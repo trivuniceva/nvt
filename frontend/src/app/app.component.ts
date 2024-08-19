@@ -10,18 +10,15 @@ import * as L from 'leaflet';
 export class AppComponent implements OnInit {
   users: any[] = [];
 
-  options = {
-    layers: [
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '© OpenStreetMap'
-      })
-    ],
-    zoom: 13,
-    center: L.latLng(45.2671, 19.8335) // Koordinate za Novi Sad
-  };
-
   constructor(private userService: UserService) { }
+
+  ngAfterViewInit(): void {
+    const map = L.map('map').setView([46.879966, -121.726909], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+  }
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe(
