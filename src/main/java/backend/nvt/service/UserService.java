@@ -11,9 +11,19 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    public User loggedUser;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-}
 
+    public boolean authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return false;
+        }
+        System.out.println(user.getEmail());
+        return user.getPassword().equals(password);
+    }
+
+}

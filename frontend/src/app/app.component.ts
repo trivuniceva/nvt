@@ -7,18 +7,10 @@ import { UserService } from "./core/services/user.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  users: any[] = [];
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe(
-      data => {
-        this.users = data;
-      },
-      error => {
-        console.error('Error fetching users', error);
-      }
-    );
   }
+
 }
