@@ -17,5 +17,20 @@ public class RegisteredUser extends User {
     @Column(name = "route")
     private Set<String> favoriteRoutes;
 
+    public List<Ride> getRides() {
+        return rides;
+    }
+
+    public void setRides(List<Ride> rides) {
+        this.rides = rides;
+    }
+
+    public Set<String> getFavoriteRoutes() {
+        return favoriteRoutes;
+    }
+
+    public void setFavoriteRoutes(Set<String> favoriteRoutes) {
+        this.favoriteRoutes = favoriteRoutes;
+    }
 }
 
