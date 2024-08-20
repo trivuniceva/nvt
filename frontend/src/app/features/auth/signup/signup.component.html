@@ -1,0 +1,58 @@
+<div class="signup-container">
+
+  <h2> Signup </h2>
+
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="currentStep === 1" class="form-group">
+      <input
+        id="email"
+        formControlName="email"
+        type="email"
+        placeholder="Email:"
+        class="form-control">
+
+      <br>
+
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        placeholder="Password:"
+        class="form-control">
+
+      <br>
+
+      <input
+        id="confirmPassword"
+        formControlName="confirmPassword"
+        type="password"
+        placeholder="Confirm Password:"
+        class="form-control">
+
+      <br>
+
+      <button type="button" (click)="goToStep(2)">Next</button>
+    </div>
+
+    <div *ngIf="currentStep === 2">
+      <input
+        id="address"
+        formControlName="address"
+        type="text"
+        placeholder="Address:">
+
+      <br>
+
+      <input
+        id="phone"
+        formControlName="phone"
+        type="text"
+        placeholder="Phone:">
+
+      <br>
+
+      <button type="button" (click)="goToStep(1)">Back</button>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</div>

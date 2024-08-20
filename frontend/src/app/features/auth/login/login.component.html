@@ -3,23 +3,22 @@
 
   <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
     <div class="form-group">
-      <label for="username">Username:</label>
       <input
         type="text"
-        id="username"
-        name="username"
-        [(ngModel)]="username"
-        #usernameInput="ngModel"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        #emailInput="ngModel"
         required
         class="form-control"
+        placeholder="Email: "
       />
-      <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error">
-        Username is required.
+      <div *ngIf="emailInput.invalid && emailInput.touched" class="error">
+        Email is required.
       </div>
     </div>
 
     <div class="form-group">
-      <label for="password">Password:</label>
       <input
         type="password"
         id="password"
@@ -28,6 +27,7 @@
         #passwordInput="ngModel"
         required
         class="form-control"
+        placeholder="Password: "
       />
       <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error">
         Password is required.
@@ -35,6 +35,19 @@
     </div>
 
     <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+
+    <p> OR </p>
+
+    <button>Google </button>
+    <button> Facebook</button>
+
+    <p (click)="forgotPassword()"> Forgot password? </p>
+
+    <p>
+      Don't have an account?
+      <strong (click)="goToSignup()">Signup</strong>
+    </p>
+
   </form>
 
   <div *ngIf="errorMessage" class="error-message">
