@@ -15,5 +15,9 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    public boolean authenticate(String email, String password) {
+        return true;
+    }
 }
 
