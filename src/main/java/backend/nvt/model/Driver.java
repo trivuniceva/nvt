@@ -4,17 +4,17 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-@Entity
-@DiscriminatorValue("DRIVER")
+//@Entity
+//@DiscriminatorValue("DRIVER")
 public class Driver extends User {
 
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ride> rides;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private boolean available;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private int workingHours;
 
     public List<Ride> getRides() {

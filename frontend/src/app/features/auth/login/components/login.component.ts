@@ -27,6 +27,7 @@ export class LoginComponent {
     );
   }
 
+
   goToSignup() {
     this.router.navigate(['/signup'])
   }
@@ -35,19 +36,22 @@ export class LoginComponent {
     this.router.navigate(['/password'])
   }
 
+
   onSubmit() {
     if (this.email === '' || this.password === '') {
       this.errorMessage = 'Please fill in both fields.';
     } else {
       this.userService.login(this.email, this.password).subscribe(
         response => {
-          console.log('Login successful', response);
+          console.log('Login successful response:', response);
+          this.router.navigate([''])
         },
         error => {
+          console.error('Login error:', error);
           this.errorMessage = 'Invalid credentials';
-          console.error('Login error', error);
         }
       );
     }
   }
+
 }

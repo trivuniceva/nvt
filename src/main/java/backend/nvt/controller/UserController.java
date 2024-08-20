@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -17,23 +16,18 @@ public class UserController {
 
     @GetMapping
     public List<User> getUsers() {
-
-        System.out.println("treba da radi getUsers");
-
+        System.out.println("Fetching users");
         return userService.getAllUsers();
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        System.out.println("idemo lutko lepa");
         boolean isAuthenticated = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
         if (isAuthenticated) {
+            System.out.println("treba da je uspesno logovanje\n");
             return ResponseEntity.ok("Login successful");
         } else {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
     }
-
-
 }
-
