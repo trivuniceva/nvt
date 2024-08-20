@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-// import * as L from 'leaflet';
+import { LeafletModule } from "@asymmetrik/ngx-leaflet";
+import { latLng, tileLayer, MapOptions } from 'leaflet';
 
 @Component({
   selector: 'app-rides',
@@ -7,14 +8,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./rides.component.css']
 })
 export class RidesComponent {
-  // options: any = {
-  //   layers: [
-  //     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  //       maxZoom: 18,
-  //       attribution: '© OpenStreetMap'
-  //     })
-  //   ],
-  //   zoom: 10,
-  //   center: L.latLng(45.2671, 19.8335)
-  // };
+  options: MapOptions = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '© OpenStreetMap contributors'
+      })
+    ],
+    zoom: 13,
+    center: latLng(45.2671, 19.8335)
+  };
+
 }
