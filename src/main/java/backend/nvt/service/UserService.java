@@ -17,13 +17,15 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public boolean authenticate(String email, String password) {
+    public User authenticate(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            return false;
+            return null;
         }
         System.out.println(user.getEmail());
-        return user.getPassword().equals(password);
+        if (user.getPassword().equals(password))
+                return user;
+        return user;
     }
 
 }

@@ -25,15 +25,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        boolean isAuthenticated = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
-        if (isAuthenticated) {
+    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest) {
+        User isAuthenticatedUser = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+        if (isAuthenticatedUser != null) {
             System.out.println("treba da je uspesno logovanje\n");
             String sessionId = java.util.UUID.randomUUID().toString();
             userSessionService.loginUser(loginRequest.getEmail(), sessionId);
-            return ResponseEntity.ok("Login successful");
+            return ResponseEntity.ok(isAuthenticatedUser);
         } else {
-            return ResponseEntity.status(401).body("Invalid credentials");
+            return ResponseEntity.status(401).build();
         }
     }
 
