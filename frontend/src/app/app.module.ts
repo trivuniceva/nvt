@@ -6,16 +6,17 @@ import { AppComponent } from './app.component';
 import { UserService } from './core/services/user.service';
 import { AuthModule } from './features/auth/auth.module';
 import { HomeComponent } from './app/home/home.component';
-import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { RidesComponent } from './shared/components/rides/rides.component';
 import { MapComponent } from './shared/components/map/map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import {NavBarComponent} from "./shared/components/navbar/navbar.component";
+import {Router, RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
       AppComponent,
       HomeComponent,
-      NavbarComponent,
+      NavBarComponent,
       RidesComponent,
       MapComponent,
 
@@ -26,6 +27,7 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
     AppRoutingModule,
     AuthModule,
     LeafletModule,
+    RouterModule,
 
 
     ],

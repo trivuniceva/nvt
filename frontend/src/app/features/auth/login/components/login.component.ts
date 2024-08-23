@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import { Router } from "@angular/router";
 import { UserService } from "../../../../core/services/user.service";
+import {AuthService} from "../../../auth.service";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent {
   errorMessage: string = '';
   users: any[] = [];
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -43,6 +44,8 @@ export class LoginComponent {
     } else {
       this.userService.login(this.email, this.password).subscribe(
         response => {
+          this.authService.login();
+          console.log("mackooooo <3")
           console.log('Login successful response:', response);
           this.router.navigate([''])
         },
