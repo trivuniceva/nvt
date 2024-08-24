@@ -1,19 +1,30 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   loggedIn = new BehaviorSubject<boolean>(this.hasToken());
-  userRole = new BehaviorSubject<string>('');
+  private userRoleSubject = new BehaviorSubject<string>('');
+  userRole$ = this.userRoleSubject.asObservable();
 
   constructor() {
-    this.loadUserRole();
   }
 
-  login(){
-    localStorage.setItem('currentUser', 'user');
+  login({user}: { user: any }){
+    // localStorage.setItem('currentUser', user);
+    // console.log(user.userRole)
+
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.loggedIn.next(true);
+
+
+    this.userRoleSubject.next(user.userRole);
+
+
+    console.log("userrr", )
     this.loggedIn.next(true);
   }
 
@@ -26,20 +37,9 @@ export class AuthService {
     return !!localStorage.getItem('currentUser')
   }
 
-  get role() {
-    return this.userRole.asObservable();
+  getUserRole(){
+    return this.userRoleSubject.getValue();
   }
 
-  private loadUserRole() {
-    const user = localStorage.getItem('currentUser');
-    if (user) {
-      try {
-        const parsedUser = JSON.parse(user);
-        this.userRole.next(parsedUser.userRole || '');
-      } catch (e) {
-        console.error('Failed to parse user role from localStorage', e);
-        this.userRole.next('');
-      }
-    }
-  }
+
 }

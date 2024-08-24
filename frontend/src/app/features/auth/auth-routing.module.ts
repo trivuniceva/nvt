@@ -4,6 +4,7 @@ import { LoginComponent } from './login/components/login.component';
 import {RidesComponent} from "../../shared/components/rides/rides.component";
 import {SignupComponent} from "./signup/signup.component";
 import {ForgottenPasswordComponent} from "./forgotten-password/forgotten-password.component";
+import {ProfileComponent} from "../../app/user/profile/profile.component";
 
 const routes: Routes = [
   {
@@ -21,7 +22,12 @@ const routes: Routes = [
   {
     path: 'ride',
     component: RidesComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   }
+
 
 ];
 
