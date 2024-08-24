@@ -1,28 +1,25 @@
-<div  class="sidenav">
-  <a href="/ride">Ride</a>
-  <a href="/login">Login</a>
+<div class="sidenav">
+  <a [routerLink]="['/ride']">Ride</a>
+  <a [routerLink]="['/login']">Login</a>
 </div>
-
 
 <div *ngIf="userRole === 'REGISTERED_USER'" class="sidenav">
-  <a href=""> Profile </a>
-  <a href=""> Track ride </a>
-  <a href=""> Ride history </a>
-  <a href=""> Support </a>
+  <a [routerLink]="['/profile']">Profile</a>
+  <a [routerLink]="['/track-ride']">Track ride</a>
+  <a [routerLink]="['/ride-history']">Ride history</a>
+  <a [routerLink]="['/sup']">Support</a>
+  <a [routerLink]="['/logout']">Logout</a>
 </div>
 
-
 <div *ngIf="userRole === 'ADMINISTRATOR'" class="sidenav">
-  <a href=""> adminileeee </a>
-  <a href=""> Profile </a>
-
-
+  <a [routerLink]="['/adminileeee']">Admin Panel</a>
+  <a [routerLink]="['/profile']">Profile</a>
+  <a [routerLink]="['/logout']">Logout</a>
 </div>
 
 <div *ngIf="userRole === 'DRIVER'" class="sidenav">
-  <a href=""> Profile </a>
-  <a href=""> Ride history </a>
-  <a href=""> Support </a>
-
-
+  <a [routerLink]="['/profile']">Profile</a>
+  <a [routerLink]="['/ride-history']">Ride history</a>
+  <a [routerLink]="['/sup']">Support</a>
+  <a [routerLink]="['/logout']">Logout</a>
 </div>

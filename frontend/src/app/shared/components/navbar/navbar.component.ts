@@ -16,18 +16,9 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.loggedIn.subscribe(status => {
-      this.isLoggedIn = status;
-    });
-
-    this.authService.userRole$.subscribe(role => {
-      this.userRole = role;
-    });
-
-
-
+    this.isLoggedIn = this.authService.hasToken();
+    const storedUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    this.userRole = storedUser.userRole || '';
   }
-
-
 }
 
