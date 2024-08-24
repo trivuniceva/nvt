@@ -44,10 +44,13 @@ export class LoginComponent {
     } else {
       this.userService.login(this.email, this.password).subscribe(
         response => {
-          this.authService.login();
+          this.authService.login({user: response});
+
+          // this.
+
           console.log("mackooooo <3")
           console.log('Login successful response:', response);
-          this.router.navigate([''])
+          this.router.navigate(['/profile'])
         },
         error => {
           console.error('Login error:', error);
