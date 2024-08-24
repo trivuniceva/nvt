@@ -11,23 +11,23 @@ export class NavBarComponent implements OnInit {
   isLoggedIn: boolean = false;
   userRole: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+
+  }
 
   ngOnInit(): void {
-    this.authService.loggedIn.subscribe(
-      (loggedIn: boolean) => {
-        this.isLoggedIn = loggedIn;
-      }
-    );
-
-    this.authService.role.subscribe(role => {
-      this.userRole = role;
-      this.isLoggedIn = !!role;
+    this.authService.loggedIn.subscribe(status => {
+      this.isLoggedIn = status;
     });
+
+    this.authService.userRole$.subscribe(role => {
+      this.userRole = role;
+    });
+
+
+
   }
 
-  logout() {
-    this.authService.logout();
-  }
+
 }
 

@@ -1,11 +1,28 @@
-<div *ngIf="!isLoggedIn" class="sidenav">
+<div  class="sidenav">
   <a href="/ride">Ride</a>
   <a href="/login">Login</a>
 </div>
 
-<div *ngIf="isLoggedIn" class="sidenav">
-  <a href="/ride">Ride</a>
-  <a *ngIf="userRole === 'ADMIN'" href="/admin">Admin Dashboard</a>
-  <a *ngIf="userRole === 'REGISTERED_USER'" href="/profile">Profile</a>
-  <a href="#" (click)="logout()">Logout</a>
+
+<div *ngIf="userRole === 'REGISTERED_USER'" class="sidenav">
+  <a href=""> Profile </a>
+  <a href=""> Track ride </a>
+  <a href=""> Ride history </a>
+  <a href=""> Support </a>
+</div>
+
+
+<div *ngIf="userRole === 'ADMINISTRATOR'" class="sidenav">
+  <a href=""> adminileeee </a>
+  <a href=""> Profile </a>
+
+
+</div>
+
+<div *ngIf="userRole === 'DRIVER'" class="sidenav">
+  <a href=""> Profile </a>
+  <a href=""> Ride history </a>
+  <a href=""> Support </a>
+
+
 </div>
