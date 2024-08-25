@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {HomeComponent} from "./app/home/home.component";
+import {HomeComponent} from "./features/home/home.component";
+import {LoginComponent} from "./features/auth/login/login.component";
+import {ProfileComponent} from "./features/profile/profile/profile.component";
+import {OrderRideComponent} from "./features/ride/order-ride/order-ride.component";
 
 const routes: Routes = [
   {
@@ -9,13 +12,28 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    redirectTo: '/auth/login',
-    pathMatch: 'full'
+    component: LoginComponent
   },
   {
-    path: 'auth',
-    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
+    path: 'profile',
+    component: ProfileComponent
+  },
+  {
+    path: 'order-ride',
+    component: OrderRideComponent
   }
+
+  // {
+  //   path: 'login',
+  //   component: LoginComponent
+  // },
+
+
+
+  // {
+  //   path: 'auth',
+  //   loadChildren: () => import('').then(m => m.AuthModule)
+  // }
 ];
 
 @NgModule({
