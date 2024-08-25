@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
 import { LeafletModule } from "@asymmetrik/ngx-leaflet";
 import { latLng, tileLayer, MapOptions } from 'leaflet';
+import {MapComponent} from "../map/map.component";
 
 @Component({
   selector: 'app-rides',
+  standalone: true,
   templateUrl: './rides.component.html',
+  imports: [
+    LeafletModule,
+    MapComponent
+  ],
   styleUrls: ['./rides.component.css']
 })
 export class RidesComponent {
