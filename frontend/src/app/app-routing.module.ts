@@ -5,6 +5,7 @@ import {LoginComponent} from "./features/auth/login/login.component";
 import {ProfileComponent} from "./features/profile/profile/profile.component";
 import {OrderRideComponent} from "./features/ride/order-ride/order-ride.component";
 import {RidesComponent} from "./shared/components/rides/rides.component";
+import {RideHistoryComponent} from "./features/ride/ride-history/ride-history.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'ride',
     component: RidesComponent
+  },
+  {
+    path: 'ride-history',
+    component: RideHistoryComponent
   },
 
 
