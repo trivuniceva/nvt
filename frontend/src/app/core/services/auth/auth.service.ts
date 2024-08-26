@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class AuthService {
   private userRoleSubject = new BehaviorSubject<string>('');
   userRole$ = this.userRoleSubject.asObservable();
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   login({user}: { user: any }){
@@ -28,10 +29,32 @@ export class AuthService {
     this.loggedIn.next(true);
   }
 
-  logout(){
-    localStorage.removeItem('currentUser');
-    this.loggedIn.next(false);
+  logout() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const sessionId = currentUser.sessionId;
+
+    if (!sessionId) {
+      console.error('No session ID found');
+      return;
+    }
+
+    this.http.post('/api/logout', { sessionId }).subscribe(
+      response => {
+        console.log('Logout successful:', response);
+
+        localStorage.removeItem('currentUser');
+        this.loggedIn.next(false);
+        this.userRoleSubject.next('');
+
+        // Preusmeravanje korisnika na početnu stranicu ili stranicu za prijavu
+        // this.router.navigate(['/login']); // Dodaj ovo ako želiš da preusmeriš korisnika nakon logout-a
+      },
+      error => {
+        console.error('Logout failed:', error);
+      }
+    );
   }
+
 
   private hasToken(): boolean{
     return !!localStorage.getItem('currentUser')
