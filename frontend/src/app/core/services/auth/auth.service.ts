@@ -15,15 +15,11 @@ export class AuthService {
   }
 
   login({user}: { user: any }){
-    // localStorage.setItem('currentUser', user);
-    // console.log(user.userRole)
 
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.loggedIn.next(true);
 
-
     this.userRoleSubject.next(user.userRole);
-
 
     console.log("userrr", )
     this.loggedIn.next(true);
@@ -45,9 +41,6 @@ export class AuthService {
         localStorage.removeItem('currentUser');
         this.loggedIn.next(false);
         this.userRoleSubject.next('');
-
-        // Preusmeravanje korisnika na početnu stranicu ili stranicu za prijavu
-        // this.router.navigate(['/login']); // Dodaj ovo ako želiš da preusmeriš korisnika nakon logout-a
       },
       error => {
         console.error('Logout failed:', error);

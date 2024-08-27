@@ -4,6 +4,22 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RideService {
+  private _polaziste: string = '';
+  private _destinacija: string = '';
 
-  constructor() { }
+  setPolaziste(polaziste: string) {
+    this._polaziste = polaziste;
+  }
+
+  setDestinacija(destinacija: string) {
+    this._destinacija = destinacija;
+  }
+
+  getPolaziste(): string {
+    return this._polaziste;
+  }
+
+  getDestinacija(): string {
+    return this._destinacija;
+  }
 }

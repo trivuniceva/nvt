@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-panel {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  border: solid;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-panel input {
+  margin-bottom: 20px;
+  padding: 15px;
+  width: 70%;
+  border-radius: 25px;
+  font-size: 16px;
+}
+
+.left-panel button {
+  padding: 15px;
+  width: 35%;
+  border-radius: 25px;
+  background-color: white;
+  font-size: 16px;
+}
+
+.right-panel {
+  width: 50%;
+  background-color: white;
+}
+
+.right-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
