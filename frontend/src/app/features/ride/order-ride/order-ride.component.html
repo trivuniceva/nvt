@@ -1,8 +1,12 @@
 <div class="container">
 
   <div class="left-panel">
-    <app-ride-form></app-ride-form>
-    <button>Pretraga</button>
+    <app-ride-form *ngIf="showRideForm"></app-ride-form>
+    <app-advanced-form *ngIf="!showRideForm"></app-advanced-form>
+    <button (click)="hideRideForm()">Next</button>
+
+
+
   </div>
 
   <div class="right-panel">
