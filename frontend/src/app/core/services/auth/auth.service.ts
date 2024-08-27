@@ -45,9 +45,6 @@ export class AuthService {
         localStorage.removeItem('currentUser');
         this.loggedIn.next(false);
         this.userRoleSubject.next('');
-
-        // Preusmeravanje korisnika na početnu stranicu ili stranicu za prijavu
-        // this.router.navigate(['/login']); // Dodaj ovo ako želiš da preusmeriš korisnika nakon logout-a
       },
       error => {
         console.error('Logout failed:', error);
