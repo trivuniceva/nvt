@@ -1,1 +1,44 @@
-<p>ride-history works!</p>
+<div class="ride-history-container">
+  <h1>Istorija Vožnji</h1>
+
+  <table class="ride-history-table">
+    <thead>
+    <tr>
+      <th (click)="sortBy('route')">Ruta</th>
+      <th (click)="sortBy('price')">Cena</th>
+      <th (click)="sortBy('startDate')">Datum Početka</th>
+      <th (click)="sortBy('endDate')">Datum Kraja</th>
+      <th>Detalji</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ride of rides">
+      <td>{{ ride.route }}</td>
+      <td>{{ ride.price | currency }}</td>
+      <td>{{ ride.startDate | date: 'dd.MM.yyyy' }}</td>
+      <td>{{ ride.endDate | date: 'dd.MM.yyyy' }}</td>
+      <td>
+        <button (click)="viewDetails({ride : ride})">Prikaz Detalja</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="selectedRide" class="ride-details-modal">
+    <h2>Detalji Vožnje</h2>
+    <p><strong>Ruta:</strong> {{ selectedRide.route }}</p>
+    <p><strong>Vozač:</strong> {{ selectedRide.driverName }}</p>
+    <p><strong>Ocena:</strong> {{ selectedRide.rating || 'Nema ocene' }}</p>
+
+    <div class="map-container">
+      <div id="map"></div>
+    </div>
+
+    <div class="action-buttons">
+      <button (click)="orderAgain()">Ponovo Poruči</button>
+      <button (click)="scheduleLater()">Zakaži Kasnije</button>
+    </div>
+
+    <button class="close-modal" (click)="closeDetails()">Zatvori</button>
+  </div>
+</div>
