@@ -7,6 +7,7 @@ import {OrderRideComponent} from "./features/ride/order-ride/order-ride.componen
 import {RidesComponent} from "./shared/components/rides/rides.component";
 import {RideHistoryComponent} from "./features/ride/ride-history/ride-history.component";
 import {RegisterComponent} from "./features/auth/register/register.component";
+import {RideGeneralComponent} from "./features/ride/ride-general/ride-general.component";
 
 const routes: Routes = [
   {
@@ -27,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'ride',
-    component: RidesComponent
+    component: RideGeneralComponent
   },
   {
 
