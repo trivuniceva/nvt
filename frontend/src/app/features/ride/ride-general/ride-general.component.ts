@@ -26,4 +26,5 @@ export class RideGeneralComponent {
       console.log(this.rideService.getDestinacija())
     }
   }
+
 }
