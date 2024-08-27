@@ -15,15 +15,11 @@ export class AuthService {
   }
 
   login({user}: { user: any }){
-    // localStorage.setItem('currentUser', user);
-    // console.log(user.userRole)
 
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.loggedIn.next(true);
 
-
     this.userRoleSubject.next(user.userRole);
-
 
     console.log("userrr", )
     this.loggedIn.next(true);
