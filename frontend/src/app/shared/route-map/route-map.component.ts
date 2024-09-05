@@ -14,6 +14,7 @@ export class RouteMapComponent implements OnInit {
   end: string = '';
 
   ngOnInit(): void {
+    // Primer: centriranje mape na Novi Sad
     this.options = {
       layers: [
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -22,14 +23,16 @@ export class RouteMapComponent implements OnInit {
         })
       ],
       zoom: 13,
-      center: L.latLng(45.2671, 19.8335)
+      center: L.latLng(45.2671, 19.8335)  // Koordinate Novog Sada
     };
+
   }
+
 
   async getRoutes() {
     if (this.start && this.end) {
       try {
-        const response = await axios.get(`http://localhost:8080/routes`, {
+        const response = await axios.get('http://localhost:8080/routes', {
           params: {
             start: this.start,
             end: this.end
@@ -38,25 +41,35 @@ export class RouteMapComponent implements OnInit {
 
         console.log("Odgovor sa backend-a:", response.data);
 
-        const routes = response.data.routes;
-        if (!routes || routes.length === 0) {
-          console.error('Nema ruta u odgovoru:', response.data);
+        const featureCollection = response.data;
+        const features = featureCollection.features;
+
+        if (!features || features.length === 0) {
+          console.error('Nema ruta u odgovoru:', featureCollection);
           return;
         }
 
-        // Sortiranje ruta po trajanju
-        routes.sort((a: any, b: any) => a.summary.duration - b.summary.duration);
+        // Uklonite stare slojeve
+        this.layers = [];
+
+        // Sortiranje ruta po trajanju (ako imate više ruta)
+        features.sort((a: any, b: any) => a.properties.summary.duration - b.properties.summary.duration);
 
         // Prikaz tri rute plavom bojom
-        for (let i = 0; i < Math.min(3, routes.length); i++) {
-          const route = routes[i];
-          if (!route || !route.geometry || !route.geometry.coordinates) {
-            console.error('Neispravan format rute:', route);
+        for (let i = 0; i < Math.min(3, features.length); i++) {
+          const feature = features[i];
+          if (!feature || !feature.geometry || !feature.geometry.coordinates) {
+            console.error('Neispravan format rute:', feature);
             continue;
           }
 
-          const coordinates = route.geometry.coordinates.map((c: any) => [c[1], c[0]]);  // Prebacujemo lat/lng
-          const color = i === 0 ? 'red' : 'blue'; // Najkraća ruta će biti crvena, ostale plave
+          // Pretvaranje koordinata iz [lng, lat] u [lat, lng]
+          const coordinates = feature.geometry.coordinates.map((c: any) => [c[1], c[0]]);
+
+          // Određivanje boje rute
+          const color = i === 0 ? 'red' : 'blue';
+
+          // Kreiranje polilinije i dodavanje u slojeve
           const polyline = L.polyline(coordinates, { color: color });
           this.layers.push(polyline);
         }
@@ -66,4 +79,7 @@ export class RouteMapComponent implements OnInit {
       }
     }
   }
+
+
+
 }
