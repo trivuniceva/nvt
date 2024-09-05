@@ -6,17 +6,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserService } from './core/services/user/user.service';
 import { HomeComponent } from './features/home/home.component';
-import { RidesComponent } from './shared/components/rides/rides.component';
-import { MapComponent } from './shared/components/map/map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NavBarComponent } from './shared/components/nav-bar/navbar.component';
 import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
 import { CoreModule } from './core.module';
 import { SharedModule } from './shared.module';
 import {LoginComponent} from "./features/auth/login/login.component";
 import {OrderRideComponent} from "./features/ride/order-ride/order-ride.component";
 import {RouteMapComponent} from "./shared/route-map/route-map.component";
+import {ProfileComponent} from "./features/profile/profile/profile.component";
+
 
 @NgModule({
   declarations: [
@@ -24,7 +23,12 @@ import {RouteMapComponent} from "./shared/route-map/route-map.component";
     HomeComponent,
     NavBarComponent,
     LoginComponent,
+
     RouteMapComponent,
+
+    ProfileComponent
+
+
   ],
   imports: [
     BrowserModule,
@@ -36,6 +40,7 @@ import {RouteMapComponent} from "./shared/route-map/route-map.component";
     ReactiveFormsModule,
     CoreModule,
     SharedModule,
+
   ],
   providers: [UserService],
   exports: [
