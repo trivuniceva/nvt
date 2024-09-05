@@ -14,9 +14,9 @@
     <tbody>
     <tr *ngFor="let ride of rides">
       <td>{{ ride.route }}</td>
-      <td>{{ ride.price | currency }}</td>
-      <td>{{ ride.startDate | date: 'dd.MM.yyyy' }}</td>
-      <td>{{ ride.endDate | date: 'dd.MM.yyyy' }}</td>
+<!--      <td>{{ ride.price | currency }}</td>-->
+<!--      <td>{{ ride.startDate | date: 'dd.MM.yyyy' }}</td>-->
+<!--      <td>{{ ride.endDate | date: 'dd.MM.yyyy' }}</td>-->
       <td>
         <button (click)="viewDetails({ride : ride})">Prikaz Detalja</button>
       </td>
