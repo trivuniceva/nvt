@@ -7,17 +7,23 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 public class GeocodingService {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private static final String CITY = "Novi Sad";  // Podrazumevani grad
 
-    public Coordinate geocodeAddress(String address) throws JSONException {
-        String url = UriComponentsBuilder.fromHttpUrl("https://nominatim.openstreetmap.org/search")
-                .queryParam("q", address)
-                .queryParam("format", "json")
-                .toUriString();
+    public Coordinate geocodeAddress(String address) throws RuntimeException, JSONException {
+        String formattedAddress = address + ", " + CITY;  // Dodaj grad na adresu
+        String url = "https://nominatim.openstreetmap.org/search?q=" + URLEncoder.encode(formattedAddress, StandardCharsets.UTF_8) + "&format=json";
 
+        RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(url, String.class);
+
+        if (response == null || response.isEmpty()) {
+            throw new RuntimeException("Adresa nije pronađena: " + address);
+        }
 
         // Parsiranje odgovora
         JSONArray jsonArray = new JSONArray(response);

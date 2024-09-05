@@ -25,14 +25,15 @@ public class RouteController {
             @RequestParam String start,
             @RequestParam String end) throws JSONException {
 
-        // Geokodiranje adresa
+        System.out.println("Start Address: " + start);
+        System.out.println("End Address: " + end);
+
         Coordinate startCoordinate = geocodingService.geocodeAddress(start);
         Coordinate endCoordinate = geocodingService.geocodeAddress(end);
 
         System.out.println("Start Coordinate: " + startCoordinate.getLatitude() + ", " + startCoordinate.getLongitude());
         System.out.println("End Coordinate: " + endCoordinate.getLatitude() + ", " + endCoordinate.getLongitude());
 
-        // Priprema URL-a za OpenRouteService API
         String url = String.format(
                 "https://api.openrouteservice.org/v2/directions/driving-car?api_key=%s&start=%f,%f&end=%f,%f",
                 apiKey,
@@ -41,7 +42,8 @@ public class RouteController {
                 endCoordinate.getLongitude(),
                 endCoordinate.getLatitude());
 
-        // Slanje GET zahteva
+        System.out.println("Routing URL: " + url);
+
         try {
             String response = restTemplate.getForObject(url, String.class);
             System.out.println("Route Response: " + response);
@@ -51,7 +53,4 @@ public class RouteController {
             return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsString());
         }
     }
-
-
-
 }
