@@ -12,7 +12,6 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from './core.module';
 import { SharedModule } from './shared.module';
 import {LoginComponent} from "./features/auth/login/login.component";
-import {OrderRideComponent} from "./features/ride/order-ride/order-ride.component";
 import {RouteMapComponent} from "./shared/route-map/route-map.component";
 import {ProfileComponent} from "./features/profile/profile/profile.component";
 
