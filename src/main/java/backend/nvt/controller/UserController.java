@@ -36,10 +36,18 @@ public class UserController {
         }
     }
 
-
     @PostMapping("/logout")
     public String logout(@RequestParam String sessionId) {
         userSessionService.logoutUser(sessionId);
         return "Logout successful!";
     }
+
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+        userService.sendPasswordResetEmail(email);
+        return ResponseEntity.ok("Password reset email sent if email exists.");
+    }
+
+
 }
