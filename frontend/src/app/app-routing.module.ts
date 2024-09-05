@@ -8,6 +8,7 @@ import {RidesComponent} from "./shared/components/rides/rides.component";
 import {RideHistoryComponent} from "./features/ride/ride-history/ride-history.component";
 import {RegisterComponent} from "./features/auth/register/register.component";
 import {RideGeneralComponent} from "./features/ride/ride-general/ride-general.component";
+import {RouteMapComponent} from "./shared/route-map/route-map.component";
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
   },
   {
     path: 'ride',
-    component: RideGeneralComponent
+    // component: RideGeneralComponent
+    component: RouteMapComponent
   },
   {
 
