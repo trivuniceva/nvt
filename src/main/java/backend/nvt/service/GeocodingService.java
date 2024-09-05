@@ -4,8 +4,6 @@ import backend.nvt.model.Coordinate;
 import org.json.JSONException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -27,10 +25,10 @@ public class GeocodingService {
             JSONObject jsonObject = jsonArray.getJSONObject(0);
             double latitude = jsonObject.getDouble("lat");
             double longitude = jsonObject.getDouble("lon");
+            System.out.println("Geocoded Coordinates: Latitude = " + latitude + ", Longitude = " + longitude);
             return new Coordinate(latitude, longitude);
         } else {
             throw new RuntimeException("Adresa nije pronađena: " + address);
         }
     }
 }
-

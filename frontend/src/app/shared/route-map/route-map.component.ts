@@ -29,7 +29,6 @@ export class RouteMapComponent implements OnInit {
   async getRoutes() {
     if (this.start && this.end) {
       try {
-        // Poziv backend-a bez kodiranja parametara
         const response = await axios.get(`http://localhost:8080/routes`, {
           params: {
             start: this.start,
@@ -37,30 +36,34 @@ export class RouteMapComponent implements OnInit {
           }
         });
 
-        console.log("ajmo")
+        console.log("Odgovor sa backend-a:", response.data);
+
         const routes = response.data.routes;
-        this.layers = [];
+        if (!routes || routes.length === 0) {
+          console.error('Nema ruta u odgovoru:', response.data);
+          return;
+        }
+
+        // Sortiranje ruta po trajanju
+        routes.sort((a: any, b: any) => a.summary.duration - b.summary.duration);
 
         // Prikaz tri rute plavom bojom
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < Math.min(3, routes.length); i++) {
           const route = routes[i];
-          const coordinates = route.geometry.coordinates.map((c: any) => [c[1], c[0]]);  // Prebacujemo lat/lng
+          if (!route || !route.geometry || !route.geometry.coordinates) {
+            console.error('Neispravan format rute:', route);
+            continue;
+          }
 
-          const polyline = L.polyline(coordinates, { color: 'blue' });
+          const coordinates = route.geometry.coordinates.map((c: any) => [c[1], c[0]]);  // Prebacujemo lat/lng
+          const color = i === 0 ? 'red' : 'blue'; // Najkraća ruta će biti crvena, ostale plave
+          const polyline = L.polyline(coordinates, { color: color });
           this.layers.push(polyline);
         }
 
-        // Prikaz najkraće rute crvenom bojom
-        const shortestRoute = routes.sort((a: any, b: any) => a.summary.duration - b.summary.duration)[0];
-        const shortestCoordinates = shortestRoute.geometry.coordinates.map((c: any) => [c[1], c[0]]);
-
-        const shortestPolyline = L.polyline(shortestCoordinates, { color: 'red' });
-        this.layers.push(shortestPolyline);
       } catch (error) {
         console.error('Greška prilikom preuzimanja ruta:', error);
       }
     }
   }
-
-
 }
