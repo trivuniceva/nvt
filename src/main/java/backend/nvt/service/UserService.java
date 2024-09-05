@@ -23,9 +23,11 @@ public class UserService {
             return null;
         }
         System.out.println(user.getEmail());
+        System.out.println("uneta: " + password);
+        System.out.println(user.getPassword());
         if (user.getPassword().equals(password))
                 return user;
-        return user;
+        return null;
     }
 
 }

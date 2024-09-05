@@ -25,17 +25,17 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         User isAuthenticatedUser = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
         if (isAuthenticatedUser != null) {
-            System.out.println("treba da je uspesno logovanje\n");
             String sessionId = java.util.UUID.randomUUID().toString();
             userSessionService.loginUser(loginRequest.getEmail(), sessionId);
-            return ResponseEntity.ok(isAuthenticatedUser);
+            return ResponseEntity.ok(isAuthenticatedUser); // Vraća korisnika u slučaju uspeha
         } else {
-            return ResponseEntity.status(401).build();
+            return ResponseEntity.status(401).body(new ErrorResponse("Invalid email or password")); // Vraća JSON poruku o grešci
         }
     }
+
 
     @PostMapping("/logout")
     public String logout(@RequestParam String sessionId) {

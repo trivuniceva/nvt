@@ -45,19 +45,26 @@ export class LoginComponent {
     } else {
       this.userService.login(this.email, this.password).subscribe(
         response => {
-          this.authService.login({user: response});
-
-          console.log("mackooooo <3")
-
-          console.log('Login successful response:', response);
-          this.router.navigate(['/profile'])
+          // Očekujemo korisnički objekat
+          if (response && response.userRole) {
+            this.authService.login({ user: response });
+            this.router.navigate(['/profile']);
+          } else {
+            this.errorMessage = 'Unexpected response from the server.';
+          }
         },
         error => {
           console.error('Login error:', error);
-          this.errorMessage = 'Invalid credentials';
+          if (error.status === 401) {
+            this.errorMessage = 'Invalid email or password.';
+          } else {
+            this.errorMessage = 'An unexpected error occurred.';
+          }
         }
       );
     }
   }
+
+
 
 }
