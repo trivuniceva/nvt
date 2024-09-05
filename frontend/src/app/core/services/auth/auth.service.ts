@@ -22,8 +22,15 @@ export class AuthService {
     this.userRoleSubject.next(user.userRole);
 
     console.log("userrr", )
+    console.log(localStorage.getItem('currentUser'))
     this.loggedIn.next(true);
   }
+
+  getCurrentUser() {
+    const user = localStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : null;
+  }
+
 
   logout() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');

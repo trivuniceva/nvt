@@ -47,9 +47,8 @@ export class LoginComponent {
         response => {
           this.authService.login({user: response});
 
-          // this.
-
           console.log("mackooooo <3")
+
           console.log('Login successful response:', response);
           this.router.navigate(['/profile'])
         },
