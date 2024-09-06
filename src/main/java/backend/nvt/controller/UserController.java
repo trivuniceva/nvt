@@ -82,49 +82,41 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
+
+        System.out.println("RegisterRequest password: " + registerRequest.getPassword());
+
+
+        if (userService.findByEmail(registerRequest.getEmail()) != null) {
+            return ResponseEntity.status(400).body(new ErrorResponse("Email is already in use."));
+        }
+
+        User newUser = new User();
+        newUser.setEmail(registerRequest.getEmail());
+        newUser.setPassword(registerRequest.getPassword());
+        newUser.setFirstname(registerRequest.getFirstname());
+        newUser.setLastname(registerRequest.getLastname());
+        newUser.setAddress(registerRequest.getAddress());
+        newUser.setPhone(registerRequest.getPhone());
+        newUser.setUserRole(UserRole.valueOf("REGISTERED_USER"));
+        newUser.setResetToken(generateActivationToken());
+
         try {
-
-            System.out.println("RegisterRequest password: " + registerRequest.getPassword());
-
-
-            if (userService.findByEmail(registerRequest.getEmail()) != null) {
-                return ResponseEntity.status(400).body(new ErrorResponse("Email is already in use."));
-            }
-
-            User newUser = new User();
-            newUser.setEmail(registerRequest.getEmail());
-            newUser.setPassword(registerRequest.getPassword());
-            newUser.setFirstname(registerRequest.getFirstname());
-            newUser.setLastname(registerRequest.getLastname());
-            newUser.setAddress(registerRequest.getAddress());
-            newUser.setPhone(registerRequest.getPhone());
-            newUser.setUserRole(UserRole.valueOf("REGISTERED_USER"));
-            newUser.setResetToken(generateActivationToken());
-
             userService.save(newUser);
-
-            // Send activation email
-            emailService.sendActivationEmail(registerRequest.getEmail(), newUser.getResetToken());
+            String token = generateResetToken(newUser);
+            newUser.setResetToken(token);
+            emailService.sendActivationEmail(newUser.getEmail(), newUser.getResetToken());
 
             return ResponseEntity.ok(new SuccessResponse("Registration successful! Please check your email to activate your account."));
+
         } catch (Exception e) {
             System.err.println("Error saving user: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Failed to save user."));
         }
     }
 
-
-
-//        try {
-//            userService.save(newUser);
-//            System.out.println(userService.getAllUsers());
-//            return ResponseEntity.ok(new SuccessResponse("Registration successful! Please check your email to activate your account."));
-//        } catch (Exception e) {
-//            System.err.println("Error saving user: " + e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Failed to save user."));
-//        }
-
-//    }
+    private String generateResetToken(User user) {
+        return UUID.randomUUID().toString();
+    }
 
 
     @GetMapping("/activate")
