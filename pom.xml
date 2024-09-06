@@ -55,6 +55,19 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.8.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.7.0</version>
+            <scope>test</scope>
+        </dependency>
+
 
 
 

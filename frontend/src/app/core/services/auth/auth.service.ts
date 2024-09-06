@@ -56,7 +56,7 @@ export class AuthService {
   }
 
 
-  private hasToken(): boolean{
+  hasToken(): boolean{
     return !!localStorage.getItem('currentUser')
   }
 
