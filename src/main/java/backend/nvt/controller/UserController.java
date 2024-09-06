@@ -1,13 +1,21 @@
 package backend.nvt.controller;
 
+import backend.nvt.model.RegisterRequest;
+import backend.nvt.model.UserRole;
+import backend.nvt.service.EmailService;
 import backend.nvt.service.UserService;
 import backend.nvt.model.User;
 import backend.nvt.service.UserSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -17,6 +25,12 @@ public class UserController {
 
     @Autowired
     private UserSessionService userSessionService;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping
     public List<User> getUsers() {
@@ -66,4 +80,68 @@ public class UserController {
         return ResponseEntity.ok(new SuccessResponse("Password reset successfully."));
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
+        try {
+
+            System.out.println("RegisterRequest password: " + registerRequest.getPassword());
+
+
+            if (userService.findByEmail(registerRequest.getEmail()) != null) {
+                return ResponseEntity.status(400).body(new ErrorResponse("Email is already in use."));
+            }
+
+            User newUser = new User();
+            newUser.setEmail(registerRequest.getEmail());
+            newUser.setPassword(registerRequest.getPassword());
+            newUser.setFirstname(registerRequest.getFirstname());
+            newUser.setLastname(registerRequest.getLastname());
+            newUser.setAddress(registerRequest.getAddress());
+            newUser.setPhone(registerRequest.getPhone());
+            newUser.setUserRole(UserRole.valueOf("REGISTERED_USER"));
+            newUser.setResetToken(generateActivationToken());
+
+            userService.save(newUser);
+
+            // Send activation email
+            emailService.sendActivationEmail(registerRequest.getEmail(), newUser.getResetToken());
+
+            return ResponseEntity.ok(new SuccessResponse("Registration successful! Please check your email to activate your account."));
+        } catch (Exception e) {
+            System.err.println("Error saving user: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Failed to save user."));
+        }
+    }
+
+
+
+//        try {
+//            userService.save(newUser);
+//            System.out.println(userService.getAllUsers());
+//            return ResponseEntity.ok(new SuccessResponse("Registration successful! Please check your email to activate your account."));
+//        } catch (Exception e) {
+//            System.err.println("Error saving user: " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Failed to save user."));
+//        }
+
+//    }
+
+
+    @GetMapping("/activate")
+    public ResponseEntity<?> activateAccount(@RequestParam String token) {
+        User user = userService.findByResetToken(token);
+        if (user == null) {
+            return ResponseEntity.badRequest().body("Invalid token.");
+        }
+
+        user.setResetToken(null);
+        user.setActive(true);
+        userService.save(user);
+
+        return ResponseEntity.ok("Account activated successfully.");
+    }
+
+    private String generateActivationToken() {
+        return UUID.randomUUID().toString();
+    }
 }

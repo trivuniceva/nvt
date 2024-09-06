@@ -1,15 +1,19 @@
 <div class="signup-container">
-
   <h2> Signup </h2>
-
   <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div *ngIf="currentStep === 1" class="form-group">
+
+
       <input
         id="email"
         formControlName="email"
         type="email"
         placeholder="Email:"
         class="form-control">
+      <div *ngIf="signupForm.get('email')?.invalid && (signupForm.get('email')?.touched || signupForm.get('email')?.dirty)">
+        <small class="text-danger" *ngIf="signupForm.get('email')?.errors?.['required']">Email is required.</small>
+        <small class="text-danger" *ngIf="signupForm.get('email')?.errors?.['email']">Invalid email format.</small>
+      </div>
 
       <br>
 
@@ -19,8 +23,10 @@
         type="password"
         placeholder="Password:"
         class="form-control">
-
-      <br>
+      <div *ngIf="signupForm.get('password')?.invalid && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty)">
+        <small class="text-danger" *ngIf="signupForm.get('password')?.errors?.['required']">Password is required.</small>
+        <small class="text-danger" *ngIf="signupForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+      </div>
 
       <input
         id="confirmPassword"
@@ -28,6 +34,10 @@
         type="password"
         placeholder="Confirm Password:"
         class="form-control">
+      <div *ngIf="signupForm.get('confirmPassword')?.invalid && (signupForm.get('confirmPassword')?.touched || signupForm.get('confirmPassword')?.dirty)">
+        <small class="text-danger" *ngIf="signupForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</small>
+      </div>
+
 
       <br>
 
@@ -48,6 +58,30 @@
         formControlName="phone"
         type="text"
         placeholder="Phone:">
+
+      <br>
+
+      <input
+        id="firstname"
+        formControlName="firstname"
+        type="text"
+        placeholder="First Name:"
+        class="form-control">
+      <div *ngIf="signupForm.get('firstname')?.invalid && (signupForm.get('firstname')?.touched || signupForm.get('firstname')?.dirty)">
+        <small class="text-danger" *ngIf="signupForm.get('firstname')?.errors?.['required']">First Name is required.</small>
+      </div>
+
+      <br>
+
+      <input
+        id="lastname"
+        formControlName="lastname"
+        type="text"
+        placeholder="Last Name:"
+        class="form-control">
+      <div *ngIf="signupForm.get('lastname')?.invalid && (signupForm.get('lastname')?.touched || signupForm.get('lastname')?.dirty)">
+        <small class="text-danger" *ngIf="signupForm.get('lastname')?.errors?.['required']">Last Name is required.</small>
+      </div>
 
       <br>
 
