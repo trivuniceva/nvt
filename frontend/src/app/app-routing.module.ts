@@ -5,6 +5,8 @@ import {LoginComponent} from "./features/auth/login/login.component";
 import {ProfileComponent} from "./features/profile/profile/profile.component";
 import {RegisterComponent} from "./features/auth/register/register.component";
 import {RouteMapComponent} from "./shared/route-map/route-map.component";
+import {ForgottenPasswordComponent} from "./features/auth/forgot-password/forgotten-password.component";
+import {ResetPasswordComponent} from "./features/auth/reset-password/reset-password.component";
 
 const routes: Routes = [
   {
@@ -27,6 +29,14 @@ const routes: Routes = [
   {
     path: 'signup',
     component: RegisterComponent
+  },
+  {
+    path: 'forgot-password',
+    component: ForgottenPasswordComponent
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent
   },
 ];
 

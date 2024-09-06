@@ -36,10 +36,34 @@ public class UserController {
         }
     }
 
-
     @PostMapping("/logout")
     public String logout(@RequestParam String sessionId) {
         userSessionService.logoutUser(sessionId);
         return "Logout successful!";
     }
+
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+        userService.sendPasswordResetEmail(email);
+        return ResponseEntity.ok("Password reset email sent if email exists.");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
+        System.out.println("Token received: " + request.getToken());
+        System.out.println("New Password received: " + request.getNewPassword());
+
+        User user = userService.findByResetToken(request.getToken());
+        if (user == null) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("Invalid token."));
+        }
+
+        user.setPassword(request.getNewPassword());
+        user.setResetToken(null);
+        userService.save(user);
+
+        return ResponseEntity.ok(new SuccessResponse("Password reset successfully."));
+    }
+
 }

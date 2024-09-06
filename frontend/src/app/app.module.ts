@@ -14,6 +14,7 @@ import { SharedModule } from './shared.module';
 import {LoginComponent} from "./features/auth/login/login.component";
 import {RouteMapComponent} from "./shared/route-map/route-map.component";
 import {ProfileComponent} from "./features/profile/profile/profile.component";
+import {ResetPasswordComponent} from "./features/auth/reset-password/reset-password.component";
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {ProfileComponent} from "./features/profile/profile/profile.component";
 
     RouteMapComponent,
 
-    ProfileComponent
+    ProfileComponent,
+    ResetPasswordComponent,
 
 
   ],
