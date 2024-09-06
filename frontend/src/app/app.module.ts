@@ -15,6 +15,7 @@ import {LoginComponent} from "./features/auth/login/login.component";
 import {RouteMapComponent} from "./shared/route-map/route-map.component";
 import {ProfileComponent} from "./features/profile/profile/profile.component";
 import {ResetPasswordComponent} from "./features/auth/reset-password/reset-password.component";
+import {RegisterComponent} from "./features/auth/register/register.component";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {ResetPasswordComponent} from "./features/auth/reset-password/reset-passw
 
     ProfileComponent,
     ResetPasswordComponent,
+    RegisterComponent,
 
 
   ],
