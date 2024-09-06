@@ -32,4 +32,18 @@ export class UserService {
     });
   }
 
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reset-password`, {
+      token: token,
+      newPassword: newPassword
+    }).pipe(
+      catchError(error => {
+        console.error('Error:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+
+
 }
