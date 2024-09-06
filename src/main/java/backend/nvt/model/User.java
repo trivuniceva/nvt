@@ -25,6 +25,8 @@ public class User {
     @Column(name = "user_role")
     private UserRole userRole;
 
+    @Column(name = "reset_token")
+    private String resetToken;
 
     public Long getId() {
         return id;
@@ -72,5 +74,13 @@ public class User {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
     }
 }
