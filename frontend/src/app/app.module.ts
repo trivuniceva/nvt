@@ -15,7 +15,11 @@ import {LoginComponent} from "./features/auth/login/login.component";
 import {RouteMapComponent} from "./shared/route-map/route-map.component";
 import {ProfileComponent} from "./features/profile/profile/profile.component";
 import {ResetPasswordComponent} from "./features/auth/reset-password/reset-password.component";
+import {ForgottenPasswordComponent} from "./features/auth/forgot-password/forgotten-password.component";
 import {RegisterComponent} from "./features/auth/register/register.component";
+import {MapComponent} from "./shared/components/map/map.component";
+import {CommonModule} from "@angular/common";
+
 
 
 @NgModule({
@@ -24,13 +28,9 @@ import {RegisterComponent} from "./features/auth/register/register.component";
     HomeComponent,
     NavBarComponent,
     LoginComponent,
-
     RouteMapComponent,
-
+    NavBarComponent,
     ProfileComponent,
-    ResetPasswordComponent,
-    RegisterComponent,
-
 
   ],
   imports: [
@@ -43,6 +43,13 @@ import {RegisterComponent} from "./features/auth/register/register.component";
     ReactiveFormsModule,
     CoreModule,
     SharedModule,
+    ForgottenPasswordComponent,
+    MapComponent,
+    // ResetPasswordComponent,
+    CommonModule
+
+
+
 
   ],
   providers: [UserService],

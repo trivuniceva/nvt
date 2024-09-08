@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { UserService } from "../../../core/services/user/user.service";
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from "@angular/common";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit{
   signupForm!: FormGroup;
   currentStep: number = 1;
 
-  constructor(private router: Router, private fb: FormBuilder, private userService: UserService) { }
+  constructor(private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
@@ -20,15 +22,8 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
       address: [''],
-      phone: [''],
-      firstname: ['', [Validators.required]],
-      lastname: ['', [Validators.required]]
-    }, { validator: this.passwordMatchValidator });
-  }
-
-  passwordMatchValidator(g: FormGroup) {
-    return g.get('password')?.value === g.get('confirmPassword')?.value
-      ? null : { 'mismatch': true };
+      phone: ['']
+    });
   }
 
   goToStep(step: number): void {
@@ -36,27 +31,13 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.signupForm.valid) {
-      const { confirmPassword, ...userData } = this.signupForm.value;
-
-      // Proverite još jednom da li su lozinke iste
-      if (this.signupForm.get('password')?.value !== confirmPassword) {
-        alert('Passwords do not match!');
-        return;
-      }
-
-      this.userService.register(userData).subscribe({
-        next: (response) => {
-          alert('Registration successful');
-          this.router.navigate(['/login']);
-        },
-        error: (err) => {
-          alert('Registration failed.');
-          console.error('Registration error:', err);
-        }
-      });
+    if (this.signupForm.valid && this.signupForm.value.password === this.signupForm.value.confirmPassword) {
+      console.log(this.signupForm.value);
+      this.router.navigate(['/login']);
     } else {
-      console.log('Form Invalid', this.signupForm.errors);
+      console.error('Form is invalid or passwords do not match');
     }
   }
+
+
 }

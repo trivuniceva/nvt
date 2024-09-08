@@ -6,6 +6,7 @@ import { UserService } from '../../../core/services/user/user.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -21,7 +22,7 @@ describe('LoginComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [RouterTestingModule, HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, FormsModule, ReactiveFormsModule],
       providers: [
         { provide: AuthService, useValue: authServiceSpy },
         { provide: UserService, useValue: userServiceSpy },

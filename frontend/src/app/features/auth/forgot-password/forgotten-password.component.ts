@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { NgIf } from "@angular/common";
 import {AuthService} from "../../../core/services/auth/auth.service";
 import {UserService} from "../../../core/services/user/user.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpClientModule, HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-forgotten-password',
   standalone: true,
-  imports: [FormsModule, NgIf],
+  imports: [FormsModule, NgIf, HttpClientModule],
   templateUrl: './forgotten-password.component.html',
   styleUrls: ['./forgotten-password.component.css']
 })

@@ -58,8 +58,9 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.8.0</version>
+            <version>4.19.1</version> <!-- Proverite najnoviju verziju -->
         </dependency>
+
 
         <dependency>
             <groupId>org.testng</groupId>
@@ -67,6 +68,9 @@
             <version>7.7.0</version>
             <scope>test</scope>
         </dependency>
+
+
+
 
 
 
