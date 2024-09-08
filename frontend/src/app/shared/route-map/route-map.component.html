@@ -1,7 +1,12 @@
-<div>
-  <input type="text" placeholder="Polazište" [(ngModel)]="start" />
-  <input type="text" placeholder="Destinacija" [(ngModel)]="end" />
-  <button (click)="getRoutes()">Prikaži rute</button>
+<div class="main-container">
+  <div class="input-container">
+    <input type="text" placeholder="Start:" [(ngModel)]="start" class="input-field" />
+    <input type="text" placeholder="End:" [(ngModel)]="end" class="input-field" />
+    <button (click)="getRoutes()" class="btn">Search route</button>
+  </div>
+
 </div>
 
-<div style="height: 400px;" leaflet [leafletOptions]="options" [leafletLayers]="layers"></div>
+<div class="map-container">
+  <app-map></app-map>
+</div>

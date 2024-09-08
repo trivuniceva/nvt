@@ -19,7 +19,8 @@ import {ForgottenPasswordComponent} from "./features/auth/forgot-password/forgot
 import {RegisterComponent} from "./features/auth/register/register.component";
 import {MapComponent} from "./shared/components/map/map.component";
 import {CommonModule} from "@angular/common";
-
+import {AddRouteOptionsComponent} from "./features/ride/add-route-options/add-route-options.component";
+import {RouteConfirmationComponent} from "./features/ride/route-confirmation/route-confirmation.component";
 
 
 @NgModule({
@@ -31,6 +32,9 @@ import {CommonModule} from "@angular/common";
     RouteMapComponent,
     NavBarComponent,
     ProfileComponent,
+    MapComponent,
+    AddRouteOptionsComponent,
+    RouteConfirmationComponent
 
   ],
   imports: [
@@ -44,9 +48,10 @@ import {CommonModule} from "@angular/common";
     CoreModule,
     SharedModule,
     ForgottenPasswordComponent,
-    MapComponent,
+    // MapComponent,
     // ResetPasswordComponent,
-    CommonModule
+    CommonModule,
+
 
 
 
@@ -55,6 +60,8 @@ import {CommonModule} from "@angular/common";
   providers: [UserService],
   exports: [
     NavBarComponent,
+    RouteMapComponent,
+    MapComponent,
   ],
   bootstrap: [AppComponent]
 })
