@@ -32,6 +32,8 @@ import {RideComponent} from "./features/ride/ride.component";
     RouteMapComponent,
     NavBarComponent,
     ProfileComponent,
+    RideComponent,
+    MapComponent,
 
   ],
   imports: [
@@ -45,7 +47,7 @@ import {RideComponent} from "./features/ride/ride.component";
     CoreModule,
     SharedModule,
     ForgottenPasswordComponent,
-    MapComponent,
+    // MapComponent,
     // ResetPasswordComponent,
     CommonModule,
 
@@ -58,6 +60,7 @@ import {RideComponent} from "./features/ride/ride.component";
   exports: [
     NavBarComponent,
     RouteMapComponent,
+    MapComponent,
   ],
   bootstrap: [AppComponent]
 })

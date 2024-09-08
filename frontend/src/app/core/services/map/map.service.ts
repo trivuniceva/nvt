@@ -42,10 +42,8 @@ export class MapService {
 
         const layers: L.Layer[] = [];
 
-        // Sortiranje ruta po trajanju
         features.sort((a: any, b: any) => a.properties.summary.duration - b.properties.summary.duration);
 
-        // Prikaz tri rute
         for (let i = 0; i < Math.min(3, features.length); i++) {
           const feature = features[i];
           if (!feature || !feature.geometry || !feature.geometry.coordinates) {
