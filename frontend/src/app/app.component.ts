@@ -7,6 +7,7 @@ import { UserService } from "./core/services/user/user.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  title = 'Bolji uber';
 
   constructor(private userService: UserService) { }
 
