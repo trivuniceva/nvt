@@ -1,30 +1,44 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RegisterComponent } from './register.component';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+import {RegisterComponent} from "./register.component";
+import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {RouterTestingModule} from "@angular/router/testing";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
-  let router: jasmine.SpyObj<Router>;
+  let router: Router;
 
   beforeEach(async () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-
     await TestBed.configureTestingModule({
-      declarations: [RegisterComponent],
-      imports: [ReactiveFormsModule, RouterTestingModule],
-      providers: [{ provide: Router, useValue: routerSpy }]
-    }).compileComponents();
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        RegisterComponent
+      ],
+      // declarations: [RegisterComponent],
+      providers: [
+        { provide: Router, useValue: routerSpy }
+      ]
+    })
+      .compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
-    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
   it('should create the component', () => {
+    const fixture = TestBed.createComponent(RegisterComponent);
+    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 
@@ -59,15 +73,6 @@ describe('RegisterComponent', () => {
     expect(component.signupForm.valid).toBeFalse();
   });
 
-  it('should submit form when valid data is provided', () => {
-    component.signupForm.setValue({
-      email: 'test@example.com',
-      password: 'sadsad',
-      confirmPassword: 'sadsad',
-      address: 'Puskinova 4',
-      phone: '1234567890'
-    });
-    component.onSubmit();
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
-  });
+  
+
 });

@@ -1,0 +1,12 @@
+<div>
+  <h2>Confirm Booking</h2>
+  <p>Start: {{ routeDetails.start }}</p>
+  <p>End: {{ routeDetails.end }}</p>
+  <p>Waypoints: {{ routeDetails.waypoints.join(', ') }}</p>
+  <p>Vehicle Type: {{ routeDetails.vehicleType }}</p>
+  <p>Allow Pets: {{ routeDetails.allowPets }}</p>
+  <p>Allow Babies: {{ routeDetails.allowBabies }}</p>
+  <p>Split Fare Emails: {{ routeDetails.splitFareEmails.join(', ') }}</p>
+
+  <button (click)="confirmBooking()">Confirm Booking</button>
+</div>

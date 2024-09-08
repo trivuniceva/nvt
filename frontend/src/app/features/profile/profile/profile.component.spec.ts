@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
+import {CommonModule} from "@angular/common";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -8,7 +12,14 @@ describe('ProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProfileComponent]
+      declarations: [ProfileComponent],
+      imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
     })
     .compileComponents();
 

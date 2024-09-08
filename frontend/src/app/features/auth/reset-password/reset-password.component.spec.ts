@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ResetPasswordComponent } from './reset-password.component';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CommonModule } from '@angular/common'; // Importuj CommonModule
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -8,9 +11,17 @@ describe('ResetPasswordComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ResetPasswordComponent]
+      imports: [
+        ResetPasswordComponent,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule
+      ],
+      providers: []
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ResetPasswordComponent);
     component = fixture.componentInstance;
@@ -18,6 +29,9 @@ describe('ResetPasswordComponent', () => {
   });
 
   it('should create', () => {
+    const fixture = TestBed.createComponent(ResetPasswordComponent);
+    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
+
 });

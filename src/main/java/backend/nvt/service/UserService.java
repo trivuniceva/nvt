@@ -61,11 +61,7 @@ public class UserService {
         }
     }
 
-
-
-
     private String generateResetToken(User user) {
-        // Implement token generation logic here (e.g., using UUID)
         return UUID.randomUUID().toString();
     }
 
@@ -78,11 +74,20 @@ public class UserService {
         return user;
     }
 
-    public void save(User user) {
-
-        userRepository.save(user);
+    public User save(User user) {
+        try {
+            return userRepository.save(user);
+        } catch (Exception e) {
+            // Log the error
+            System.err.println("Error saving user: " + e.getMessage());
+            throw e; // or handle it appropriately
+        }
     }
 
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
 
 }

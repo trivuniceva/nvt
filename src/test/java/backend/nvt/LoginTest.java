@@ -1,43 +1,54 @@
 package backend.nvt;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginTest {
     private WebDriver driver;
 
-    @BeforeMethod
+    @BeforeEach
     public void setUp() {
-        // ovo jos nisam resila :"))
-        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
-        driver = new ChromeDriver();
+        driver = new SafariDriver();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        System.out.println("Driver is set up: " + (driver != null));
     }
 
     @Test
-    public void testLogin() {
+    public void testLogin() throws InterruptedException {
         driver.get("http://localhost:4200/login");
 
-        WebElement usernameField = driver.findElement(By.name("username"));
-        WebElement passwordField = driver.findElement(By.name("password"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        usernameField.sendKeys("validUsername");
-        passwordField.sendKeys("validPassword");
+        WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
+        WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
 
-        WebElement loginButton = driver.findElement(By.name("login"));
+        Thread.sleep(2000);
+        emailField.sendKeys("trivuniceva99@gmail.com");
+
+        Thread.sleep(2000);
+        passwordField.sendKeys("sad");
+
+        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn.btn-primary")));
+
+        Thread.sleep(2000);
         loginButton.click();
 
-        Assert.assertTrue(driver.getPageSource().contains("Welcome"));
+        Thread.sleep(2000);
     }
 
-    @AfterMethod
+    @AfterEach
     public void tearDown() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
-

@@ -31,9 +31,13 @@ export class RegisterComponent implements OnInit{
   }
 
   onSubmit(): void {
-    if (this.signupForm.valid) {
+    if (this.signupForm.valid && this.signupForm.value.password === this.signupForm.value.confirmPassword) {
       console.log(this.signupForm.value);
+      this.router.navigate(['/login']);
+    } else {
+      console.error('Form is invalid or passwords do not match');
     }
   }
+
 
 }
