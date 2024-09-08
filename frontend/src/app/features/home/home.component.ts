@@ -7,13 +7,5 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  isBlue: boolean = false;
-  text: string = 'beloo';
-
-  toggleColor(){
-    this.isBlue = !this.isBlue;
-    this.text = this.isBlue ? 'plavo' : 'belo';
-  }
-
 
 }

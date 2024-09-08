@@ -22,6 +22,7 @@ import {CommonModule} from "@angular/common";
 import {RideComponent} from "./features/ride/ride.component";
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
