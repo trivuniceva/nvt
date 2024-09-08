@@ -21,6 +21,7 @@ import {MapComponent} from "./shared/components/map/map.component";
 import {CommonModule} from "@angular/common";
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,8 +31,6 @@ import {CommonModule} from "@angular/common";
     RouteMapComponent,
     NavBarComponent,
     ProfileComponent,
-
-
 
   ],
   imports: [
