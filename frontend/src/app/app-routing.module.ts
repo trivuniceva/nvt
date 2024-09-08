@@ -7,7 +7,7 @@ import {RegisterComponent} from "./features/auth/register/register.component";
 import {RouteMapComponent} from "./shared/route-map/route-map.component";
 import {ForgottenPasswordComponent} from "./features/auth/forgot-password/forgotten-password.component";
 import {ResetPasswordComponent} from "./features/auth/reset-password/reset-password.component";
-import {RideComponent} from "./features/ride/ride.component";
+import {AddRouteOptionsComponent} from "./features/ride/add-route-options/add-route-options.component";
 
 const routes: Routes = [
   {
@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'order-ride',
-    component: RideComponent
+    component: AddRouteOptionsComponent
   },
 ];
 

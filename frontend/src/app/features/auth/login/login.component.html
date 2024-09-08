@@ -36,16 +36,17 @@
 
     <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
 
-    <p> OR </p>
+    <p class="or-text">OR</p>
 
-    <button>Google </button>
-    <button> Facebook</button>
+    <div class="social-buttons">
+      <button class="btn btn-social">Google</button>
+      <button class="btn btn-social">Facebook</button>
+    </div>
 
-    <p (click)="forgotPassword()"> Forgot password? </p>
+    <p (click)="forgotPassword()" class="link-text">Forgot password?</p>
 
-    <p>
-      Don't have an account?
-      <strong (click)="goToSignup()">Signup</strong>
+    <p class="signup-text">
+      Don't have an account? <strong (click)="goToSignup()" class="signup-link">Signup</strong>
     </p>
 
   </form>

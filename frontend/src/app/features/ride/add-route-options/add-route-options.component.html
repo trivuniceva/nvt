@@ -1,0 +1,48 @@
+<div class="container">
+  <form (ngSubmit)="submitOptions()" class="form-container">
+    <div class="form-group">
+      <label for="start" class="label">Start:</label>
+      <input id="start" [(ngModel)]="startPoint" name="start" required class="input">
+    </div>
+
+    <div class="form-group">
+      <label for="end" class="label">End:</label>
+      <input id="end" [(ngModel)]="endPoint" name="end" required class="input">
+    </div>
+
+    <div class="form-group">
+      <label for="waypoints" class="label">Waypoints:</label>
+      <input id="waypoints" [(ngModel)]="waypoints" name="waypoints" class="input">
+    </div>
+
+    <div class="form-group">
+      <label for="vehicleType" class="label">Vehicle Type:</label>
+      <select id="vehicleType" [(ngModel)]="selectedVehicleType" name="vehicleType" class="input">
+        <option *ngFor="let type of vehicleTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="checkbox-label">
+        <input type="checkbox" [(ngModel)]="allowPets" name="allowPets" class="checkbox">
+        Allow Pets
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label class="checkbox-label">
+        <input type="checkbox" [(ngModel)]="allowBabies" name="allowBabies" class="checkbox">
+        Allow Babies
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="splitFare" class="label">Split Fare Emails:</label>
+      <input id="splitFare" [(ngModel)]="splitFareEmails" name="splitFareEmails" class="input">
+    </div>
+
+    <button type="submit" class="btn">Submit</button>
+  </form>
+
+  <app-map class="map"></app-map>
+</div>
