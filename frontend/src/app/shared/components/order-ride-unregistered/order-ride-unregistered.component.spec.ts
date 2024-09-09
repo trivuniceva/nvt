@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RouteMapComponent } from './route-map.component';
+import { OrderRideUnregisteredComponent } from './order-ride-unregistered.component';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
@@ -8,8 +8,8 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
 describe('RouteMapComponent', () => {
-  let component: RouteMapComponent;
-  let fixture: ComponentFixture<RouteMapComponent>;
+  let component: OrderRideUnregisteredComponent;
+  let fixture: ComponentFixture<OrderRideUnregisteredComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -20,11 +20,11 @@ describe('RouteMapComponent', () => {
         RouterTestingModule,
         LeafletModule
       ],
-      declarations: [RouteMapComponent]
+      declarations: [OrderRideUnregisteredComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RouteMapComponent);
+    fixture = TestBed.createComponent(OrderRideUnregisteredComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

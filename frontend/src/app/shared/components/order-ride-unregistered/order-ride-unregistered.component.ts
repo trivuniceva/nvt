@@ -1,14 +1,14 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { MapService } from "../../core/services/map/map.service";
-import { MapComponent } from "../components/map/map.component";
-import {RouteService} from "../../core/services/route/route.service";
+import { MapService } from "../../../core/services/map/map.service";
+import { MapComponent } from "../map/map.component";
+import {RouteService} from "../../../core/services/route/route.service";
 
 @Component({
   selector: 'app-route-map',
-  templateUrl: './route-map.component.html',
-  styleUrls: ['./route-map.component.css']
+  templateUrl: './order-ride-unregistered.component.html',
+  styleUrls: ['./order-ride-unregistered.component.css']
 })
-export class RouteMapComponent implements AfterViewInit {
+export class OrderRideUnregisteredComponent implements AfterViewInit {
   start: string = '';
   end: string = '';
   @ViewChild(MapComponent) mapComponent?: MapComponent;

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddRouteOptionsComponent } from './add-route-options.component';
+import { OrderRideComponent } from './order-ride.component';
 
-describe('AddRouteOptionsComponent', () => {
-  let component: AddRouteOptionsComponent;
-  let fixture: ComponentFixture<AddRouteOptionsComponent>;
+describe('OrderRideComponent', () => {
+  let component: OrderRideComponent;
+  let fixture: ComponentFixture<OrderRideComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddRouteOptionsComponent]
+      imports: [OrderRideComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddRouteOptionsComponent);
+    fixture = TestBed.createComponent(OrderRideComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

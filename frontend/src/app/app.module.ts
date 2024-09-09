@@ -12,15 +12,16 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from './core.module';
 import { SharedModule } from './shared.module';
 import {LoginComponent} from "./features/auth/login/login.component";
-import {RouteMapComponent} from "./shared/route-map/route-map.component";
 import {ProfileComponent} from "./features/profile/profile/profile.component";
 import {ResetPasswordComponent} from "./features/auth/reset-password/reset-password.component";
 import {ForgottenPasswordComponent} from "./features/auth/forgot-password/forgotten-password.component";
 import {RegisterComponent} from "./features/auth/register/register.component";
 import {MapComponent} from "./shared/components/map/map.component";
 import {CommonModule} from "@angular/common";
-import {AddRouteOptionsComponent} from "./features/ride/add-route-options/add-route-options.component";
-import {RouteConfirmationComponent} from "./features/ride/route-confirmation/route-confirmation.component";
+import {
+  OrderRideUnregisteredComponent
+} from "./shared/components/order-ride-unregistered/order-ride-unregistered.component";
+import {OrderRideComponent} from "./features/ride/order-ride/order-ride.component";
 
 
 @NgModule({
@@ -29,12 +30,11 @@ import {RouteConfirmationComponent} from "./features/ride/route-confirmation/rou
     HomeComponent,
     NavBarComponent,
     LoginComponent,
-    RouteMapComponent,
+    OrderRideUnregisteredComponent,
     NavBarComponent,
     ProfileComponent,
     MapComponent,
-    AddRouteOptionsComponent,
-    RouteConfirmationComponent
+    OrderRideComponent,
 
   ],
   imports: [
@@ -60,7 +60,7 @@ import {RouteConfirmationComponent} from "./features/ride/route-confirmation/rou
   providers: [UserService],
   exports: [
     NavBarComponent,
-    RouteMapComponent,
+    OrderRideUnregisteredComponent,
     MapComponent,
   ],
   bootstrap: [AppComponent]

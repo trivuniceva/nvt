@@ -4,10 +4,10 @@ import {HomeComponent} from "./features/home/home.component";
 import {LoginComponent} from "./features/auth/login/login.component";
 import {ProfileComponent} from "./features/profile/profile/profile.component";
 import {RegisterComponent} from "./features/auth/register/register.component";
-import {RouteMapComponent} from "./shared/route-map/route-map.component";
+import {OrderRideUnregisteredComponent} from "./shared/components/order-ride-unregistered/order-ride-unregistered.component";
 import {ForgottenPasswordComponent} from "./features/auth/forgot-password/forgotten-password.component";
 import {ResetPasswordComponent} from "./features/auth/reset-password/reset-password.component";
-import {AddRouteOptionsComponent} from "./features/ride/add-route-options/add-route-options.component";
+import {OrderRideComponent} from "./features/ride/order-ride/order-ride.component";
 
 const routes: Routes = [
   {
@@ -25,7 +25,7 @@ const routes: Routes = [
 
   {
     path: 'ride',
-    component: RouteMapComponent
+    component: OrderRideUnregisteredComponent
   },
   {
     path: 'signup',
@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'order-ride',
-    component: AddRouteOptionsComponent
+    component: OrderRideComponent
   },
 ];
 
