@@ -4,58 +4,32 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Driver extends User {
+@Table(name = "drivers")
+public class Driver {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private boolean isAvailable;
+    @Column(name = "is_available")
+    private int isAvailable;
 
-    private LocalDateTime shiftStart;
-
-    private LocalDateTime shiftEnd;
-
+    @Column(name = "hours_worked_last_24h")
     private int hoursWorkedLast24h;
 
-    private boolean hasFutureRide;
-
-    @ManyToOne
-    @JoinColumn(name = "current_ride_id")
-    private Ride currentRide;
-
-    public boolean canTakeNewRide() {
-        return isAvailable && hoursWorkedLast24h < 8 && !hasFutureRide;
+    public Long getId() {
+        return id;
     }
 
-    public void assignRide(Ride ride) {
-        this.currentRide = ride;
-        this.isAvailable = false;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void finishRide() {
-        this.currentRide = null;
-        this.isAvailable = true;
-    }
-
-    public boolean isAvailable() {
+    public int getIsAvailable() {
         return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
-    public LocalDateTime getShiftStart() {
-        return shiftStart;
-    }
-
-    public void setShiftStart(LocalDateTime shiftStart) {
-        this.shiftStart = shiftStart;
-    }
-
-    public LocalDateTime getShiftEnd() {
-        return shiftEnd;
-    }
-
-    public void setShiftEnd(LocalDateTime shiftEnd) {
-        this.shiftEnd = shiftEnd;
+    public void setIsAvailable(int isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     public int getHoursWorkedLast24h() {
@@ -64,21 +38,5 @@ public class Driver extends User {
 
     public void setHoursWorkedLast24h(int hoursWorkedLast24h) {
         this.hoursWorkedLast24h = hoursWorkedLast24h;
-    }
-
-    public boolean isHasFutureRide() {
-        return hasFutureRide;
-    }
-
-    public void setHasFutureRide(boolean hasFutureRide) {
-        this.hasFutureRide = hasFutureRide;
-    }
-
-    public Ride getCurrentRide() {
-        return currentRide;
-    }
-
-    public void setCurrentRide(Ride currentRide) {
-        this.currentRide = currentRide;
     }
 }

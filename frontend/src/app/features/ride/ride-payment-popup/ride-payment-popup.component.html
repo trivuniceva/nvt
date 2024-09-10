@@ -9,16 +9,21 @@
     <p><strong>Allow Babies:</strong> {{ data.allowBabies ? 'Yes' : 'No' }}</p>
     <p><strong>Split Fare Emails:</strong> {{ data.splitFareEmails.join(', ') }}</p>
 
-    <div class="form-group">
-      <label for="driver" class="label">Select Driver:</label>
-      <select id="driver" [(ngModel)]="selectedDriver" name="driver" class="input">
-        <option *ngFor="let driver of drivers" [value]="driver.id">
-          <img [src]="driver.image" alt="Driver Image" class="driver-image">
-          {{ driver.firstname }} {{ driver.lastname }} - {{ driver.rating }}
-        </option>
-      </select>
+    <div>
+      <h3>Available Drivers</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>Select Driver</mat-label>
+        <mat-select [(value)]="selectedDriver">
+          <mat-option *ngFor="let driver of drivers" [value]="driver">
+            {{ driver.id }} - Hours Worked: {{ driver.hoursWorkedLast24h }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
+    <div *ngIf="drivers.length === 0">
+      <p>No available drivers at the moment.</p>
+    </div>
 
     <p><strong>Distance:</strong> {{ data.distance }} meters</p> <!-- Prikaz distance -->
     <p><strong>Price:</strong> {{ data.price }} RSD</p> <!-- Prikaz cene -->

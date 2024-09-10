@@ -26,6 +26,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {MatDialogModule} from "@angular/material/dialog";
 import {RidePaymentPopupComponent} from "./features/ride/ride-payment-popup/ride-payment-popup.component";
 import {PaymentComponent} from "./features/ride/payment/payment.component";
+import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
+import {MatOption, MatSelect} from "@angular/material/select";
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import {PaymentComponent} from "./features/ride/payment/payment.component";
     OrderRideComponent,
     RidePaymentPopupComponent,
     PaymentComponent,
+
 
 
   ],
@@ -59,9 +62,10 @@ import {PaymentComponent} from "./features/ride/payment/payment.component";
     // ResetPasswordComponent,
     CommonModule,
     MatDialogModule,
-
-
-
+    MatFormField,
+    MatSelect,
+    MatOption,
+    MatFormFieldModule,
 
 
   ],

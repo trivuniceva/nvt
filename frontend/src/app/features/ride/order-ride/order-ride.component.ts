@@ -70,31 +70,39 @@ export class OrderRideComponent implements OnInit {
       this.price = response.price;
       this.distance = response.distance;
 
-      const dialogRef = this.dialog.open(RidePaymentPopupComponent, {
-        data: {
-          start: this.startPoint,
-          end: this.endPoint,
-          waypoints: waypointsArray,
-          vehicleType: this.selectedVehicleType,
-          allowPets: this.allowPets,
-          allowBabies: this.allowBabies,
-          splitFareEmails: this.splitFareEmails,
-          drivers: this.drivers, // Pass available drivers to popup
-          distance: this.distance,
-          price: this.price
-        }
+      this.driverService.getAvailableDrivers().subscribe(drivers => {
+        this.drivers = drivers; // Ensure drivers are set here
+
+        const dialogRef = this.dialog.open(RidePaymentPopupComponent, {
+          data: {
+            start: this.startPoint,
+            end: this.endPoint,
+            waypoints: waypointsArray,
+            vehicleType: this.selectedVehicleType,
+            allowPets: this.allowPets,
+            allowBabies: this.allowBabies,
+            splitFareEmails: this.splitFareEmails,
+            drivers: this.drivers, // Pass available drivers to popup
+            distance: this.distance,
+            price: this.price
+          }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            console.log('Payment confirmed');
+          } else {
+            console.log('Payment cancelled');
+          }
+          this.resetFields();
+        });
+      }, error => {
+        console.error('Error fetching drivers:', error);
       });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          console.log('Payment confirmed');
-        } else {
-          console.log('Payment cancelled');
-        }
-        this.resetFields();
-      });
     }, error => {
       console.error('Error sending ride data:', error);
     });
   }
+
 }
