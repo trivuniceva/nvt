@@ -42,6 +42,7 @@ export class OrderRideComponent implements OnInit {
   resetFields(): void {
     this.startPoint = '';
     this.endPoint = '';
+    this.waypointsString = '';
     this.waypoints = [];
     this.selectedVehicleType = '';
     this.allowPets = false;

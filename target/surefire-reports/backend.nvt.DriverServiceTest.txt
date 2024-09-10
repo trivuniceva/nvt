@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: backend.nvt.NvtApplicationTests
+Test set: backend.nvt.DriverServiceTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.582 s -- in backend.nvt.NvtApplicationTests
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.845 s -- in backend.nvt.DriverServiceTest

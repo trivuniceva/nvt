@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DriverService} from "../../../core/services/driver.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-ride-payment-popup',
@@ -14,7 +15,8 @@ export class RidePaymentPopupComponent implements OnInit {
   constructor(
     private driverService: DriverService,
     public dialogRef: MatDialogRef<RidePaymentPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -25,7 +27,12 @@ export class RidePaymentPopupComponent implements OnInit {
   }
 
   onConfirm(): void {
-    this.dialogRef.close(this.selectedDriver);
+    this.dialogRef.close(true);
+    this.snackBar.open('Uskoro očekujte vozilo!', 'U redu', {
+      duration: 3000, // 3 sekunde
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
   }
 
   onCancel(): void {
