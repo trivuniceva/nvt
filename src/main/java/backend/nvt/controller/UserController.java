@@ -1,5 +1,7 @@
 package backend.nvt.controller;
 
+import backend.nvt.DTO.LoginRequest;
+import backend.nvt.DTO.ResetPasswordRequest;
 import backend.nvt.model.RegisterRequest;
 import backend.nvt.model.UserRole;
 import backend.nvt.service.EmailService;
@@ -9,7 +11,6 @@ import backend.nvt.service.UserSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 

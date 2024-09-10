@@ -8,6 +8,7 @@ import {OrderRideUnregisteredComponent} from "./shared/components/order-ride-unr
 import {ForgottenPasswordComponent} from "./features/auth/forgot-password/forgotten-password.component";
 import {ResetPasswordComponent} from "./features/auth/reset-password/reset-password.component";
 import {OrderRideComponent} from "./features/ride/order-ride/order-ride.component";
+import {PaymentComponent} from "./features/ride/payment/payment.component";
 
 const routes: Routes = [
   {
@@ -43,6 +44,7 @@ const routes: Routes = [
     path: 'order-ride',
     component: OrderRideComponent
   },
+  { path: 'payment', component: PaymentComponent },
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-package backend.nvt.controller;
+package backend.nvt.DTO;
 
 public class LoginRequest {
     private String email;

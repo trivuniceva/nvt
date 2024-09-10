@@ -22,6 +22,10 @@ import {
   OrderRideUnregisteredComponent
 } from "./shared/components/order-ride-unregistered/order-ride-unregistered.component";
 import {OrderRideComponent} from "./features/ride/order-ride/order-ride.component";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {MatDialogModule} from "@angular/material/dialog";
+import {RidePaymentPopupComponent} from "./features/ride/ride-payment-popup/ride-payment-popup.component";
+import {PaymentComponent} from "./features/ride/payment/payment.component";
 
 
 @NgModule({
@@ -35,6 +39,9 @@ import {OrderRideComponent} from "./features/ride/order-ride/order-ride.componen
     ProfileComponent,
     MapComponent,
     OrderRideComponent,
+    RidePaymentPopupComponent,
+    PaymentComponent,
+
 
   ],
   imports: [
@@ -51,13 +58,14 @@ import {OrderRideComponent} from "./features/ride/order-ride/order-ride.componen
     // MapComponent,
     // ResetPasswordComponent,
     CommonModule,
+    MatDialogModule,
 
 
 
 
 
   ],
-  providers: [UserService],
+  providers: [UserService, provideAnimationsAsync()],
   exports: [
     NavBarComponent,
     OrderRideUnregisteredComponent,

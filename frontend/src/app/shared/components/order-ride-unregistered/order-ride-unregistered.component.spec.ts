@@ -7,7 +7,7 @@ import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
-describe('RouteMapComponent', () => {
+describe('OrderRideUnregisteredComponent', () => {
   let component: OrderRideUnregisteredComponent;
   let fixture: ComponentFixture<OrderRideUnregisteredComponent>;
 

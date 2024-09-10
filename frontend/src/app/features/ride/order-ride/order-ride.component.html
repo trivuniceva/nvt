@@ -11,14 +11,25 @@
     </div>
 
     <div class="form-group">
-      <label for="waypoints" class="label">Waypoints:</label>
-      <input id="waypoints" [(ngModel)]="waypoints" name="waypoints" class="input">
+      <label for="waypoints" class="label">Waypoints (separirani zarezom):</label>
+      <input id="waypoints" [(ngModel)]="waypointsString" name="waypoints" class="input" placeholder="e.g., puskinova 22, puskinova 4">
     </div>
+
 
     <div class="form-group">
       <label for="vehicleType" class="label">Vehicle Type:</label>
       <select id="vehicleType" [(ngModel)]="selectedVehicleType" name="vehicleType" class="input">
         <option *ngFor="let type of vehicleTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="driver" class="label">Select Driver:</label>
+      <select id="driver" [(ngModel)]="selectedDriver" name="driver" class="input">
+        <option *ngFor="let driver of drivers" [value]="driver.id">
+          <img [src]="driver.image" alt="Driver Image" class="driver-image">
+          {{ driver.firstname }} {{ driver.lastname }} - {{ driver.rating }}
+        </option>
       </select>
     </div>
 
@@ -42,6 +53,7 @@
     </div>
 
     <button type="submit" class="btn">Submit</button>
+
   </form>
 
   <app-map class="map"></app-map>

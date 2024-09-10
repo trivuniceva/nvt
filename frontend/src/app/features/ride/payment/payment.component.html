@@ -1,6 +1,6 @@
 <div class="container">
-  <h1 mat-dialog-title>Review Your Order</h1>
-  <div mat-dialog-content>
+  <h1>Review Your Order</h1>
+  <div>
     <p><strong>Start:</strong> {{ data.start }}</p>
     <p><strong>End:</strong> {{ data.end }}</p>
     <p><strong>Waypoints:</strong> {{ data.waypoints.join(', ') }}</p>
@@ -13,11 +13,7 @@
       <img [src]="data.selectedDriver.image" alt="Driver Image" class="driver-image">
       {{ data.selectedDriver.firstname }} {{ data.selectedDriver.lastname }} - {{ data.selectedDriver.rating }}
     </p>
-    <p><strong>Distance:</strong> {{ data.distance }} meters</p> <!-- Prikaz distance -->
-    <p><strong>Price:</strong> {{ data.price }} RSD</p> <!-- Prikaz cene -->
-  </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onCancel()">Cancel Ride</button>
-    <button mat-button color="primary" (click)="onConfirm()">Pay Ride</button>
+    <p><strong>Distance:</strong> {{ data.distance }} meters</p>
+    <p><strong>Price:</strong> {{ data.price }} RSD</p>
   </div>
 </div>

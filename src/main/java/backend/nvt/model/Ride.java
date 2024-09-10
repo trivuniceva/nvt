@@ -1,127 +1,26 @@
 package backend.nvt.model;
 
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-//@Entity
-//@Table(name = "rides")
 public class Ride {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Coordinate startLocation;
+    private Coordinate endLocation;
+    private List<Coordinate> waypoints; // Lista stanica između polazišta i destinacije
+    private Driver driver; // Vozač dodeljen za vožnju
+    private List<RegisteredUser> passengers; // Lista putnika
+    private List<RegisteredUser> linkedPassengers; // Korisnici sa opcijom split fare
+    private VehicleType vehicleType; // Tip vozila (standard, luksuzni itd.)
+    private boolean hasBabies; // Da li se prevoze bebe
+    private boolean hasPets; // Da li se prevoze kućni ljubimci
+    private RideStatus status; // Status vožnje (zakazana, u toku, završena, otkazana)
+    private double distance; // Ukupna razdaljina vožnje
+    private double price; // Cena vožnje
+    private LocalDateTime startTime; // Vreme početka vožnje
+    private LocalDateTime endTime; // Vreme završetka vožnje
+    private boolean isScheduled; // Da li je vožnja zakazana za budućnost
+    private LocalDateTime scheduledTime; // Zakazano vreme za vožnju (ako je unapred planirana)
 
-//    @ManyToOne
-//    @JoinColumn(name = "nvt_users")
-    private RegisteredUser registeredUser;
-
-//    @ManyToOne
-//    @JoinColumn(name = "driver_id")
-    private Driver driver;
-
-//    @Column(nullable = false)
-    private String startLocation;
-
-//    @Column(nullable = false)
-    private String endLocation;
-
-//    @ElementCollection
-//    @CollectionTable(name = "ride_stops", joinColumns = @JoinColumn(name = "ride_id"))
-//    @Column(name = "stop_location")
-    private List<String> stops;
-
-//    @Column(nullable = false)
-    private double price;
-
-//    @Column(nullable = false)
-    private LocalDateTime startTime;
-
-//    @Column(nullable = false)
-    private LocalDateTime endTime;
-
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-    private RideStatus status;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public RegisteredUser getRegisteredUser() {
-        return registeredUser;
-    }
-
-    public void setRegisteredUser(RegisteredUser registeredUser) {
-        this.registeredUser = registeredUser;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
-
-    public String getStartLocation() {
-        return startLocation;
-    }
-
-    public void setStartLocation(String startLocation) {
-        this.startLocation = startLocation;
-    }
-
-    public String getEndLocation() {
-        return endLocation;
-    }
-
-    public void setEndLocation(String endLocation) {
-        this.endLocation = endLocation;
-    }
-
-    public List<String> getStops() {
-        return stops;
-    }
-
-    public void setStops(List<String> stops) {
-        this.stops = stops;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public RideStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(RideStatus status) {
-        this.status = status;
-    }
 }

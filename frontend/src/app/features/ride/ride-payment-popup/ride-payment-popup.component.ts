@@ -13,7 +13,7 @@ export class RidePaymentPopupComponent {
   ) {}
 
   onConfirm(): void {
-    this.dialogRef.close(true); 
+    this.dialogRef.close(true);
   }
 
   onCancel(): void {

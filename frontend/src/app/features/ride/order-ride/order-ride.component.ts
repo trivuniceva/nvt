@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RidePaymentPopupComponent } from "../ride-payment-popup/ride-payment-popup.component";
+import { RideService } from "../../../core/services/ride/ride.service";
 
 @Component({
   selector: 'app-add-route-options',
@@ -10,6 +11,7 @@ import { RidePaymentPopupComponent } from "../ride-payment-popup/ride-payment-po
 export class OrderRideComponent {
   startPoint: string = '';
   endPoint: string = '';
+  waypointsString: string = '';
   waypoints: string[] = [];
   selectedVehicleType: string = '';
   allowPets: boolean = false;
@@ -17,6 +19,8 @@ export class OrderRideComponent {
   splitFareEmails: string[] = [];
   selectedDriver: any = null;
   price: number = 0;
+  distance: number = 0;
+  route: any = null;
 
   vehicleTypes: string[] = ['STANDARD', 'LUXURY', 'VAN'];
 
@@ -27,13 +31,7 @@ export class OrderRideComponent {
 
   @Output() routeOptionsSubmitted = new EventEmitter<any>();
 
-  constructor(public dialog: MatDialog) {}
-
-  calculatePrice(): number {
-    let basePrice = 10;
-    let vehiclePrice = this.selectedVehicleType === 'LUXURY' ? 20 : 0;
-    return basePrice + vehiclePrice;
-  }
+  constructor(public dialog: MatDialog, private rideService: RideService) {}
 
   resetFields(): void {
     this.startPoint = '';
@@ -45,29 +43,54 @@ export class OrderRideComponent {
     this.splitFareEmails = [];
     this.selectedDriver = null;
     this.price = 0;
+    this.distance = 0;
+    this.route = null;
   }
 
   submitOptions() {
-    this.price = this.calculatePrice();
+    const waypointsArray = this.waypointsString.split(',').map(point => point.trim());
 
-    const dialogRef = this.dialog.open(RidePaymentPopupComponent, {
-      data: {
-        start: this.startPoint,
-        end: this.endPoint,
-        waypoints: this.waypoints,
-        vehicleType: this.selectedVehicleType,
-        allowPets: this.allowPets,
-        allowBabies: this.allowBabies,
-        splitFareEmails: this.splitFareEmails,
-        selectedDriver: this.drivers.find(driver => driver.id === this.selectedDriver),
-        price: this.price
-      }
-    });
+    const rideData = {
+      startPoint: this.startPoint,
+      endPoint: this.endPoint,
+      waypoints: waypointsArray,
+      selectedVehicleType: this.selectedVehicleType,
+      allowPets: this.allowPets,
+      allowBabies: this.allowBabies,
+      splitFareEmails: this.splitFareEmails,
+      selectedDriver: this.selectedDriver
+    };
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (!result) {
+    this.rideService.submitRideOptions(rideData).subscribe(response => {
+      // Assume the response contains price and distance
+      this.price = response.price;
+      this.distance = response.distance;
+
+      const dialogRef = this.dialog.open(RidePaymentPopupComponent, {
+        data: {
+          start: this.startPoint,
+          end: this.endPoint,
+          waypoints: waypointsArray,
+          vehicleType: this.selectedVehicleType,
+          allowPets: this.allowPets,
+          allowBabies: this.allowBabies,
+          splitFareEmails: this.splitFareEmails,
+          selectedDriver: this.drivers.find(driver => driver.id === this.selectedDriver),
+          distance: this.distance,
+          price: this.price
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log('Payment confirmed');
+        } else {
+          console.log('Payment cancelled');
+        }
         this.resetFields();
-      }
+      });
+    }, error => {
+      console.error('Error sending ride data:', error);
     });
   }
 }
