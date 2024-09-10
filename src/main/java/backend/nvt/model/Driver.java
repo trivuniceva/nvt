@@ -1,44 +1,84 @@
 package backend.nvt.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-import java.util.List;
-
-//@Entity
-//@DiscriminatorValue("DRIVER")
+@Entity
 public class Driver extends User {
 
-//    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Ride> rides;
+    private boolean isAvailable;
 
-//    @Column(nullable = false)
-    private boolean available;
+    private LocalDateTime shiftStart;
 
-//    @Column(nullable = false)
-    private int workingHours;
+    private LocalDateTime shiftEnd;
 
-    public List<Ride> getRides() {
-        return rides;
+    private int hoursWorkedLast24h;
+
+    private boolean hasFutureRide;
+
+    @ManyToOne
+    @JoinColumn(name = "current_ride_id")
+    private Ride currentRide;
+
+    public boolean canTakeNewRide() {
+        return isAvailable && hoursWorkedLast24h < 8 && !hasFutureRide;
     }
 
-    public void setRides(List<Ride> rides) {
-        this.rides = rides;
+    public void assignRide(Ride ride) {
+        this.currentRide = ride;
+        this.isAvailable = false;
+    }
+
+    public void finishRide() {
+        this.currentRide = null;
+        this.isAvailable = true;
     }
 
     public boolean isAvailable() {
-        return available;
+        return isAvailable;
     }
 
     public void setAvailable(boolean available) {
-        this.available = available;
+        isAvailable = available;
     }
 
-    public int getWorkingHours() {
-        return workingHours;
+    public LocalDateTime getShiftStart() {
+        return shiftStart;
     }
 
-    public void setWorkingHours(int workingHours) {
-        this.workingHours = workingHours;
+    public void setShiftStart(LocalDateTime shiftStart) {
+        this.shiftStart = shiftStart;
+    }
+
+    public LocalDateTime getShiftEnd() {
+        return shiftEnd;
+    }
+
+    public void setShiftEnd(LocalDateTime shiftEnd) {
+        this.shiftEnd = shiftEnd;
+    }
+
+    public int getHoursWorkedLast24h() {
+        return hoursWorkedLast24h;
+    }
+
+    public void setHoursWorkedLast24h(int hoursWorkedLast24h) {
+        this.hoursWorkedLast24h = hoursWorkedLast24h;
+    }
+
+    public boolean isHasFutureRide() {
+        return hasFutureRide;
+    }
+
+    public void setHasFutureRide(boolean hasFutureRide) {
+        this.hasFutureRide = hasFutureRide;
+    }
+
+    public Ride getCurrentRide() {
+        return currentRide;
+    }
+
+    public void setCurrentRide(Ride currentRide) {
+        this.currentRide = currentRide;
     }
 }
-

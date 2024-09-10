@@ -8,11 +8,18 @@
     <p><strong>Allow Pets:</strong> {{ data.allowPets ? 'Yes' : 'No' }}</p>
     <p><strong>Allow Babies:</strong> {{ data.allowBabies ? 'Yes' : 'No' }}</p>
     <p><strong>Split Fare Emails:</strong> {{ data.splitFareEmails.join(', ') }}</p>
-    <p *ngIf="data.selectedDriver">
-      <strong>Selected Driver:</strong>
-      <img [src]="data.selectedDriver.image" alt="Driver Image" class="driver-image">
-      {{ data.selectedDriver.firstname }} {{ data.selectedDriver.lastname }} - {{ data.selectedDriver.rating }}
-    </p>
+
+    <div class="form-group">
+      <label for="driver" class="label">Select Driver:</label>
+      <select id="driver" [(ngModel)]="selectedDriver" name="driver" class="input">
+        <option *ngFor="let driver of drivers" [value]="driver.id">
+          <img [src]="driver.image" alt="Driver Image" class="driver-image">
+          {{ driver.firstname }} {{ driver.lastname }} - {{ driver.rating }}
+        </option>
+      </select>
+    </div>
+
+
     <p><strong>Distance:</strong> {{ data.distance }} meters</p> <!-- Prikaz distance -->
     <p><strong>Price:</strong> {{ data.price }} RSD</p> <!-- Prikaz cene -->
   </div>

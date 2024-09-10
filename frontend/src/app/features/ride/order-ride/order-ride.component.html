@@ -23,15 +23,15 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label for="driver" class="label">Select Driver:</label>
-      <select id="driver" [(ngModel)]="selectedDriver" name="driver" class="input">
-        <option *ngFor="let driver of drivers" [value]="driver.id">
-          <img [src]="driver.image" alt="Driver Image" class="driver-image">
-          {{ driver.firstname }} {{ driver.lastname }} - {{ driver.rating }}
-        </option>
-      </select>
-    </div>
+<!--    <div class="form-group">-->
+<!--      <label for="driver" class="label">Select Driver:</label>-->
+<!--      <select id="driver" [(ngModel)]="selectedDriver" name="driver" class="input">-->
+<!--        <option *ngFor="let driver of drivers" [value]="driver.id">-->
+<!--          <img [src]="driver.image" alt="Driver Image" class="driver-image">-->
+<!--          {{ driver.firstname }} {{ driver.lastname }} - {{ driver.rating }}-->
+<!--        </option>-->
+<!--      </select>-->
+<!--    </div>-->
 
     <div class="form-group">
       <label class="checkbox-label">

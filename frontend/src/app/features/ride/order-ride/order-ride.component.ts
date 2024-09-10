@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RidePaymentPopupComponent } from "../ride-payment-popup/ride-payment-popup.component";
 import { RideService } from "../../../core/services/ride/ride.service";
+import { DriverService } from "../../../core/services/driver.service";
 
 @Component({
   selector: 'app-add-route-options',
   templateUrl: './order-ride.component.html',
   styleUrls: ['./order-ride.component.css']
 })
-export class OrderRideComponent {
+export class OrderRideComponent implements OnInit {
   startPoint: string = '';
   endPoint: string = '';
   waypointsString: string = '';
@@ -23,15 +24,20 @@ export class OrderRideComponent {
   route: any = null;
 
   vehicleTypes: string[] = ['STANDARD', 'LUXURY', 'VAN'];
+  drivers: any[] = []; // List of available drivers
 
-  drivers = [
-    { id: 1, firstname: 'Sara', lastname: 'Doe', image: 'assets/pics/drivers/sara.jpg', rating: 4.5 },
-    { id: 2, firstname: 'Jane', lastname: 'Smith', image: 'assets/pics/drivers/jane.jpg', rating: 4.7 },
-  ];
+  constructor(
+    public dialog: MatDialog,
+    private rideService: RideService,
+    private driverService: DriverService
+  ) {}
 
-  @Output() routeOptionsSubmitted = new EventEmitter<any>();
-
-  constructor(public dialog: MatDialog, private rideService: RideService) {}
+  ngOnInit(): void {
+    // Fetch available drivers when component initializes
+    this.driverService.getAvailableDrivers().subscribe((drivers: any[]) => {
+      this.drivers = drivers;
+    });
+  }
 
   resetFields(): void {
     this.startPoint = '';
@@ -57,12 +63,10 @@ export class OrderRideComponent {
       selectedVehicleType: this.selectedVehicleType,
       allowPets: this.allowPets,
       allowBabies: this.allowBabies,
-      splitFareEmails: this.splitFareEmails,
-      selectedDriver: this.selectedDriver
+      splitFareEmails: this.splitFareEmails
     };
 
     this.rideService.submitRideOptions(rideData).subscribe(response => {
-      // Assume the response contains price and distance
       this.price = response.price;
       this.distance = response.distance;
 
@@ -75,7 +79,7 @@ export class OrderRideComponent {
           allowPets: this.allowPets,
           allowBabies: this.allowBabies,
           splitFareEmails: this.splitFareEmails,
-          selectedDriver: this.drivers.find(driver => driver.id === this.selectedDriver),
+          drivers: this.drivers, // Pass available drivers to popup
           distance: this.distance,
           price: this.price
         }

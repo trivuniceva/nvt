@@ -8,11 +8,7 @@
     <p><strong>Allow Pets:</strong> {{ data.allowPets ? 'Yes' : 'No' }}</p>
     <p><strong>Allow Babies:</strong> {{ data.allowBabies ? 'Yes' : 'No' }}</p>
     <p><strong>Split Fare Emails:</strong> {{ data.splitFareEmails.join(', ') }}</p>
-    <p *ngIf="data.selectedDriver">
-      <strong>Selected Driver:</strong>
-      <img [src]="data.selectedDriver.image" alt="Driver Image" class="driver-image">
-      {{ data.selectedDriver.firstname }} {{ data.selectedDriver.lastname }} - {{ data.selectedDriver.rating }}
-    </p>
+
     <p><strong>Distance:</strong> {{ data.distance }} meters</p>
     <p><strong>Price:</strong> {{ data.price }} RSD</p>
   </div>
