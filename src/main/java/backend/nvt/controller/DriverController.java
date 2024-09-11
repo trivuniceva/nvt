@@ -22,8 +22,9 @@ public class DriverController {
 
     @GetMapping("/available")
     public List<Driver> getAvailableDrivers() {
-        List<Driver> drivers = driverService.getAvailableDrivers();
-        logger.info("Available drivers: " + drivers.toString());
-        return drivers;
+//        List<Driver> drivers = driverService.getAvailableDrivers();
+//        logger.info("Available drivers: " + drivers.toString());
+//        return drivers;
+        return null;
     }
 }

@@ -29,8 +29,8 @@ public class User {
     @Column(name = "reset_token")
     private String resetToken;
 
-    @Column(name = "address")
-    private String address;
+//    @Column(name = "address")
+//    private String address;
 
     @Column(name = "phone")
     private String phone;
@@ -94,13 +94,13 @@ public class User {
         this.resetToken = resetToken;
     }
 
-    public String getAddress() {
-        return address;
-    }
+//    public String getAddress() {
+//        return address;
+//    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+//    public void setAddress(String address) {
+//        this.address = address;
+//    }
 
     public String getPhone() {
         return phone;

@@ -14,10 +14,13 @@ public class DriverService {
     private DriverRepository driverRepository;
 
     public List<Driver> getAvailableDrivers() {
-        return driverRepository.findAvailableDrivers();
+//        return driverRepository.findAvailableDrivers();
+        return null;
     }
 
-    public void hello() {
+    public void findReserveDriver() {
         System.out.println("hej seksiiiii");
+
+
     }
 }

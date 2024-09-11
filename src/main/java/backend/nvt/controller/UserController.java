@@ -96,7 +96,7 @@ public class UserController {
         newUser.setPassword(registerRequest.getPassword());
         newUser.setFirstname(registerRequest.getFirstname());
         newUser.setLastname(registerRequest.getLastname());
-        newUser.setAddress(registerRequest.getAddress());
+//        newUser.setAddress(registerRequest.getAddress());
         newUser.setPhone(registerRequest.getPhone());
         newUser.setUserRole(UserRole.valueOf("REGISTERED_USER"));
         newUser.setResetToken(generateActivationToken());

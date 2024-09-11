@@ -75,8 +75,7 @@ public class RideController {
 
 
         //        2. nadje vozace
-
-        driverService.hello();
+        driverService.findReserveDriver();
 
         return ResponseEntity.ok(paymentResponse);
     }
