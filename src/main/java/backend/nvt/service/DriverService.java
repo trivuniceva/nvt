@@ -19,8 +19,11 @@ public class DriverService {
     }
 
     public void findReserveDriver() {
-        System.out.println("hej seksiiiii");
-
-
+        for (Driver driver : driverRepository.findAll()) {
+            System.out.println(driver.toString());
+        }
     }
+
+
+
 }

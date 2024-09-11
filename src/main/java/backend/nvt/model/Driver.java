@@ -6,11 +6,11 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Table(name = "drivers")
+@Table(name = "vozaci")
 public class Driver extends User {
 
     @Column(name = "is_available")
-    private int isAvailable;
+    private Boolean isAvailable;
 
     @Column(name = "hours_worked_last_24h")
     private int hoursWorkedLast24h;
@@ -28,12 +28,13 @@ public class Driver extends User {
     @OneToMany(mappedBy = "driver")
     private List<Ride> futureRidesLst;
 
-    public int getIsAvailable() {
+
+    public Boolean getAvailable() {
         return isAvailable;
     }
 
-    public void setIsAvailable(int isAvailable) {
-        this.isAvailable = isAvailable;
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
     }
 
     public int getHoursWorkedLast24h() {
@@ -74,5 +75,17 @@ public class Driver extends User {
 
     public void setFutureRidesLst(List<Ride> futureRidesLst) {
         this.futureRidesLst = futureRidesLst;
+    }
+
+    @Override
+    public String toString() {
+        return "Driver{" +
+                "isAvailable=" + isAvailable +
+                ", hoursWorkedLast24h=" + hoursWorkedLast24h +
+                ", vehicleType=" + vehicleType +
+                ", timeOfLogin=" + timeOfLogin +
+                ", hasFutureDrive=" + hasFutureDrive +
+                ", futureRidesLst=" + futureRidesLst +
+                '}';
     }
 }
