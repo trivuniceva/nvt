@@ -24,7 +24,7 @@ export class OrderRideComponent implements OnInit {
   route: any = null;
 
   vehicleTypes: string[] = ['STANDARD', 'LUXURY', 'VAN'];
-  drivers: any[] = []; 
+  drivers: any[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -75,6 +75,7 @@ export class OrderRideComponent implements OnInit {
       this.price = response.price;
       this.distance = response.distance;
 
+
       this.driverService.getAvailableDrivers().subscribe(drivers => {
         this.drivers = drivers;
 
@@ -86,7 +87,8 @@ export class OrderRideComponent implements OnInit {
             vehicleType: this.selectedVehicleType,
             allowPets: this.allowPets,
             allowBabies: this.allowBabies,
-            splitFareEmails: splitFareEmailsArray, // Prosledi niz email adresa
+            splitFareEmails: splitFareEmailsArray,
+            numberOfEmails: splitFareEmailsArray.length,
             drivers: this.drivers,
             distance: this.distance,
             price: this.price

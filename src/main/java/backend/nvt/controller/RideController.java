@@ -2,15 +2,16 @@ package backend.nvt.controller;
 
 import backend.nvt.DTO.RideRequest;
 import backend.nvt.model.PaymentResponse;
+import backend.nvt.service.EmailService;
 import backend.nvt.service.RideService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 
 @RestController
@@ -19,6 +20,11 @@ public class RideController {
 
     private RouteController routeController;
     private RideService rideService;
+    private UserController userController;
+
+
+    @Autowired
+    private EmailService emailService;
 
     public RideController(RouteController routeController) {
         this.routeController = routeController;
@@ -26,6 +32,12 @@ public class RideController {
 
     @PostMapping("/pay")
     public ResponseEntity<PaymentResponse> payRide(@RequestBody RideRequest rideRequest) throws JSONException {
+
+//        1. nadje vozace
+
+
+
+//        2. izvrsi peyment ako ima slobodnih
         System.out.println();
         System.out.println("- - - - - - - -  - - - - - ");
         System.out.println("Start Point: " + rideRequest.getStartPoint());
@@ -49,6 +61,11 @@ public class RideController {
 
         System.out.println("Distance: " + distance + " meters");
 
+        for (String email : rideRequest.getSplitFareEmails()){
+            String token = UUID.randomUUID().toString();
+            emailService.sendPaymentEmail(email, token);
+        }
+
         double price = calculatePrice(distance, rideRequest.getSelectedVehicleType());
         System.out.println(price);
 
@@ -56,9 +73,6 @@ public class RideController {
 
         return ResponseEntity.ok(paymentResponse);
     }
-
-
-
 
 
 

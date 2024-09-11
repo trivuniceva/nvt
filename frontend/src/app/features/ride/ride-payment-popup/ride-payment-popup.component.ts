@@ -11,6 +11,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class RidePaymentPopupComponent implements OnInit {
   drivers: any[] = [];
   // selectedDriver: any;
+  backendActionSuccess: boolean = false;
+  circles: any[] = [];
+  paymentStatuses: boolean[] = [];
 
   constructor(
     // private driverService: DriverService,
@@ -20,19 +23,27 @@ export class RidePaymentPopupComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // this.circles = Array((this.data.numberOfEmails + 1)).fill(0).map((_, index) => index + 1);
+    this.circles = Array(this.data.numberOfEmails + 1).fill(0).map((_, index) => index + 1);
+    this.paymentStatuses = Array(this.data.numberOfEmails).fill(false);
     // this.driverService.getAvailableDrivers().subscribe((drivers: any[]) => {
     //   this.drivers = drivers;
     // });
       console.log("ovde sam server za vozaca zvala");
   }
 
-  onConfirm(): void {
-    this.dialogRef.close(true);
-    this.snackBar.open('Uskoro očekujte vozilo!', 'U redu', {
-      duration: 3000, // 3 sekunde
+  onConfirm(index: number): void {
+    // this.dialogRef.close(true);
+
+    this.paymentStatuses[index] = true;
+
+    this.snackBar.open('Waiting for all payments...', 'OK', {
+      duration: 6000,
       horizontalPosition: 'center',
       verticalPosition: 'top'
     });
+
+
   }
 
   onCancel(): void {

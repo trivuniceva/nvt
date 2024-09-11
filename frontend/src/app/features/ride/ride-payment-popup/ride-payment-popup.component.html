@@ -16,8 +16,20 @@
     <p><strong>Distance:</strong> {{ data.distance }} meters</p> <!-- Prikaz distance -->
     <p><strong>Price:</strong> {{ data.price }} RSD</p> <!-- Prikaz cene -->
   </div>
+
+  <div class="status-indicators">
+    <div
+      class="circle"
+      [ngClass]="{'success': paymentStatuses[i]}"
+      *ngFor="let circle of circles; let i = index"
+      (click)="onConfirm(i)">
+    </div>
+  </div>
+
+
+
   <div mat-dialog-actions>
     <button mat-button (click)="onCancel()">Cancel Ride</button>
-    <button mat-button color="primary" (click)="onConfirm()">Pay Ride</button>
+    <button mat-button color="primary" (click)="onConfirm(0)">Pay Ride</button>
   </div>
 </div>
