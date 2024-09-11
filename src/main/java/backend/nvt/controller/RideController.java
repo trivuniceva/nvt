@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -58,14 +60,20 @@ public class RideController {
         String responseBody = routeResponse.getBody();
         System.out.println("Route Response: " + responseBody);
 
-        double distance = getDistance(responseBody);
+        Map<String, Object> routeInfo = getRouteInfo(responseBody);
+
+        double distance = (Double) routeInfo.get("distance_km");
+        double duration = (Double) routeInfo.get("duration_min");
+
+        double[] startPoint = (double[]) routeInfo.get("start_point");
+        double[] endPoint = (double[]) routeInfo.get("end_point");
 
         System.out.println("Distance: " + distance + " meters");
 
-        for (String email : rideRequest.getSplitFareEmails()){
-            String token = UUID.randomUUID().toString();
-            emailService.sendPaymentEmail(email, token);
-        }
+//        for (String email : rideRequest.getSplitFareEmails()){
+//            String token = UUID.randomUUID().toString();
+//            emailService.sendPaymentEmail(email, token);
+//        }
 
         double price = calculatePrice(distance, rideRequest.getSelectedVehicleType());
 
@@ -75,23 +83,46 @@ public class RideController {
 
 
         //        2. nadje vozace
-        driverService.findReserveDriver();
+
+        System.out.println(duration);
+        driverService.findReserveDriver(duration, startPoint);
 
         return ResponseEntity.ok(paymentResponse);
     }
 
-
-
-    double getDistance(String responseBody) throws JSONException {
+    public Map<String, Object> getRouteInfo(String responseBody) throws JSONException {
         JSONObject jsonObject = new JSONObject(responseBody);
         JSONArray features = jsonObject.getJSONArray("features");
         JSONObject feature = features.getJSONObject(0);
         JSONObject properties = feature.getJSONObject("properties");
         JSONObject summary = properties.getJSONObject("summary");
 
-        double distance = summary.getDouble("distance");
-        distance = distance / 1000;
-        return distance;
+        // Izdvajanje distance i duration
+        double distance = summary.getDouble("distance") / 1000; // Konverzija u kilometre
+        double duration = summary.getDouble("duration") / 60; // Konverzija u minute
+
+        // Izdvajanje početne i krajnje tačke
+        JSONObject geometry = feature.getJSONObject("geometry");
+        JSONArray coordinates = geometry.getJSONArray("coordinates");
+
+        // Početna tačka (prva koordinata)
+        JSONArray startPoint = coordinates.getJSONArray(0);
+        double startLongitude = startPoint.getDouble(0);
+        double startLatitude = startPoint.getDouble(1);
+
+        // Krajnja tačka (poslednja koordinata)
+        JSONArray endPoint = coordinates.getJSONArray(coordinates.length() - 1);
+        double endLongitude = endPoint.getDouble(0);
+        double endLatitude = endPoint.getDouble(1);
+
+        // Kreiranje rezultata u mapu
+        Map<String, Object> routeInfo = new HashMap<>();
+        routeInfo.put("distance_km", distance);
+        routeInfo.put("duration_min", duration);
+        routeInfo.put("start_point", new double[]{startLatitude, startLongitude});
+        routeInfo.put("end_point", new double[]{endLatitude, endLongitude});
+
+        return routeInfo;
     }
 
 
@@ -101,6 +132,7 @@ public class RideController {
         double price = basePrice + distance * 120;
         return price;
     }
+
     private float getBasePriceForVehicleType(String vehicleType) {
         switch (vehicleType.toUpperCase()) {
             case "LUXURY":
@@ -111,5 +143,6 @@ public class RideController {
                 return 200;
         }
     }
+
 }
 

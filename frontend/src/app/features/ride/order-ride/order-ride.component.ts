@@ -40,19 +40,19 @@ export class OrderRideComponent implements OnInit {
   }
 
   resetFields(): void {
-    this.startPoint = '';
-    this.endPoint = '';
-    this.waypointsString = '';
-    this.waypoints = [];
-    this.selectedVehicleType = '';
-    this.allowPets = false;
-    this.allowBabies = false;
-    this.splitFareEmailsString = ''; // Resetuj string
-    this.splitFareEmails = []; // Resetuj listu
-    this.selectedDriver = null;
-    this.price = 0;
-    this.distance = 0;
-    this.route = null;
+    // this.startPoint = '';
+    // this.endPoint = '';
+    // this.waypointsString = '';
+    // this.waypoints = [];
+    // this.selectedVehicleType = '';
+    // this.allowPets = false;
+    // this.allowBabies = false;
+    // this.splitFareEmailsString = ''; // Resetuj string
+    // this.splitFareEmails = []; // Resetuj listu
+    // this.selectedDriver = null;
+    // this.price = 0;
+    // this.distance = 0;
+    // this.route = null;
   }
 
   submitOptions() {
