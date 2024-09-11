@@ -2,6 +2,7 @@ package backend.nvt.controller;
 
 import backend.nvt.DTO.RideRequest;
 import backend.nvt.model.PaymentResponse;
+import backend.nvt.service.DriverService;
 import backend.nvt.service.EmailService;
 import backend.nvt.service.RideService;
 import org.json.JSONArray;
@@ -26,6 +27,10 @@ public class RideController {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private DriverService driverService;
+
+
     public RideController(RouteController routeController) {
         this.routeController = routeController;
     }
@@ -33,11 +38,7 @@ public class RideController {
     @PostMapping("/pay")
     public ResponseEntity<PaymentResponse> payRide(@RequestBody RideRequest rideRequest) throws JSONException {
 
-//        1. nadje vozace
-
-
-
-//        2. izvrsi peyment ako ima slobodnih
+//        1. izvrsi peyment ako ima slobodnih
         System.out.println();
         System.out.println("- - - - - - - -  - - - - - ");
         System.out.println("Start Point: " + rideRequest.getStartPoint());
@@ -67,9 +68,15 @@ public class RideController {
         }
 
         double price = calculatePrice(distance, rideRequest.getSelectedVehicleType());
-        System.out.println(price);
+
+        System.out.println("price: " + price + " distance: " + distance);
 
         PaymentResponse paymentResponse = new PaymentResponse(responseBody, distance, price);
+
+
+        //        2. nadje vozace
+
+        driverService.hello();
 
         return ResponseEntity.ok(paymentResponse);
     }

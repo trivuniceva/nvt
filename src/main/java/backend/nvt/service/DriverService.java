@@ -16,4 +16,8 @@ public class DriverService {
     public List<Driver> getAvailableDrivers() {
         return driverRepository.findAvailableDrivers();
     }
+
+    public void hello() {
+        System.out.println("hej seksiiiii");
+    }
 }
