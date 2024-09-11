@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { RidePaymentPopupComponent } from "../ride-payment-popup/ride-payment-popup.component";
 import { RideService } from "../../../core/services/ride/ride.service";
 import { DriverService } from "../../../core/services/driver.service";
-
 @Component({
   selector: 'app-add-route-options',
   templateUrl: './order-ride.component.html',
@@ -18,13 +17,14 @@ export class OrderRideComponent implements OnInit {
   allowPets: boolean = false;
   allowBabies: boolean = false;
   splitFareEmails: string[] = [];
+  splitFareEmailsString: string = '';
   selectedDriver: any = null;
   price: number = 0;
   distance: number = 0;
   route: any = null;
 
   vehicleTypes: string[] = ['STANDARD', 'LUXURY', 'VAN'];
-  drivers: any[] = []; // List of available drivers
+  drivers: any[] = []; 
 
   constructor(
     public dialog: MatDialog,
@@ -33,7 +33,7 @@ export class OrderRideComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Fetch available drivers when component initializes
+    // Učitavanje dostupnih vozača
     this.driverService.getAvailableDrivers().subscribe((drivers: any[]) => {
       this.drivers = drivers;
     });
@@ -47,7 +47,8 @@ export class OrderRideComponent implements OnInit {
     this.selectedVehicleType = '';
     this.allowPets = false;
     this.allowBabies = false;
-    this.splitFareEmails = [];
+    this.splitFareEmailsString = ''; // Resetuj string
+    this.splitFareEmails = []; // Resetuj listu
     this.selectedDriver = null;
     this.price = 0;
     this.distance = 0;
@@ -56,6 +57,9 @@ export class OrderRideComponent implements OnInit {
 
   submitOptions() {
     const waypointsArray = this.waypointsString.split(',').map(point => point.trim());
+    const splitFareEmailsArray = this.splitFareEmailsString.split(',').map(email => email.trim());
+
+    console.log(splitFareEmailsArray)
 
     const rideData = {
       startPoint: this.startPoint,
@@ -64,7 +68,7 @@ export class OrderRideComponent implements OnInit {
       selectedVehicleType: this.selectedVehicleType,
       allowPets: this.allowPets,
       allowBabies: this.allowBabies,
-      splitFareEmails: this.splitFareEmails
+      splitFareEmails: splitFareEmailsArray // Prosledi niz email adresa
     };
 
     this.rideService.submitRideOptions(rideData).subscribe(response => {
@@ -72,7 +76,7 @@ export class OrderRideComponent implements OnInit {
       this.distance = response.distance;
 
       this.driverService.getAvailableDrivers().subscribe(drivers => {
-        this.drivers = drivers; // Ensure drivers are set here
+        this.drivers = drivers;
 
         const dialogRef = this.dialog.open(RidePaymentPopupComponent, {
           data: {
@@ -82,8 +86,8 @@ export class OrderRideComponent implements OnInit {
             vehicleType: this.selectedVehicleType,
             allowPets: this.allowPets,
             allowBabies: this.allowBabies,
-            splitFareEmails: this.splitFareEmails,
-            drivers: this.drivers, // Pass available drivers to popup
+            splitFareEmails: splitFareEmailsArray, // Prosledi niz email adresa
+            drivers: this.drivers,
             distance: this.distance,
             price: this.price
           }
@@ -105,5 +109,4 @@ export class OrderRideComponent implements OnInit {
       console.error('Error sending ride data:', error);
     });
   }
-
 }

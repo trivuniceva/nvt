@@ -10,20 +10,20 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class RidePaymentPopupComponent implements OnInit {
   drivers: any[] = [];
-  selectedDriver: any;
+  // selectedDriver: any;
 
   constructor(
-    private driverService: DriverService,
+    // private driverService: DriverService,
     public dialogRef: MatDialogRef<RidePaymentPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
-    this.driverService.getAvailableDrivers().subscribe((drivers: any[]) => {
-      this.drivers = drivers;
-      console.log(this.drivers);
-    });
+    // this.driverService.getAvailableDrivers().subscribe((drivers: any[]) => {
+    //   this.drivers = drivers;
+    // });
+      console.log("ovde sam server za vozaca zvala");
   }
 
   onConfirm(): void {

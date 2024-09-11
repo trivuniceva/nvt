@@ -51,7 +51,7 @@ public class RouteController {
 
         try {
             String response = restTemplate.getForObject(url, String.class);
-            System.out.println("Route Response: " + response);
+            System.out.println("Route Responseeeee: " + response);
             return ResponseEntity.ok(response);
         } catch (HttpClientErrorException e) {
             System.err.println("Error response from OpenRouteService: " + e.getResponseBodyAsString());

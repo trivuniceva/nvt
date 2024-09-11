@@ -9,7 +9,7 @@ public class RideRequest {
     private String selectedVehicleType;
     private boolean allowPets;
     private boolean allowBabies;
-    private String[] splitFareEmails;
+    private List<String> splitFareEmails;
     private Long selectedDriver;
     private double price;
 
@@ -61,11 +61,11 @@ public class RideRequest {
         this.allowBabies = allowBabies;
     }
 
-    public String[] getSplitFareEmails() {
+    public List<String> getSplitFareEmails() {
         return splitFareEmails;
     }
 
-    public void setSplitFareEmails(String[] splitFareEmails) {
+    public void setSplitFareEmails(List<String> splitFareEmails) {
         this.splitFareEmails = splitFareEmails;
     }
 

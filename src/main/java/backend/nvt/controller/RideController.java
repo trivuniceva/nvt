@@ -33,8 +33,8 @@ public class RideController {
         System.out.println("Waypoints: " + rideRequest.getWaypoints());
         System.out.println("Selected Driver ID: " + rideRequest.getSelectedDriver());
         System.out.println("Price: " + rideRequest.getPrice());
+        System.out.println(rideRequest.getSplitFareEmails());
         System.out.println();
-        System.out.println(rideRequest.getSelectedVehicleType());
 
         ResponseEntity<String> routeResponse = routeController.getRouteWithWaypoints(
                 rideRequest.getStartPoint(),
