@@ -64,8 +64,6 @@ public class RideController {
 
         driverService.findReserveDriver(duration, startPoint);
 
-
-
         for (String email : rideRequest.getSplitFareEmails()){
             System.out.println(email);
             String token = paymentStatusService.createTokenForEmail(email);

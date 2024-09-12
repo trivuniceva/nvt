@@ -14,8 +14,6 @@ public class PaymentStatusService {
     private Map<String, String> emailTokenMap = new HashMap<>();
     private Map<String, Boolean> emailStatusMap = new HashMap<>();
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
 
     public String createTokenForEmail(String email) {
         String token = UUID.randomUUID().toString();
@@ -25,7 +23,11 @@ public class PaymentStatusService {
 
     public void addEmailStatus(String email, Boolean status) {
         emailStatusMap.put(email, status);
-        messagingTemplate.convertAndSend("/topic/payment-status", Map.of("email", email, "status", status));
+//        messagingTemplate.convertAndSend("/topic/payment-status", Map.of("email", email, "status", status));
+    }
+
+    public void changeStatus(String email){
+        emailStatusMap.replace(email, true);
     }
 
     public boolean validateToken(String token) {
@@ -37,13 +39,20 @@ public class PaymentStatusService {
     }
 
     public void updateTokenStatus(String token) {
-        // Find and remove the token
+
+        emailTokenMap.forEach((email, status) -> System.out.println("token jel: " + email + " - Status: " + status));
+        emailStatusMap.forEach((email, status) -> System.out.println("Email: " + email + " - Status: " + status));
+
+        for (Map.Entry<String, String> entry : emailTokenMap.entrySet()) {
+            if (entry.getValue().equals(token)) {
+                System.out.println("evo ga mejlllllll " + entry.getKey());
+                changeStatus(entry.getKey());
+            }
+        }
+
+        System.out.println("brise token");
         emailTokenMap.entrySet().removeIf(entry -> entry.getValue().equals(token));
-
-        // Notify frontend or log the update
-        messagingTemplate.convertAndSend("/topic/payment-status", "Token status updated: " + token);
     }
-
 
     public void printEmailStatusMap() {
         emailStatusMap.forEach((email, status) -> System.out.println("Email: " + email + " - Status: " + status));

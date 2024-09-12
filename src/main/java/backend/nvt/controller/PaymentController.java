@@ -21,7 +21,11 @@ public class PaymentController {
         boolean isValidToken = paymentStatusService.validateToken(token);
         if (isValidToken) {
             paymentStatusService.updateTokenStatus(token);
-            return ResponseEntity.ok("Payment confirmed.");
+            paymentStatusService.printEmailStatusMap();
+
+            System.out.println("evo posle mejla");
+            paymentStatusService.printEmailStatusMap();
+            return ResponseEntity.ok("Payment confirmed for email: ");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or expired token.");
         }
