@@ -1,9 +1,6 @@
 package backend.nvt.controller;
 
-import backend.nvt.DTO.DriverResponse;
-import backend.nvt.DTO.LoginRequest;
-import backend.nvt.DTO.ResetPasswordRequest;
-import backend.nvt.DTO.UserResponse;
+import backend.nvt.DTO.*;
 import backend.nvt.model.*;
 import backend.nvt.service.EmailService;
 import backend.nvt.service.UserService;
@@ -186,7 +183,6 @@ public class UserController {
     }
 
 
-
     private String generateResetToken(User user) {
         return UUID.randomUUID().toString();
     }
@@ -209,4 +205,17 @@ public class UserController {
     private String generateActivationToken() {
         return UUID.randomUUID().toString();
     }
+
+    @PostMapping("/update-user")
+    public ResponseEntity<?> updateUser(@RequestBody UserDto userDto) {
+        System.out.println(userDto.getEmail());
+        System.out.println(userDto.getFirstname());
+        try {
+            userService.updateUser(userDto);
+            return ResponseEntity.ok().body("User updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating user");
+        }
+    }
+
 }
