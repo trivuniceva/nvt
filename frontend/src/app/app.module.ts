@@ -28,6 +28,7 @@ import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {RideHistoryViewComponent} from "./features/ride/ride-history-view/ride-history-view.component";
 import {ChatComponent} from "./features/chat/chat.component";
+import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-payment.component";
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import {ChatComponent} from "./features/chat/chat.component";
     PaymentComponent,
     RideHistoryViewComponent,
     ChatComponent,
+    ConfirmPaymentComponent,
 
 
 

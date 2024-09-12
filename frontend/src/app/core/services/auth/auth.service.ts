@@ -22,6 +22,7 @@ export class AuthService {
     this.loggedIn.next(true);
 
     this.userRoleSubject.next(user.userRole);
+    console.log(this.userRole$);
 
     this.userEmail = user.email;
 

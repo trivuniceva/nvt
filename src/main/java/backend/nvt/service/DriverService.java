@@ -17,7 +17,7 @@ public class DriverService {
     @Autowired
     private DriverRepository driverRepository;
 
-    public List<Driver> getAvailableDrivers(double duration, double[] startPoint) {
+    private List<Driver> getAvailableDrivers(double duration, double[] startPoint) {
         List<Driver> availableDriversLst = new ArrayList<>();
 
         for (Driver driver : driverRepository.findAll()) {
@@ -33,12 +33,10 @@ public class DriverService {
                 }
             }
         }
-
         return availableDriversLst;
     }
 
     public void findReserveDriver(double duration, double[] startPoint) {
-
         List<Driver> availableDriversLst = getAvailableDrivers(duration, startPoint);
 
         Driver topDriver = null;
@@ -54,10 +52,6 @@ public class DriverService {
         if (topDriver != null) {
             System.out.println("Vozač sa najvećim brojem sati rada u poslednjih 24h: " + topDriver);
         }
-
-
-
-
     }
 
     private Boolean checkFutureRide(List<Ride> futureRidesLst, double duration){
@@ -79,7 +73,6 @@ public class DriverService {
             } else if (futureTime.isBefore(buduce.getEndTime())) {
                 System.out.println("imas dobro vreme END TIMEEEEEE <3333");
                 return true;
-
             }
         }
 

@@ -6,6 +6,7 @@ import backend.nvt.model.Ride;
 import backend.nvt.repository.RideRepository;
 import backend.nvt.service.DriverService;
 import backend.nvt.service.EmailService;
+import backend.nvt.service.PaymentStatusService;
 import backend.nvt.service.RideService;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,12 +29,14 @@ public class RideController {
     @Autowired
     RideRepository rideRepository;
 
-
     @Autowired
     private EmailService emailService;
 
     @Autowired
     private DriverService driverService;
+
+    @Autowired
+    private PaymentStatusService paymentStatusService;
 
 
     public RideController(RouteController routeController) {
@@ -43,17 +46,6 @@ public class RideController {
     @PostMapping("/pay")
     public ResponseEntity<PaymentResponse> payRide(@RequestBody RideRequest rideRequest) throws JSONException {
 
-//        1. izvrsi peyment ako ima slobodnih
-        System.out.println();
-        System.out.println("- - - - - - - -  - - - - - ");
-        System.out.println("Start Point: " + rideRequest.getStartPoint());
-        System.out.println("End Point: " + rideRequest.getEndPoint());
-        System.out.println("Waypoints: " + rideRequest.getWaypoints());
-        System.out.println("Selected Driver ID: " + rideRequest.getSelectedDriver());
-        System.out.println("Price: " + rideRequest.getPrice());
-        System.out.println(rideRequest.getSplitFareEmails());
-        System.out.println();
-
         ResponseEntity<String> routeResponse = routeController.getRouteWithWaypoints(
                 rideRequest.getStartPoint(),
                 rideRequest.getEndPoint(),
@@ -61,34 +53,33 @@ public class RideController {
         );
 
         String responseBody = routeResponse.getBody();
-        System.out.println("Route Response: " + responseBody);
-
         Map<String, Object> routeInfo = getRouteInfo(responseBody);
-
         double distance = (Double) routeInfo.get("distance_km");
         double duration = (Double) routeInfo.get("duration_min");
-
         double[] startPoint = (double[]) routeInfo.get("start_point");
         double[] endPoint = (double[]) routeInfo.get("end_point");
-
-        System.out.println("Distance: " + distance + " meters");
-
-//        for (String email : rideRequest.getSplitFareEmails()){
-//            String token = UUID.randomUUID().toString();
-//            emailService.sendPaymentEmail(email, token);
-//        }
-
         double price = calculatePrice(distance, rideRequest.getSelectedVehicleType());
-
-        System.out.println("price: " + price + " distance: " + distance);
 
         PaymentResponse paymentResponse = new PaymentResponse(responseBody, distance, price);
 
-
-        //        2. nadje vozace
-
-        System.out.println(duration);
         driverService.findReserveDriver(duration, startPoint);
+
+
+
+        for (String email : rideRequest.getSplitFareEmails()){
+            System.out.println(email);
+            String token = paymentStatusService.createTokenForEmail(email);
+
+            System.out.println("Token generisan za " + email + ": " + token);
+
+            emailService.sendPaymentEmail(email, token);
+            paymentStatusService.addEmailStatus(email, false);
+        }
+
+        System.out.println("treba sad da zelenimo ");
+        paymentStatusService.printEmailStatusMap();
+
+
 //        driverService.findReserveDriver(duration, startPoint);
 
 //        if(paymentSuccessful){
