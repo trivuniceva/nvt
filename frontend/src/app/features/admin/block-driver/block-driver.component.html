@@ -1,0 +1,38 @@
+<div *ngIf="drivers && drivers.length > 0; else noDrivers" class="driver-table-container">
+  <table class="driver-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Vehicle Type</th>
+      <th>Hours Worked (Last 24h)</th>
+      <th>Available</th>
+      <th>Time of Login</th>
+      <th>Has Future Drive</th>
+      <th>Action</th> <!-- New column header -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let driver of drivers">
+      <td>{{ driver.id }}</td>
+      <td>{{ driver.firstname }}</td>
+      <td>{{ driver.lastname }}</td>
+      <td>{{ driver.email }}</td>
+      <td>{{ driver.vehicleType }}</td>
+      <td>{{ driver.hoursWorkedLast24h }}</td>
+      <td>{{ driver.isAvailable ? 'Yes' : 'No' }}</td>
+      <td>{{ driver.timeOfLogin }}</td>
+      <td>{{ driver.hasFutureDrive ? 'Yes' : 'No' }}</td>
+      <td>
+        <button (click)="blockDriver(driver.id)" class="btn btn-block">Block</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noDrivers>
+  <p class="no-drivers-text">No drivers available.</p>
+</ng-template>

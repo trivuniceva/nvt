@@ -31,6 +31,7 @@ import {ChatComponent} from "./features/chat/chat.component";
 import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-payment.component";
 import {DriverComponent} from "./features/driver/driver/driver.component";
 import {SignupDriverComponent} from "./features/admin/signup-driver/signup-driver.component";
+import {BlockDriverComponent} from "./features/admin/block-driver/block-driver.component";
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {SignupDriverComponent} from "./features/admin/signup-driver/signup-drive
     ChatComponent,
     ConfirmPaymentComponent,
     DriverComponent,
-    SignupDriverComponent
+    SignupDriverComponent,
+    BlockDriverComponent
 
 
 

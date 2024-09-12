@@ -14,4 +14,11 @@ export class DriverService {
     return this.http.get<any[]>(this.apiUrl + "/available");
   }
 
+  getAllDrivers(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + "/get-all-driver");
+  }
+
+  blockDriver(driverId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/block-driver/${driverId}`, {});
+  }
 }

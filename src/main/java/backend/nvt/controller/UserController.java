@@ -148,7 +148,7 @@ public class UserController {
         String firstname = (String) requestData.get("firstname");
         String lastname = (String) requestData.get("lastname");
         String phone = (String) requestData.get("phone");
-        String vehicleTypeStr = (String) requestData.get("vehicleType"); 
+        String vehicleTypeStr = (String) requestData.get("vehicleType");
 
         if (userService.findByEmail(email) != null) {
             return ResponseEntity.status(400).body(new ErrorResponse("Email is already in use."));
