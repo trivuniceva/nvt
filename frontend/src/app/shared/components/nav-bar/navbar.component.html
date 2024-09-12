@@ -25,9 +25,8 @@
 </div>
 
 <div *ngIf="userRole === 'DRIVER'" class="sidenav">
-  <a href=""> Profile </a>
-  <a href=""> Ride history </a>
-  <a href=""> Support </a>
+  <a routerLink="/profile">Profile</a>
+  <a routerLink="/ride-history-driver">Ride history</a>
   <a href="#" (click)="logout()">Logout</a>
 
 </div>

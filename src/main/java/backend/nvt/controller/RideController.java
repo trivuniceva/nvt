@@ -189,6 +189,39 @@ public class RideController {
     }
 
 
+    @GetMapping("/ride-history-driver")
+    public List<RideDTO> getRideHistoryDriver(@RequestParam("email") String email) {
+        List<Ride> rides = getAllRidesByDriver(email);
+        return rides.stream()
+                .map(ride -> new RideDTO(
+                        ride.getId(),
+                        ride.getRoute(),  // Koristi metod getRoute()
+                        ride.getPrice(),
+                        Timestamp.valueOf(ride.getStartTime()),  // Konvertuj LocalDateTime u Timestamp
+                        Timestamp.valueOf(ride.getEndTime()),    // Konvertuj LocalDateTime u Timestamp
+                        ride.getDriver() != null ? ride.getDriver().getFirstname() + " " + ride.getDriver().getLastname() : "Unknown",
+                        null // Ako nema ocene, postavi na null ili neku default vrednost
+                ))
+                .collect(Collectors.toList());
+    }
+
+    private List<Ride> getAllRidesByDriver(String email) {
+        List<Ride> filtriraniRide = new ArrayList<>();
+
+        System.out.println("usla si u istoriju na ride ");
+        System.out.println(email);
+
+        for (Ride ride : rideRepository.findAll()) {
+            if (ride.getDriver().getEmail().equals(email)) {
+                System.out.println("---------------> " + ride);
+                System.out.println("---------------> " + ride.getStartTime());
+                filtriraniRide.add(ride);
+            }
+        }
+        return filtriraniRide;
+    }
+
+
     public List<Ride> allRides(){
         return rideRepository.findAll();
 

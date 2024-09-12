@@ -23,6 +23,11 @@ export class RideService {
     return this.http.get<any[]>(`${this.apiUrl}/ride-history`, { params });
   }
 
+  getRideHistoryDriver(userEmail: string): Observable<any[]> {
+    const params = new HttpParams().set('email', userEmail);
+    return this.http.get<any[]>(`${this.apiUrl}/ride-history-driver`, { params });
+  }
+
   getAllRideHistory(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/ride-history-all`, );
   }

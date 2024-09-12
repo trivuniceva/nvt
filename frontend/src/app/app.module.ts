@@ -33,6 +33,7 @@ import {DriverComponent} from "./features/driver/driver/driver.component";
 import {SignupDriverComponent} from "./features/admin/signup-driver/signup-driver.component";
 import {BlockDriverComponent} from "./features/admin/block-driver/block-driver.component";
 import {RideHistoryAllComponent} from "./features/admin/ride-history-all/ride-history-all.component";
+import {DriveHistoryComponent} from "./features/driver/drive-history/drive-history.component";
 
 
 @NgModule({
@@ -55,6 +56,8 @@ import {RideHistoryAllComponent} from "./features/admin/ride-history-all/ride-hi
     SignupDriverComponent,
     BlockDriverComponent,
     RideHistoryAllComponent,
+    DriveHistoryComponent,
+
 
 
 

@@ -15,6 +15,7 @@ import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-p
 import {SignupDriverComponent} from "./features/admin/signup-driver/signup-driver.component";
 import {BlockDriverComponent} from "./features/admin/block-driver/block-driver.component";
 import {RideHistoryAllComponent} from "./features/admin/ride-history-all/ride-history-all.component";
+import {DriveHistoryComponent} from "./features/driver/drive-history/drive-history.component";
 
 const routes: Routes = [
   {
@@ -54,6 +55,7 @@ const routes: Routes = [
   { path: 'create-driver', component: SignupDriverComponent },
   { path: 'get-all-driver', component: BlockDriverComponent },
   { path: 'ride-history-all', component: RideHistoryAllComponent },
+  { path: 'ride-history-driver', component: DriveHistoryComponent },
 ];
 
 @NgModule({
