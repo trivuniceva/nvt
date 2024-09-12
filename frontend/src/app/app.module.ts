@@ -27,6 +27,7 @@ import {PaymentComponent} from "./features/ride/payment/payment.component";
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {RideHistoryViewComponent} from "./features/ride/ride-history-view/ride-history-view.component";
+import {ChatComponent} from "./features/chat/chat.component";
 
 
 @NgModule({
@@ -43,6 +44,8 @@ import {RideHistoryViewComponent} from "./features/ride/ride-history-view/ride-h
     RidePaymentPopupComponent,
     PaymentComponent,
     RideHistoryViewComponent,
+    ChatComponent,
+
 
 
   ],

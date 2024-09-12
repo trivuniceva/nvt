@@ -10,6 +10,7 @@ import {ResetPasswordComponent} from "./features/auth/reset-password/reset-passw
 import {OrderRideComponent} from "./features/ride/order-ride/order-ride.component";
 import {PaymentComponent} from "./features/ride/payment/payment.component";
 import {RideHistoryViewComponent} from "./features/ride/ride-history-view/ride-history-view.component";
+import {ChatComponent} from "./features/chat/chat.component";
 
 const routes: Routes = [
   {
@@ -47,6 +48,7 @@ const routes: Routes = [
   },
   { path: 'payment', component: PaymentComponent },
   { path: 'ride-history', component: RideHistoryViewComponent },
+  { path: 'support', component: ChatComponent },
 ];
 
 @NgModule({
