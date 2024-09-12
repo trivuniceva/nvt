@@ -14,6 +14,7 @@ import {ChatComponent} from "./features/chat/chat.component";
 import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-payment.component";
 import {SignupDriverComponent} from "./features/admin/signup-driver/signup-driver.component";
 import {BlockDriverComponent} from "./features/admin/block-driver/block-driver.component";
+import {RideHistoryAllComponent} from "./features/admin/ride-history-all/ride-history-all.component";
 
 const routes: Routes = [
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
   { path: 'confirm-payment', component: ConfirmPaymentComponent },
   { path: 'create-driver', component: SignupDriverComponent },
   { path: 'get-all-driver', component: BlockDriverComponent },
+  { path: 'ride-history-all', component: RideHistoryAllComponent },
 ];
 
 @NgModule({

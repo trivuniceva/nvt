@@ -94,9 +94,9 @@ public class DriverService {
 //    }
 
     public void blockDriver(Long driverId) {
-        Driver driver = driverRepository.findById(driverId)
-                .orElseThrow(() -> new RuntimeException("Driver not found with id: " + driverId));
-        driver.setAvailable(false); // Assuming `available` is a boolean field indicating if the driver is active or not
-        driverRepository.save(driver);
+//        Driver driver = driverRepository.findById(driverId)
+//                .orElseThrow(() -> new RuntimeException("Driver not found with id: " + driverId));
+//        driver.setAvailable(false); // Assuming `available` is a boolean field indicating if the driver is active or not
+//        driverRepository.save(driver);
     }
 }

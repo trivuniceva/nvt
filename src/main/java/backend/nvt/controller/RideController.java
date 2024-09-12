@@ -1,5 +1,6 @@
 package backend.nvt.controller;
 
+import backend.nvt.DTO.RideDTO;
 import backend.nvt.DTO.RideRequest;
 import backend.nvt.config.WebSocketHandler;
 import backend.nvt.model.Driver;
@@ -18,7 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -153,23 +156,61 @@ public class RideController {
         }
     }
 
-    @GetMapping("/ride-history")
-    public List<Ride> getRideHistory(String email) {
-
+    public List<Ride> getAllRides(@RequestParam("email") String email) {
         List<Ride> filtriraniRide = new ArrayList<>();
 
         System.out.println("usla si u istoriju na ride ");
         System.out.println(email);
 
-        for(Ride ride : rideRepository.findAll()){
-            if(ride.getUser().getEmail().equals(email)){
+        for (Ride ride : rideRepository.findAll()) {
+            if (ride.getUser().getEmail().equals(email)) {
                 System.out.println("---------------> " + ride);
+                System.out.println("---------------> " + ride.getStartTime());
                 filtriraniRide.add(ride);
             }
         }
-
         return filtriraniRide;
     }
+
+    @GetMapping("/ride-history")
+    public List<RideDTO> getRideHistory(@RequestParam("email") String email) {
+        List<Ride> rides = getAllRides(email);
+        return rides.stream()
+                .map(ride -> new RideDTO(
+                        ride.getId(),
+                        ride.getRoute(),  // Koristi metod getRoute()
+                        ride.getPrice(),
+                        Timestamp.valueOf(ride.getStartTime()),  // Konvertuj LocalDateTime u Timestamp
+                        Timestamp.valueOf(ride.getEndTime()),    // Konvertuj LocalDateTime u Timestamp
+                        ride.getDriver() != null ? ride.getDriver().getFirstname() + " " + ride.getDriver().getLastname() : "Unknown",
+                        null // Ako nema ocene, postavi na null ili neku default vrednost
+                ))
+                .collect(Collectors.toList());
+    }
+
+
+    public List<Ride> allRides(){
+        return rideRepository.findAll();
+
+    }
+
+    @GetMapping("/ride-history-all")
+    public List<RideDTO> getAllRideHistory() {
+        System.out.println("halooooo");
+        List<Ride> rides = allRides();
+        return rides.stream()
+                .map(ride -> new RideDTO(
+                        ride.getId(),
+                        ride.getRoute(),  // Koristi metod getRoute()
+                        ride.getPrice(),
+                        Timestamp.valueOf(ride.getStartTime()),  // Konvertuj LocalDateTime u Timestamp
+                        Timestamp.valueOf(ride.getEndTime()),    // Konvertuj LocalDateTime u Timestamp
+                        ride.getDriver() != null ? ride.getDriver().getFirstname() + " " + ride.getDriver().getLastname() : "Unknown",
+                        null // Ako nema ocene, postavi na null ili neku default vrednost
+                ))
+                .collect(Collectors.toList());
+    }
+
 
 }
 

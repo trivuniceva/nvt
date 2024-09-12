@@ -32,6 +32,7 @@ import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-p
 import {DriverComponent} from "./features/driver/driver/driver.component";
 import {SignupDriverComponent} from "./features/admin/signup-driver/signup-driver.component";
 import {BlockDriverComponent} from "./features/admin/block-driver/block-driver.component";
+import {RideHistoryAllComponent} from "./features/admin/ride-history-all/ride-history-all.component";
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {BlockDriverComponent} from "./features/admin/block-driver/block-driver.c
     ConfirmPaymentComponent,
     DriverComponent,
     SignupDriverComponent,
-    BlockDriverComponent
+    BlockDriverComponent,
+    RideHistoryAllComponent,
 
 
 

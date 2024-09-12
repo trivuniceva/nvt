@@ -1,14 +1,13 @@
-// ride-history-view.component.ts
-import { Component, OnInit } from '@angular/core';
-import { RideService } from '../../../core/services/ride/ride.service';
-import { AuthService } from '../../../core/services/auth/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {RideService} from "../../../core/services/ride/ride.service";
+import {AuthService} from "../../../core/services/auth/auth.service";
 
 @Component({
-  selector: 'app-ride-history-view',
-  templateUrl: './ride-history-view.component.html',
-  styleUrls: ['./ride-history-view.component.css']
+  selector: 'app-ride-history-all',
+  templateUrl: './ride-history-all.component.html',
+  styleUrl: './ride-history-all.component.css'
 })
-export class RideHistoryViewComponent implements OnInit {
+export class RideHistoryAllComponent implements OnInit {
   rides: any[] = [];
   sortField: string = 'startDate';
   sortAsc: boolean = false;
@@ -20,7 +19,7 @@ export class RideHistoryViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.rideService.getRideHistory(this.authService.userEmail).subscribe((rides: any[]) => {
+    this.rideService.getAllRideHistory().subscribe((rides: any[]) => {
       console.log("Ride History Data:", rides);
       this.rides = rides;
     });

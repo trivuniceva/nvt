@@ -202,4 +202,9 @@ public class Ride {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getRoute() {
+//        return "Start: " + startLocation.toString() + " - End: " + endLocation.toString();
+        return "Start: " + this.startLocation.getLatitude() + " - End: " + this.endLocation.getLongitude();
+    }
 }

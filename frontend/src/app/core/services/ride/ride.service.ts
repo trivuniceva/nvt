@@ -23,6 +23,10 @@ export class RideService {
     return this.http.get<any[]>(`${this.apiUrl}/ride-history`, { params });
   }
 
+  getAllRideHistory(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ride-history-all`, );
+  }
+
 
 
 }
