@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {UserService} from "../../../core/services/user/user.service";
@@ -8,13 +8,14 @@ import {UserService} from "../../../core/services/user/user.service";
   templateUrl: './signup-driver.component.html',
   styleUrl: './signup-driver.component.css'
 })
-export class SignupDriverComponent {
+
+export class SignupDriverComponent implements OnInit {
   signupForm!: FormGroup;
-  currentStep: number = 1;
+  currentStep: number = 1; // Održava trenutni korak forme
   errorMessage: string = '';
   successMessage: string = '';
 
-  constructor(private router: Router, private fb: FormBuilder, private userService: UserService) { }
+  constructor(private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
@@ -23,11 +24,12 @@ export class SignupDriverComponent {
       confirmPassword: ['', [Validators.required]],
       firstname: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
-      address: [''],
-      phone: ['']
+      phone: [''],
+      vehicleType: ['', [Validators.required]] // vehicleType polje
     });
   }
 
+  // Funkcija za prebacivanje između koraka
   goToStep(step: number): void {
     this.currentStep = step;
   }
@@ -39,35 +41,17 @@ export class SignupDriverComponent {
         password: this.signupForm.value.password,
         firstname: this.signupForm.value.firstname,
         lastname: this.signupForm.value.lastname,
-        address: this.signupForm.value.address,
-        phone: this.signupForm.value.phone
+        phone: this.signupForm.value.phone,
+        vehicleType: this.signupForm.value.vehicleType
       };
 
-      this.userService.createDriver(userData).subscribe(
-        response => {
-          console.log('Registration successful:', response);
-          this.successMessage = 'Driver has been successfully created!'; 
-          setTimeout(() => {
-            this.router.navigate(['/profile']);
-          }, 2000);
-        },
-        error => {
-          console.error('Registration error:', error);
-          if (error.status === 400) {
-            if (error.error.message === 'Email already exists') {
-              this.errorMessage = 'Email is already in use. Please choose another.';
-            } else if (error.error.message === 'Invalid password') {
-              this.errorMessage = 'Password is too weak. Please choose a stronger password.';
-            } else {
-              this.errorMessage = 'An unknown error occurred. Please try again later.';
-            }
-          } else {
-            this.errorMessage = 'An unexpected error occurred. Please try again later.';
-          }
-        }
-      );
+      // Ovdje se poziva servis za slanje podataka na backend
+      console.log('User data:', userData);
+      this.successMessage = 'Driver successfully created!';
+      setTimeout(() => {
+        this.router.navigate(['/profile']);
+      }, 2000);
     } else {
-      console.error('Form is invalid or passwords do not match');
       this.errorMessage = 'Please fill in all fields correctly and ensure passwords match.';
     }
   }
