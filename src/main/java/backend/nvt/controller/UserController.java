@@ -45,6 +45,11 @@ public class UserController {
         if (isAuthenticatedUser != null) {
             String sessionId = java.util.UUID.randomUUID().toString();
             userSessionService.loginUser(loginRequest.getEmail(), sessionId);
+            System.out.println("treba da je ovde " +
+                    "");
+            System.out.println(ResponseEntity.ok(isAuthenticatedUser));
+            System.out.println(isAuthenticatedUser.getEmail());
+            System.out.println(isAuthenticatedUser.getUserRole());
             return ResponseEntity.ok(isAuthenticatedUser); // Vraća korisnika u slučaju uspeha
         } else {
             return ResponseEntity.status(401).body(new ErrorResponse("Invalid email or password")); // Vraća JSON poruku o grešci

@@ -26,15 +26,27 @@ public class UserService {
     }
 
     public User authenticate(String email, String password) {
+        System.out.println(email + password);
+
+        System.out.println("sace vidimo find all");
+        for( User user: userRepository.findAll()){
+            System.out.println(user.getEmail());
+        }
+
         User user = userRepository.findByEmail(email);
+        System.out.println();
+        System.out.println("dole je nadjeni");
+        System.out.println(user.getEmail());
         if (user == null) {
             return null;
         }
         System.out.println(user.getEmail());
         System.out.println("uneta: " + password);
         System.out.println(user.getPassword());
-        if (user.getPassword().equals(password))
-                return user;
+        if (user.getPassword().equals(password)) {
+            System.out.println("dobra sifra");
+            return user;
+        }
         return null;
     }
 

@@ -16,10 +16,13 @@ export class UserService {
   }
 
   login(email: string, password: string) {
+    console.log("2")
+    console.log(email)
+    console.log(password)
+
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password }).pipe(
       catchError(error => {
         console.error('Login error:', error);
-        // Raspakuj grešku i prosledi je dalje
         return throwError(error);
       })
     );
