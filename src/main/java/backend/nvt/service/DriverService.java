@@ -36,7 +36,7 @@ public class DriverService {
         return availableDriversLst;
     }
 
-    public void findReserveDriver(double duration, double[] startPoint) {
+    public Driver findReserveDriver(double duration, double[] startPoint) {
         List<Driver> availableDriversLst = getAvailableDrivers(duration, startPoint);
 
         Driver topDriver = null;
@@ -51,7 +51,9 @@ public class DriverService {
 
         if (topDriver != null) {
             System.out.println("Vozač sa najvećim brojem sati rada u poslednjih 24h: " + topDriver);
+            return topDriver;
         }
+        return null;
     }
 
     private Boolean checkFutureRide(List<Ride> futureRidesLst, double duration){
@@ -79,8 +81,6 @@ public class DriverService {
         return false;
     }
 
-    public void sendDriver() {
-    }
 
 //    public void getRideHistory() {
 //

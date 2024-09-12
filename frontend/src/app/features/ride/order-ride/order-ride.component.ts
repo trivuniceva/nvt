@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RidePaymentPopupComponent } from "../ride-payment-popup/ride-payment-popup.component";
 import { RideService } from "../../../core/services/ride/ride.service";
-import { DriverService } from "../../../core/services/driver.service";
+import { DriverService } from "../../../core/services/driver/driver.service";
+import {NotificationService} from "../../../core/services/notification/notification.service";
 @Component({
   selector: 'app-add-route-options',
   templateUrl: './order-ride.component.html',
@@ -29,7 +30,8 @@ export class OrderRideComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private rideService: RideService,
-    private driverService: DriverService
+    private driverService: DriverService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -79,30 +81,44 @@ export class OrderRideComponent implements OnInit {
       this.driverService.getAvailableDrivers().subscribe(drivers => {
         this.drivers = drivers;
 
-        const dialogRef = this.dialog.open(RidePaymentPopupComponent, {
-          data: {
-            start: this.startPoint,
-            end: this.endPoint,
-            waypoints: waypointsArray,
-            vehicleType: this.selectedVehicleType,
-            allowPets: this.allowPets,
-            allowBabies: this.allowBabies,
-            splitFareEmails: splitFareEmailsArray,
-            numberOfEmails: splitFareEmailsArray.length,
-            drivers: this.drivers,
-            distance: this.distance,
-            price: this.price
-          }
-        });
+        if (this.drivers.length > 0) {
+          const selectedDriver = this.drivers[0];
 
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            console.log('Payment confirmed');
-          } else {
-            console.log('Payment cancelled');
-          }
-          this.resetFields();
-        });
+          // Pošaljite obaveštenje vozaču
+          this.notificationService.notifyDriver(selectedDriver.id, rideData).subscribe(() => {
+            console.log('Notification sent to driver');
+
+            const dialogRef = this.dialog.open(RidePaymentPopupComponent, {
+              data: {
+                start: this.startPoint,
+                end: this.endPoint,
+                waypoints: waypointsArray,
+                vehicleType: this.selectedVehicleType,
+                allowPets: this.allowPets,
+                allowBabies: this.allowBabies,
+                splitFareEmails: splitFareEmailsArray,
+                numberOfEmails: splitFareEmailsArray.length,
+                drivers: this.drivers,
+                distance: this.distance,
+                price: this.price
+              }
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+              if (result) {
+                console.log('Payment confirmed');
+              } else {
+                console.log('Payment cancelled');
+              }
+              this.resetFields();
+            });
+          }, error => {
+            console.error('Error notifying driver:', error);
+          });
+        } else {
+          console.error('No available drivers');
+        }
+
       }, error => {
         console.error('Error fetching drivers:', error);
       });

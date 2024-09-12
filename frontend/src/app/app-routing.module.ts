@@ -11,6 +11,7 @@ import {OrderRideComponent} from "./features/ride/order-ride/order-ride.componen
 import {PaymentComponent} from "./features/ride/payment/payment.component";
 import {RideHistoryViewComponent} from "./features/ride/ride-history-view/ride-history-view.component";
 import {ChatComponent} from "./features/chat/chat.component";
+import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-payment.component";
 
 const routes: Routes = [
   {
@@ -42,13 +43,11 @@ const routes: Routes = [
     path: 'reset-password',
     component: ResetPasswordComponent
   },
-  {
-    path: 'order-ride',
-    component: OrderRideComponent
-  },
+  { path: 'order-ride', component: OrderRideComponent },
   { path: 'payment', component: PaymentComponent },
   { path: 'ride-history', component: RideHistoryViewComponent },
   { path: 'support', component: ChatComponent },
+  { path: 'confirm-payment', component: ConfirmPaymentComponent },
 ];
 
 @NgModule({

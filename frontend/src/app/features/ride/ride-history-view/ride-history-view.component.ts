@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {DriverService} from "../../../core/services/driver.service";
+import {DriverService} from "../../../core/services/driver/driver.service";
 import {RideService} from "../../../core/services/ride/ride.service";
 import {AuthService} from "../../../core/services/auth/auth.service";
 

@@ -1,0 +1,6 @@
+<div *ngIf="notifications.length > 0">
+  <h3>Obaveštenja:</h3>
+  <ul>
+    <li *ngFor="let notification of notifications">{{ notification }}</li>
+  </ul>
+</div>

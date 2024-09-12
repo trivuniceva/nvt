@@ -39,7 +39,6 @@ public class PaymentStatusService {
     }
 
     public void updateTokenStatus(String token) {
-
         emailTokenMap.forEach((email, status) -> System.out.println("token jel: " + email + " - Status: " + status));
         emailStatusMap.forEach((email, status) -> System.out.println("Email: " + email + " - Status: " + status));
 
@@ -57,4 +56,19 @@ public class PaymentStatusService {
     public void printEmailStatusMap() {
         emailStatusMap.forEach((email, status) -> System.out.println("Email: " + email + " - Status: " + status));
     }
+
+    public Map<String, Boolean> getAllEmailStatuses() {
+        return emailStatusMap;
+    }
+
+    public Boolean paymentSuccessful(){
+        for (Boolean status : emailStatusMap.values()) {
+            if (!status) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 }

@@ -1,6 +1,8 @@
 package backend.nvt.controller;
 
 import backend.nvt.DTO.RideRequest;
+import backend.nvt.config.WebSocketHandler;
+import backend.nvt.model.Driver;
 import backend.nvt.model.PaymentResponse;
 import backend.nvt.model.Ride;
 import backend.nvt.repository.RideRepository;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -38,13 +41,15 @@ public class RideController {
     @Autowired
     private PaymentStatusService paymentStatusService;
 
+    @Autowired
+    private WebSocketHandler webSocketHandler;
 
     public RideController(RouteController routeController) {
         this.routeController = routeController;
     }
 
     @PostMapping("/pay")
-    public ResponseEntity<PaymentResponse> payRide(@RequestBody RideRequest rideRequest) throws JSONException {
+    public ResponseEntity<PaymentResponse> payRide(@RequestBody RideRequest rideRequest) throws JSONException, IOException {
 
         ResponseEntity<String> routeResponse = routeController.getRouteWithWaypoints(
                 rideRequest.getStartPoint(),
@@ -64,25 +69,32 @@ public class RideController {
 
         driverService.findReserveDriver(duration, startPoint);
 
-        for (String email : rideRequest.getSplitFareEmails()){
-            System.out.println(email);
-            String token = paymentStatusService.createTokenForEmail(email);
+//        for (String email : rideRequest.getSplitFareEmails()){
+//            System.out.println(email);
+//            String token = paymentStatusService.createTokenForEmail(email);
+//
+//            System.out.println("Token generisan za " + email + ": " + token);
+//
+//            emailService.sendPaymentEmail(email, token);
+//            paymentStatusService.addEmailStatus(email, false);
+//        }
 
-            System.out.println("Token generisan za " + email + ": " + token);
 
-            emailService.sendPaymentEmail(email, token);
-            paymentStatusService.addEmailStatus(email, false);
+//        if(paymentStatusService.paymentSuccessful()){
+//            driverService.findReserveDriver(duration, startPoint);
+//            driverService.sendDriver();
+//            System.out.println("treba sad da zelenimo ");
+//            paymentStatusService.printEmailStatusMap();
+//        }
+
+        Driver topDriver = driverService.findReserveDriver(duration, startPoint);
+        if (topDriver != null) {
+            String notificationMessage = "Nova vožnja: " + rideRequest.getStartPoint() + " do " + rideRequest.getEndPoint();
+            webSocketHandler.sendNotification(topDriver.getId(), notificationMessage); // Promenjen poziv metode
+        } else {
+            System.out.println("nema slob vozaca");
         }
 
-        System.out.println("treba sad da zelenimo ");
-        paymentStatusService.printEmailStatusMap();
-
-
-//        driverService.findReserveDriver(duration, startPoint);
-
-//        if(paymentSuccessful){
-//            driverService.sendDriver();
-//        }
 
         return ResponseEntity.ok(paymentResponse);
     }

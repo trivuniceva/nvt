@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/pay")
 public class PaymentController {
@@ -21,13 +23,15 @@ public class PaymentController {
         boolean isValidToken = paymentStatusService.validateToken(token);
         if (isValidToken) {
             paymentStatusService.updateTokenStatus(token);
-            paymentStatusService.printEmailStatusMap();
-
-            System.out.println("evo posle mejla");
-            paymentStatusService.printEmailStatusMap();
             return ResponseEntity.ok("Payment confirmed for email: ");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or expired token.");
         }
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<Map<String, Boolean>> getPaymentStatuses() {
+        Map<String, Boolean> statuses = paymentStatusService.getAllEmailStatuses();
+        return ResponseEntity.ok(statuses);
     }
 }

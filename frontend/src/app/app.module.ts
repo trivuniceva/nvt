@@ -29,6 +29,7 @@ import {MatOption, MatSelect} from "@angular/material/select";
 import {RideHistoryViewComponent} from "./features/ride/ride-history-view/ride-history-view.component";
 import {ChatComponent} from "./features/chat/chat.component";
 import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-payment.component";
+import {DriverComponent} from "./features/driver/driver/driver.component";
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-p
     RideHistoryViewComponent,
     ChatComponent,
     ConfirmPaymentComponent,
+    DriverComponent
 
 
 
