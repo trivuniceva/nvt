@@ -2,6 +2,8 @@ package backend.nvt.controller;
 
 import backend.nvt.DTO.RideRequest;
 import backend.nvt.model.PaymentResponse;
+import backend.nvt.model.Ride;
+import backend.nvt.repository.RideRepository;
 import backend.nvt.service.DriverService;
 import backend.nvt.service.EmailService;
 import backend.nvt.service.RideService;
@@ -12,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
 @RestController
@@ -24,6 +24,9 @@ public class RideController {
     private RouteController routeController;
     private RideService rideService;
     private UserController userController;
+
+    @Autowired
+    RideRepository rideRepository;
 
 
     @Autowired
@@ -86,6 +89,11 @@ public class RideController {
 
         System.out.println(duration);
         driverService.findReserveDriver(duration, startPoint);
+//        driverService.findReserveDriver(duration, startPoint);
+
+//        if(paymentSuccessful){
+//            driverService.sendDriver();
+//        }
 
         return ResponseEntity.ok(paymentResponse);
     }
@@ -142,6 +150,24 @@ public class RideController {
             default:
                 return 200;
         }
+    }
+
+    @GetMapping("/ride-history")
+    public List<Ride> getRideHistory(String email) {
+
+        List<Ride> filtriraniRide = new ArrayList<>();
+
+        System.out.println("usla si u istoriju na ride ");
+        System.out.println(email);
+
+        for(Ride ride : rideRepository.findAll()){
+            if(ride.getUser().getEmail().equals(email)){
+                System.out.println("---------------> " + ride);
+                filtriraniRide.add(ride);
+            }
+        }
+
+        return filtriraniRide;
     }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -17,6 +17,12 @@ export class RideService {
     });
     return this.http.post<any>(`${this.apiUrl}/pay`, rideData, { headers });
   }
+
+  getRideHistory(userEmail: string): Observable<any[]> {
+    const params = new HttpParams().set('email', userEmail);
+    return this.http.get<any[]>(`${this.apiUrl}/ride-history`, { params });
+  }
+
 
 
 }

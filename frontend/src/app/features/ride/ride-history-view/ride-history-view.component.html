@@ -1,0 +1,50 @@
+<div class="container">
+  <h1>Istorija vožnji</h1>
+
+  <!-- Tabela sa istorijom vožnji -->
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th (click)="sort('route')">Ruta</th>
+      <th (click)="sort('price')">Cena</th>
+      <th (click)="sort('startDate')">Datum početka</th>
+      <th (click)="sort('endDate')">Datum kraja</th>
+      <th>Detalji</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tbody>
+    <tr *ngFor="let ride of rides">
+      <td>{{ ride.route }}</td>
+      <td>{{ ride.price | currency }}</td>
+      <td>{{ ride.user.email | currency }}</td>
+      <td>{{ ride.startDate | date: 'dd.MM.yyyy' }}</td>
+      <td>{{ ride.endDate | date: 'dd.MM.yyyy' }}</td>
+      <td>
+        <button (click)="showDetails(ride)">Detalji</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal za prikaz detalja vožnje -->
+  <div *ngIf="selectedRide" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeDetails()">&times;</span>
+      <h2>Detalji vožnje</h2>
+
+      <!-- Mapa sa rutom -->
+      <div class="map-container">
+<!--        <app-map [route]="selectedRide.route"></app-map>-->
+      </div>
+
+      <!-- Detalji o vozaču i ocena vožnje -->
+      <p><strong>Vozač:</strong> {{ selectedRide.driverName }}</p>
+      <p><strong>Ocena vožnje:</strong> {{ selectedRide.rating || 'Nema ocena' }}</p>
+
+      <!-- Dugmad za ponovno poručivanje -->
+      <button (click)="orderNow(selectedRide)">Poruči odmah</button>
+      <button (click)="orderLater(selectedRide)">Poruči kasnije</button>
+    </div>
+  </div>
+</div>

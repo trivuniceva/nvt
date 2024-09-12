@@ -13,9 +13,7 @@ import { CoreModule } from './core.module';
 import { SharedModule } from './shared.module';
 import {LoginComponent} from "./features/auth/login/login.component";
 import {ProfileComponent} from "./features/profile/profile/profile.component";
-import {ResetPasswordComponent} from "./features/auth/reset-password/reset-password.component";
 import {ForgottenPasswordComponent} from "./features/auth/forgot-password/forgotten-password.component";
-import {RegisterComponent} from "./features/auth/register/register.component";
 import {MapComponent} from "./shared/components/map/map.component";
 import {CommonModule} from "@angular/common";
 import {
@@ -28,6 +26,7 @@ import {RidePaymentPopupComponent} from "./features/ride/ride-payment-popup/ride
 import {PaymentComponent} from "./features/ride/payment/payment.component";
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
+import {RideHistoryViewComponent} from "./features/ride/ride-history-view/ride-history-view.component";
 
 
 @NgModule({
@@ -43,7 +42,7 @@ import {MatOption, MatSelect} from "@angular/material/select";
     OrderRideComponent,
     RidePaymentPopupComponent,
     PaymentComponent,
-
+    RideHistoryViewComponent,
 
 
   ],
@@ -66,6 +65,7 @@ import {MatOption, MatSelect} from "@angular/material/select";
     MatSelect,
     MatOption,
     MatFormFieldModule,
+
 
 
   ],

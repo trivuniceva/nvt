@@ -10,6 +10,8 @@ export class AuthService {
   loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   private userRoleSubject = new BehaviorSubject<string>('');
   userRole$ = this.userRoleSubject.asObservable();
+  userEmail: any;
+
 
   constructor(private http: HttpClient) {
   }
@@ -21,8 +23,11 @@ export class AuthService {
 
     this.userRoleSubject.next(user.userRole);
 
+    this.userEmail = user.email;
+
     console.log("userrr", )
     console.log(localStorage.getItem('currentUser'))
+    console.log(user.email)
     this.loggedIn.next(true);
   }
 

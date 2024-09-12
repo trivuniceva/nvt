@@ -9,6 +9,7 @@ import java.util.List;
 @Table(name = "vozaci")
 public class Driver extends User {
 
+
     @Column(name = "is_available")
     private Boolean isAvailable;
 

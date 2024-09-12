@@ -1,8 +1,8 @@
 package backend.nvt.service;
 
 import backend.nvt.model.Driver;
+import backend.nvt.model.Ride;
 import backend.nvt.repository.DriverRepository;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +17,7 @@ public class DriverService {
     @Autowired
     private DriverRepository driverRepository;
 
-    public List<Driver> getAvailableDrivers() {
-//        return driverRepository.findAvailableDrivers();
-        return null;
-    }
-
-    public void findReserveDriver(double duration, double[] startPoint) {
-
+    public List<Driver> getAvailableDrivers(double duration, double[] startPoint) {
         List<Driver> availableDriversLst = new ArrayList<>();
 
         for (Driver driver : driverRepository.findAll()) {
@@ -31,40 +25,75 @@ public class DriverService {
                 if(driver.getHoursWorkedLast24h() < 8){
                     if(!driver.getHasFutureDrive()){
                         availableDriversLst.add(driver);
+                    } else if (checkFutureRide(driver.getFutureRidesLst(), duration)){
+                        availableDriversLst.add(driver);
+                        System.out.println();
+                        System.out.println(" ima buduce voznje i dobro mu je vreme " + driver);
                     }
-//                    TODO: proveri da li stizu
-//                    checkFutureRide(duration, driver.getHasFutureDrive());
                 }
             }
         }
 
+        return availableDriversLst;
+    }
+
+    public void findReserveDriver(double duration, double[] startPoint) {
+
+        List<Driver> availableDriversLst = getAvailableDrivers(duration, startPoint);
+
+        Driver topDriver = null;
+        int maxHoursWorked = -1;
+
         for (Driver driver : availableDriversLst) {
-            System.out.println(driver.toString());
+            if (driver.getHoursWorkedLast24h() > maxHoursWorked) {
+                maxHoursWorked = driver.getHoursWorkedLast24h();
+                topDriver = driver;
+            }
         }
+
+        if (topDriver != null) {
+            System.out.println("Vozač sa najvećim brojem sati rada u poslednjih 24h: " + topDriver);
+        }
+
+
 
 
     }
 
-    private List<Driver> checkFutureRide(double duration, Boolean hasFutureDrive){
-        List<Driver> availableDriversLst = null;
+    private Boolean checkFutureRide(List<Ride> futureRidesLst, double duration){
 
         LocalDateTime now = LocalDateTime.now();
-
         Duration rideDuration = Duration.ofMinutes((long) duration);
         LocalDateTime futureTime = now.plus(rideDuration);
 
-        System.out.println("Trenutno vreme: " + now);
+//        System.out.println("Trenutno vreme: " + now);
         System.out.println("Vreme posle dodavanja trajanja: " + futureTime);
-        System.out.println();
+//        System.out.println();
 
+        System.out.println(" lista ");
+        for(Ride buduce : futureRidesLst){
+            System.out.println(buduce.getStartTime());
+            if( futureTime.isBefore(buduce.getStartTime())){
+                System.out.println("imas dobro vreme");
+                return true;
+            } else if (futureTime.isBefore(buduce.getEndTime())) {
+                System.out.println("imas dobro vreme END TIMEEEEEE <3333");
+                return true;
 
-        if(hasFutureDrive) {
-//            TODO: proveri kada su i da li stize na tu voznju ako prihvati ovu
-//            dodaj u lisu i vrati tu listu
+            }
         }
-        return null;
+
+        return false;
     }
 
+    public void sendDriver() {
+    }
 
-
+//    public void getRideHistory() {
+//
+//        System.out.println("driver iz istorije");
+//        for (Driver driver : driverRepository.findAll()){
+//            System.out.println(driver);
+//        }
+//    }
 }

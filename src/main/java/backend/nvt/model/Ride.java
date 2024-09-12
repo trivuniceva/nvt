@@ -35,16 +35,20 @@ public class Ride {
     private List<Coordinate> waypoints;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name = "driver_id")
     private Driver driver;
 
-    @ManyToMany
-    @JoinTable(
-            name = "ride_passengers",
-            joinColumns = @JoinColumn(name = "ride_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<User> passengers;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "ride_passengers",
+//            joinColumns = @JoinColumn(name = "ride_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id")
+//    )
+//    private List<User> passengers;
 
     @ManyToMany
     @JoinTable(
@@ -102,13 +106,6 @@ public class Ride {
         this.driver = driver;
     }
 
-    public List<User> getPassengers() {
-        return passengers;
-    }
-
-    public void setPassengers(List<User> passengers) {
-        this.passengers = passengers;
-    }
 
     public List<User> getLinkedPassengers() {
         return linkedPassengers;
@@ -196,5 +193,13 @@ public class Ride {
 
     public void setScheduledTime(LocalDateTime scheduledTime) {
         this.scheduledTime = scheduledTime;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
