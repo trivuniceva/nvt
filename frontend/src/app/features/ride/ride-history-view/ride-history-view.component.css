@@ -171,3 +171,52 @@ button:disabled {
 .btn-block:hover {
   background-color: #c82333;
 }
+
+
+.date-filter {
+  margin-bottom: 20px;
+}
+
+.date-filter .row {
+  display: flex;
+  align-items: center;
+}
+
+.chart-container {
+  margin-bottom: 20px;
+}
+
+.modal-content {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.2);
+}
+
+.modal-header {
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.close {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #000;
+  opacity: .5;
+}
+
+.close:hover {
+  color: #000;
+  text-decoration: none;
+  opacity: .75;
+}
+
+.map-container {
+  height: 300px;
+  width: 100%;
+}
