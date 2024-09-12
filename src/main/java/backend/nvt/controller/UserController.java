@@ -1,7 +1,10 @@
 package backend.nvt.controller;
 
+import backend.nvt.DTO.DriverResponse;
 import backend.nvt.DTO.LoginRequest;
 import backend.nvt.DTO.ResetPasswordRequest;
+import backend.nvt.DTO.UserResponse;
+import backend.nvt.model.Driver;
 import backend.nvt.model.RegisterRequest;
 import backend.nvt.model.UserRole;
 import backend.nvt.service.EmailService;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -45,16 +49,37 @@ public class UserController {
         if (isAuthenticatedUser != null) {
             String sessionId = java.util.UUID.randomUUID().toString();
             userSessionService.loginUser(loginRequest.getEmail(), sessionId);
-            System.out.println("treba da je ovde " +
-                    "");
-            System.out.println(ResponseEntity.ok(isAuthenticatedUser));
-            System.out.println(isAuthenticatedUser.getEmail());
-            System.out.println(isAuthenticatedUser.getUserRole());
-            return ResponseEntity.ok(isAuthenticatedUser); // Vraća korisnika u slučaju uspeha
+
+            if (isAuthenticatedUser instanceof Driver) {
+                Driver driver = (Driver) isAuthenticatedUser;
+                DriverResponse response = new DriverResponse(
+                        driver.getEmail(),
+                        driver.getUserRole().name(),
+                        driver.getFirstname(),
+                        driver.getLastname(),
+                        driver.getAvailable(),
+                        driver.getHoursWorkedLast24h(),
+                        driver.getVehicleType(),
+                        driver.getTimeOfLogin(),
+                        driver.getHasFutureDrive()
+                );
+                return ResponseEntity.ok(response);
+            } else {
+                UserResponse response = new UserResponse(
+                        isAuthenticatedUser.getEmail(),
+                        isAuthenticatedUser.getUserRole().name(),
+                        isAuthenticatedUser.getFirstname(),
+                        isAuthenticatedUser.getLastname()
+                );
+                return ResponseEntity.ok(response);
+            }
         } else {
-            return ResponseEntity.status(401).body(new ErrorResponse("Invalid email or password")); // Vraća JSON poruku o grešci
+            return ResponseEntity.status(401).body(new ErrorResponse("Invalid email or password"));
         }
     }
+
+
+
 
     @PostMapping("/logout")
     public String logout(@RequestParam String sessionId) {
