@@ -12,6 +12,7 @@ import {PaymentComponent} from "./features/ride/payment/payment.component";
 import {RideHistoryViewComponent} from "./features/ride/ride-history-view/ride-history-view.component";
 import {ChatComponent} from "./features/chat/chat.component";
 import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-payment.component";
+import {SignupDriverComponent} from "./features/admin/signup-driver/signup-driver.component";
 
 const routes: Routes = [
   {
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: 'ride-history', component: RideHistoryViewComponent },
   { path: 'support', component: ChatComponent },
   { path: 'confirm-payment', component: ConfirmPaymentComponent },
+  { path: 'create-driver', component: SignupDriverComponent },
 ];
 
 @NgModule({

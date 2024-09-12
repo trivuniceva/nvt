@@ -72,12 +72,10 @@
       <button type="submit" class="btn btn-submit">Submit</button>
     </div>
 
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
   </form>
 </div>
 
-<div class="video-background">
-  <video muted autoplay loop playsinline>
-    <source src="assets/video/vacay.mov" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>

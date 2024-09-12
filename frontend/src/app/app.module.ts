@@ -30,6 +30,7 @@ import {RideHistoryViewComponent} from "./features/ride/ride-history-view/ride-h
 import {ChatComponent} from "./features/chat/chat.component";
 import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-payment.component";
 import {DriverComponent} from "./features/driver/driver/driver.component";
+import {SignupDriverComponent} from "./features/admin/signup-driver/signup-driver.component";
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {DriverComponent} from "./features/driver/driver/driver.component";
     RideHistoryViewComponent,
     ChatComponent,
     ConfirmPaymentComponent,
-    DriverComponent
+    DriverComponent,
+    SignupDriverComponent
 
 
 

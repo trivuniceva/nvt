@@ -78,9 +78,6 @@ public class UserController {
         }
     }
 
-
-
-
     @PostMapping("/logout")
     public String logout(@RequestParam String sessionId) {
         userSessionService.logoutUser(sessionId);
@@ -116,7 +113,6 @@ public class UserController {
 
         System.out.println("RegisterRequest password: " + registerRequest.getPassword());
 
-
         if (userService.findByEmail(registerRequest.getEmail()) != null) {
             return ResponseEntity.status(400).body(new ErrorResponse("Email is already in use."));
         }
@@ -129,6 +125,39 @@ public class UserController {
 //        newUser.setAddress(registerRequest.getAddress());
         newUser.setPhone(registerRequest.getPhone());
         newUser.setUserRole(UserRole.valueOf("REGISTERED_USER"));
+        newUser.setResetToken(generateActivationToken());
+
+        try {
+            userService.save(newUser);
+            String token = generateResetToken(newUser);
+            newUser.setResetToken(token);
+            emailService.sendActivationEmail(newUser.getEmail(), newUser.getResetToken());
+
+            return ResponseEntity.ok(new SuccessResponse("Registration successful! Please check your email to activate your account."));
+
+        } catch (Exception e) {
+            System.err.println("Error saving user: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Failed to save user."));
+        }
+    }
+
+    @PostMapping("/create-driver")
+    public ResponseEntity<?> createDriver(@RequestBody RegisterRequest registerRequest) {
+        System.out.println("treba udje na driver");
+//        System.out.println("RegisterRequest password: " + registerRequest.getPassword());
+
+        if (userService.findByEmail(registerRequest.getEmail()) != null) {
+            return ResponseEntity.status(400).body(new ErrorResponse("Email is already in use."));
+        }
+
+        User newUser = new User();
+        newUser.setEmail(registerRequest.getEmail());
+        newUser.setPassword(registerRequest.getPassword());
+        newUser.setFirstname(registerRequest.getFirstname());
+        newUser.setLastname(registerRequest.getLastname());
+//        newUser.setAddress(registerRequest.getAddress());
+        newUser.setPhone(registerRequest.getPhone());
+        newUser.setUserRole(UserRole.valueOf("DRIVER"));
         newUser.setResetToken(generateActivationToken());
 
         try {

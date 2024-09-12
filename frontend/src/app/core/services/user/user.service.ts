@@ -58,4 +58,14 @@ export class UserService {
       })
     );
   }
+
+  createDriver(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/create-driver`, userData)
+      .pipe(
+        catchError(error => {
+          // Handle specific errors here
+          return throwError(error);
+        })
+      );
+  }
 }

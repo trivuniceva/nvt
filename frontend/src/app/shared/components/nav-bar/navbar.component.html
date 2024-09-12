@@ -14,8 +14,10 @@
 
 
 <div *ngIf="userRole === 'ADMINISTRATOR'" class="sidenav">
-  <a href=""> adminileeee </a>
-  <a href=""> Profile </a>
+  <a routerLink="/profile">Profile</a>
+  <a routerLink="/create-driver">Create driver</a>
+  <a routerLink="">Block driver</a>
+
   <a href="#" (click)="logout()">Logout</a>
 
 
