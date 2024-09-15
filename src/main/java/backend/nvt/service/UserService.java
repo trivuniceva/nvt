@@ -99,6 +99,7 @@ public class UserService {
 
         user.setFirstname(userDto.getFirstname());
         user.setLastname(userDto.getLastname());
+        user.setProfilePic(user.getProfilePic());
 
         userRepository.save(user);
 

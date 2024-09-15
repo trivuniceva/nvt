@@ -5,12 +5,16 @@ public class UserResponse {
     private String userRole;
     private String firstname;
     private String lastname;
+    private String phone;
+    private String profilePic;
 
-    public UserResponse(String email, String userRole, String firstname, String lastname) {
+    public UserResponse(String email, String userRole, String firstname, String lastname, String phone, String profilePic) {
         this.email = email;
         this.userRole = userRole;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.phone = phone;
+        this.profilePic = profilePic;
     }
 
     public String getEmail() {
@@ -43,5 +47,21 @@ public class UserResponse {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }

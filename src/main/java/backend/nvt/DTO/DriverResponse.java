@@ -12,10 +12,10 @@ public class DriverResponse extends UserResponse {
     private Timestamp timeOfLogin;
     private Boolean hasFutureDrive;
 
-    public DriverResponse(String email, String userRole, String firstname, String lastname,
+    public DriverResponse(String email, String userRole, String firstname, String lastname, String phone, String profilePic,
                           Boolean isAvailable, int hoursWorkedLast24h, VehicleType vehicleType,
                           Timestamp timeOfLogin, Boolean hasFutureDrive) {
-        super(email, userRole, firstname, lastname);
+        super(email, userRole, firstname, lastname, phone, profilePic);
         this.isAvailable = isAvailable;
         this.hoursWorkedLast24h = hoursWorkedLast24h;
         this.vehicleType = vehicleType;

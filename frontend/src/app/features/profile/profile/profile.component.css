@@ -62,3 +62,14 @@
   font-size: 1em;
   color: #555;
 }
+
+.image-container {
+  margin-top: 20px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}

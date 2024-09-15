@@ -5,6 +5,7 @@ public class UserDto {
     private String firstname;
     private String lastname;
     private String email;
+    private String profilePic;
 
     public String getFirstname() {
         return firstname;
@@ -28,5 +29,13 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }

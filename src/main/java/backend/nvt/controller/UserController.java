@@ -52,6 +52,8 @@ public class UserController {
                         driver.getUserRole().name(),
                         driver.getFirstname(),
                         driver.getLastname(),
+                        driver.getPhone(),
+                        driver.getProfilePic(),
                         driver.getAvailable(),
                         driver.getHoursWorkedLast24h(),
                         driver.getVehicleType(),
@@ -64,7 +66,9 @@ public class UserController {
                         isAuthenticatedUser.getEmail(),
                         isAuthenticatedUser.getUserRole().name(),
                         isAuthenticatedUser.getFirstname(),
-                        isAuthenticatedUser.getLastname()
+                        isAuthenticatedUser.getLastname(),
+                        isAuthenticatedUser.getPhone(),
+                        isAuthenticatedUser.getProfilePic()
                 );
                 return ResponseEntity.ok(response);
             }

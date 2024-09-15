@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit{
 
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser()
+    console.log("ovog usera gledas info " + this.user);
   }
 
 
@@ -34,11 +35,9 @@ export class ProfileComponent implements OnInit{
     response => {
       console.log('User updated successfully:', response);
       this.isEditing = false;
-      // Možete dodati još neko obaveštenje ili redirekciju
     },
     error => {
       console.error('Error updating user:', error);
-      // Možete dodati obaveštenje o grešci korisniku
     }
   );
   }
