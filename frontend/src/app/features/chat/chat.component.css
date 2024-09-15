@@ -1,0 +1,62 @@
+/* Opšti kontejner za chat */
+div {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Stil za poruke */
+div > div {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+div > div:last-child {
+  border-bottom: none;
+}
+
+/* Stil za ime pošiljaoca */
+div > div > span.sender {
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Stil za tekst poruke */
+div > div > span.message {
+  color: #333;
+}
+
+/* Stil za input polje */
+input {
+  width: calc(100% - 100px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+  box-sizing: border-box;
+}
+
+/* Stil za dugme */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

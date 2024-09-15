@@ -1,25 +1,37 @@
 import { Injectable } from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RideService {
-  private _polaziste: string = '';
-  private _destinacija: string = '';
+  private apiUrl = 'http://localhost:8080/api/rides';
 
-  setPolaziste(polaziste: string) {
-    this._polaziste = polaziste;
+  constructor(private http: HttpClient) {}
+
+  submitRideOptions(rideData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json' // Dodaj Accept header
+    });
+    return this.http.post<any>(`${this.apiUrl}/pay`, rideData, { headers });
   }
 
-  setDestinacija(destinacija: string) {
-    this._destinacija = destinacija;
+  getRideHistory(userEmail: string): Observable<any[]> {
+    const params = new HttpParams().set('email', userEmail);
+    return this.http.get<any[]>(`${this.apiUrl}/ride-history`, { params });
   }
 
-  getPolaziste(): string {
-    return this._polaziste;
+  getRideHistoryDriver(userEmail: string): Observable<any[]> {
+    const params = new HttpParams().set('email', userEmail);
+    return this.http.get<any[]>(`${this.apiUrl}/ride-history-driver`, { params });
   }
 
-  getDestinacija(): string {
-    return this._destinacija;
+  getAllRideHistory(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ride-history-all`, );
   }
+
+
+
 }

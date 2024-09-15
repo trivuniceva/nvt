@@ -12,15 +12,28 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from './core.module';
 import { SharedModule } from './shared.module';
 import {LoginComponent} from "./features/auth/login/login.component";
-import {RouteMapComponent} from "./shared/route-map/route-map.component";
 import {ProfileComponent} from "./features/profile/profile/profile.component";
-import {ResetPasswordComponent} from "./features/auth/reset-password/reset-password.component";
 import {ForgottenPasswordComponent} from "./features/auth/forgot-password/forgotten-password.component";
-import {RegisterComponent} from "./features/auth/register/register.component";
 import {MapComponent} from "./shared/components/map/map.component";
 import {CommonModule} from "@angular/common";
-import {AddRouteOptionsComponent} from "./features/ride/add-route-options/add-route-options.component";
-import {RouteConfirmationComponent} from "./features/ride/route-confirmation/route-confirmation.component";
+import {
+  OrderRideUnregisteredComponent
+} from "./shared/components/order-ride-unregistered/order-ride-unregistered.component";
+import {OrderRideComponent} from "./features/ride/order-ride/order-ride.component";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {MatDialogModule} from "@angular/material/dialog";
+import {RidePaymentPopupComponent} from "./features/ride/ride-payment-popup/ride-payment-popup.component";
+import {PaymentComponent} from "./features/ride/payment/payment.component";
+import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {RideHistoryViewComponent} from "./features/ride/ride-history-view/ride-history-view.component";
+import {ChatComponent} from "./features/chat/chat.component";
+import {ConfirmPaymentComponent} from "./features/ride/confirm-payment/confirm-payment.component";
+import {DriverComponent} from "./features/driver/driver/driver.component";
+import {SignupDriverComponent} from "./features/admin/signup-driver/signup-driver.component";
+import {BlockDriverComponent} from "./features/admin/block-driver/block-driver.component";
+import {RideHistoryAllComponent} from "./features/admin/ride-history-all/ride-history-all.component";
+import {DriveHistoryComponent} from "./features/driver/drive-history/drive-history.component";
 
 
 @NgModule({
@@ -29,12 +42,24 @@ import {RouteConfirmationComponent} from "./features/ride/route-confirmation/rou
     HomeComponent,
     NavBarComponent,
     LoginComponent,
-    RouteMapComponent,
+    OrderRideUnregisteredComponent,
     NavBarComponent,
     ProfileComponent,
     MapComponent,
-    AddRouteOptionsComponent,
-    RouteConfirmationComponent
+    OrderRideComponent,
+    RidePaymentPopupComponent,
+    PaymentComponent,
+    RideHistoryViewComponent,
+    ChatComponent,
+    ConfirmPaymentComponent,
+    DriverComponent,
+    SignupDriverComponent,
+    BlockDriverComponent,
+    RideHistoryAllComponent,
+    DriveHistoryComponent,
+
+
+
 
   ],
   imports: [
@@ -51,16 +76,19 @@ import {RouteConfirmationComponent} from "./features/ride/route-confirmation/rou
     // MapComponent,
     // ResetPasswordComponent,
     CommonModule,
-
-
+    MatDialogModule,
+    MatFormField,
+    MatSelect,
+    MatOption,
+    MatFormFieldModule,
 
 
 
   ],
-  providers: [UserService],
+  providers: [UserService, provideAnimationsAsync()],
   exports: [
     NavBarComponent,
-    RouteMapComponent,
+    OrderRideUnregisteredComponent,
     MapComponent,
   ],
   bootstrap: [AppComponent]

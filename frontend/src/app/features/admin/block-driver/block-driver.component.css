@@ -1,0 +1,66 @@
+/* Styling for the driver table container */
+.driver-table-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(30, 30, 30, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for the driver table */
+.driver-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.driver-table th, .driver-table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.driver-table thead {
+  background-color: #333;
+  color: white;
+}
+
+.driver-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.driver-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.driver-table th {
+  border-bottom: 2px solid #ddd;
+}
+
+.driver-table td {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Styling for no drivers text */
+.no-drivers-text {
+  text-align: center;
+  font-size: 1.2em;
+  color: #666;
+  margin-top: 20px;
+}
+
+/* Styling for the block button */
+.btn-block {
+  background-color: #dc3545; /* Red background for block button */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875em;
+  transition: background-color 0.3s;
+}
+
+.btn-block:hover {
+  background-color: #c82333; /* Darker red on hover */
+}

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "nvt_users")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +29,17 @@ public class User {
     @Column(name = "reset_token")
     private String resetToken;
 
-    @Column(name = "address")
-    private String address;
+//    @Column(name = "address")
+//    private String address;
 
     @Column(name = "phone")
     private String phone;
 
     @Column(name = "is_active")
     private boolean isActive;
+
+    @Column(name = "profile_pic")
+    private String profilePic;
 
     public Long getId() {
         return id;
@@ -93,13 +97,13 @@ public class User {
         this.resetToken = resetToken;
     }
 
-    public String getAddress() {
-        return address;
-    }
+//    public String getAddress() {
+//        return address;
+//    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+//    public void setAddress(String address) {
+//        this.address = address;
+//    }
 
     public String getPhone() {
         return phone;
@@ -115,5 +119,13 @@ public class User {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }

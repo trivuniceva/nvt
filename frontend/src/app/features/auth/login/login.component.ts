@@ -43,9 +43,14 @@ export class LoginComponent {
     if (this.email === '' || this.password === '') {
       this.errorMessage = 'Please fill in both fields.';
     } else {
+      console.log("1")
+      console.log(this.email)
+      console.log(this.password)
       this.userService.login(this.email, this.password).subscribe(
         response => {
           // Očekujemo korisnički objekat
+          console.log(response.userRole)
+          console.log(response)
           if (response && response.userRole) {
             this.authService.login({ user: response });
             this.router.navigate(['/profile']);

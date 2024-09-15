@@ -1,49 +1,94 @@
 package backend.nvt.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
-//@Entity
-//@Table(name = "rides")
+@Entity
+@Table(name = "rides")
 public class Ride {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "nvt_users")
-    private RegisteredUser registeredUser;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "start_latitude")),
+            @AttributeOverride(name = "longitude", column = @Column(name = "start_longitude"))
+    })
+    private Coordinate startLocation;
 
-//    @ManyToOne
-//    @JoinColumn(name = "driver_id")
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "end_latitude")),
+            @AttributeOverride(name = "longitude", column = @Column(name = "end_longitude"))
+    })
+    private Coordinate endLocation;
+
+    @ElementCollection
+    @CollectionTable(name = "ride_waypoints", joinColumns = @JoinColumn(name = "ride_id"))
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "waypoint_latitude")),
+            @AttributeOverride(name = "longitude", column = @Column(name = "waypoint_longitude"))
+    })
+    private List<Coordinate> waypoints;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
     private Driver driver;
 
-//    @Column(nullable = false)
-    private String startLocation;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "ride_passengers",
+//            joinColumns = @JoinColumn(name = "ride_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id")
+//    )
+//    private List<User> passengers;
 
-//    @Column(nullable = false)
-    private String endLocation;
+    @ManyToMany
+    @JoinTable(
+            name = "ride_linked_passengers",
+            joinColumns = @JoinColumn(name = "ride_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> linkedPassengers;
 
-//    @ElementCollection
-//    @CollectionTable(name = "ride_stops", joinColumns = @JoinColumn(name = "ride_id"))
-//    @Column(name = "stop_location")
-    private List<String> stops;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "vehicle_type")
+    private VehicleType vehicleType;
 
-//    @Column(nullable = false)
+    @Column(name = "has_babies")
+    private boolean hasBabies;
+
+    @Column(name = "has_pets")
+    private boolean hasPets;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private RideStatus status;
+
+    @Column(name = "distance")
+    private double distance;
+
+    @Column(name = "price")
     private double price;
 
-//    @Column(nullable = false)
+    @Column(name = "start_time")
     private LocalDateTime startTime;
 
-//    @Column(nullable = false)
+    @Column(name = "end_time")
     private LocalDateTime endTime;
 
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-    private RideStatus status;
+    @Column(name = "is_scheduled")
+    private boolean isScheduled;
+
+    @Column(name = "scheduled_time")
+    private LocalDateTime scheduledTime;
 
     public Long getId() {
         return id;
@@ -51,14 +96,6 @@ public class Ride {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public RegisteredUser getRegisteredUser() {
-        return registeredUser;
-    }
-
-    public void setRegisteredUser(RegisteredUser registeredUser) {
-        this.registeredUser = registeredUser;
     }
 
     public Driver getDriver() {
@@ -69,28 +106,53 @@ public class Ride {
         this.driver = driver;
     }
 
-    public String getStartLocation() {
-        return startLocation;
+
+    public List<User> getLinkedPassengers() {
+        return linkedPassengers;
     }
 
-    public void setStartLocation(String startLocation) {
-        this.startLocation = startLocation;
+    public void setLinkedPassengers(List<User> linkedPassengers) {
+        this.linkedPassengers = linkedPassengers;
     }
 
-    public String getEndLocation() {
-        return endLocation;
+    public VehicleType getVehicleType() {
+        return vehicleType;
     }
 
-    public void setEndLocation(String endLocation) {
-        this.endLocation = endLocation;
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
     }
 
-    public List<String> getStops() {
-        return stops;
+    public boolean isHasBabies() {
+        return hasBabies;
     }
 
-    public void setStops(List<String> stops) {
-        this.stops = stops;
+    public void setHasBabies(boolean hasBabies) {
+        this.hasBabies = hasBabies;
+    }
+
+    public boolean isHasPets() {
+        return hasPets;
+    }
+
+    public void setHasPets(boolean hasPets) {
+        this.hasPets = hasPets;
+    }
+
+    public RideStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(RideStatus status) {
+        this.status = status;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     public double getPrice() {
@@ -117,11 +179,32 @@ public class Ride {
         this.endTime = endTime;
     }
 
-    public RideStatus getStatus() {
-        return status;
+    public boolean isScheduled() {
+        return isScheduled;
     }
 
-    public void setStatus(RideStatus status) {
-        this.status = status;
+    public void setScheduled(boolean scheduled) {
+        isScheduled = scheduled;
+    }
+
+    public LocalDateTime getScheduledTime() {
+        return scheduledTime;
+    }
+
+    public void setScheduledTime(LocalDateTime scheduledTime) {
+        this.scheduledTime = scheduledTime;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getRoute() {
+//        return "Start: " + startLocation.toString() + " - End: " + endLocation.toString();
+        return "Start: " + this.startLocation.getLatitude() + " - End: " + this.endLocation.getLongitude();
     }
 }

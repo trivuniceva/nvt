@@ -18,7 +18,7 @@ public class LoginTest {
     @BeforeEach
     public void setUp() {
         driver = new SafariDriver();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         System.out.println("Driver is set up: " + (driver != null));
     }
 
@@ -43,6 +43,33 @@ public class LoginTest {
         loginButton.click();
 
         Thread.sleep(2000);
+    }
+
+    @Test
+    public void testLoginWithIncorrectPassword() throws InterruptedException {
+        driver.get("http://localhost:4200/login");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
+        WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+
+        Thread.sleep(2000);
+        emailField.sendKeys("trivuniceva99@gmail.com");
+
+        Thread.sleep(2000);
+        passwordField.sendKeys("wrongpassword"); // Unesite pogrešnu lozinku
+
+        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn.btn-primary")));
+
+        Thread.sleep(2000);
+        loginButton.click();
+
+        Thread.sleep(2000);
+
+        // Check for error message indicating login failure (modify the selector according to your actual page)
+        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("errorMessage")));
+        System.out.println("Login failed: " + (errorMessage != null));
     }
 
     @AfterEach

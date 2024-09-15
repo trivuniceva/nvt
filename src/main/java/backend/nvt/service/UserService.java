@@ -1,5 +1,6 @@
 package backend.nvt.service;
 
+import backend.nvt.DTO.UserDto;
 import backend.nvt.repository.UserRepository;
 import backend.nvt.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,10 @@ public class UserService {
         if (user == null) {
             return null;
         }
-        System.out.println(user.getEmail());
-        System.out.println("uneta: " + password);
-        System.out.println(user.getPassword());
-        if (user.getPassword().equals(password))
-                return user;
+        if (user.getPassword().equals(password)) {
+            System.out.println("dobra sifra");
+            return user;
+        }
         return null;
     }
 
@@ -90,4 +90,18 @@ public class UserService {
     }
 
 
+    public void updateUser(UserDto userDto) {
+        User user = userRepository.findByEmail(userDto.getEmail());
+
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        user.setFirstname(userDto.getFirstname());
+        user.setLastname(userDto.getLastname());
+        user.setProfilePic(user.getProfilePic());
+
+        userRepository.save(user);
+
+    }
 }

@@ -1,20 +1,20 @@
 package backend.nvt.controller;
 
-import backend.nvt.model.RegisterRequest;
-import backend.nvt.model.UserRole;
+import backend.nvt.DTO.*;
+import backend.nvt.model.*;
 import backend.nvt.service.EmailService;
 import backend.nvt.service.UserService;
-import backend.nvt.model.User;
 import backend.nvt.service.UserSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -44,9 +44,36 @@ public class UserController {
         if (isAuthenticatedUser != null) {
             String sessionId = java.util.UUID.randomUUID().toString();
             userSessionService.loginUser(loginRequest.getEmail(), sessionId);
-            return ResponseEntity.ok(isAuthenticatedUser); // Vraća korisnika u slučaju uspeha
+
+            if (isAuthenticatedUser instanceof Driver) {
+                Driver driver = (Driver) isAuthenticatedUser;
+                DriverResponse response = new DriverResponse(
+                        driver.getEmail(),
+                        driver.getUserRole().name(),
+                        driver.getFirstname(),
+                        driver.getLastname(),
+                        driver.getPhone(),
+                        driver.getProfilePic(),
+                        driver.getAvailable(),
+                        driver.getHoursWorkedLast24h(),
+                        driver.getVehicleType(),
+                        driver.getTimeOfLogin(),
+                        driver.getHasFutureDrive()
+                );
+                return ResponseEntity.ok(response);
+            } else {
+                UserResponse response = new UserResponse(
+                        isAuthenticatedUser.getEmail(),
+                        isAuthenticatedUser.getUserRole().name(),
+                        isAuthenticatedUser.getFirstname(),
+                        isAuthenticatedUser.getLastname(),
+                        isAuthenticatedUser.getPhone(),
+                        isAuthenticatedUser.getProfilePic()
+                );
+                return ResponseEntity.ok(response);
+            }
         } else {
-            return ResponseEntity.status(401).body(new ErrorResponse("Invalid email or password")); // Vraća JSON poruku o grešci
+            return ResponseEntity.status(401).body(new ErrorResponse("Invalid email or password"));
         }
     }
 
@@ -85,7 +112,6 @@ public class UserController {
 
         System.out.println("RegisterRequest password: " + registerRequest.getPassword());
 
-
         if (userService.findByEmail(registerRequest.getEmail()) != null) {
             return ResponseEntity.status(400).body(new ErrorResponse("Email is already in use."));
         }
@@ -95,7 +121,7 @@ public class UserController {
         newUser.setPassword(registerRequest.getPassword());
         newUser.setFirstname(registerRequest.getFirstname());
         newUser.setLastname(registerRequest.getLastname());
-        newUser.setAddress(registerRequest.getAddress());
+//        newUser.setAddress(registerRequest.getAddress());
         newUser.setPhone(registerRequest.getPhone());
         newUser.setUserRole(UserRole.valueOf("REGISTERED_USER"));
         newUser.setResetToken(generateActivationToken());
@@ -113,6 +139,53 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Failed to save user."));
         }
     }
+
+    @PostMapping("/create-driver")
+    public ResponseEntity<?> createDriver(@RequestBody Map<String, Object> requestData) {
+        System.out.println("Treba ući na driver");
+
+        String email = (String) requestData.get("email");
+        String password = (String) requestData.get("password");
+        String firstname = (String) requestData.get("firstname");
+        String lastname = (String) requestData.get("lastname");
+        String phone = (String) requestData.get("phone");
+        String vehicleTypeStr = (String) requestData.get("vehicleType");
+
+        if (userService.findByEmail(email) != null) {
+            return ResponseEntity.status(400).body(new ErrorResponse("Email is already in use."));
+        }
+
+        Driver newDriver = new Driver();
+        newDriver.setEmail(email);
+        newDriver.setPassword(password);
+        newDriver.setFirstname(firstname);
+        newDriver.setLastname(lastname);
+        newDriver.setPhone(phone);
+        newDriver.setUserRole(UserRole.DRIVER);
+        newDriver.setResetToken(generateActivationToken());
+
+        newDriver.setAvailable(false);
+        newDriver.setHoursWorkedLast24h(0);
+        newDriver.setHasFutureDrive(false);
+
+        VehicleType vehicleType = VehicleType.valueOf(vehicleTypeStr.toUpperCase()); // Pretvori string u VehicleType
+        newDriver.setVehicleType(vehicleType);
+
+        try {
+            userService.save(newDriver);
+
+            String token = generateResetToken(newDriver);
+            newDriver.setResetToken(token);
+            emailService.sendActivationEmail(newDriver.getEmail(), newDriver.getResetToken());
+
+            return ResponseEntity.ok(new SuccessResponse("Registration successful! Please check your email to activate your account."));
+
+        } catch (Exception e) {
+            System.err.println("Error saving driver: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Failed to save driver."));
+        }
+    }
+
 
     private String generateResetToken(User user) {
         return UUID.randomUUID().toString();
@@ -136,4 +209,17 @@ public class UserController {
     private String generateActivationToken() {
         return UUID.randomUUID().toString();
     }
+
+    @PostMapping("/update-user")
+    public ResponseEntity<?> updateUser(@RequestBody UserDto userDto) {
+        System.out.println(userDto.getEmail());
+        System.out.println(userDto.getFirstname());
+        try {
+            userService.updateUser(userDto);
+            return ResponseEntity.ok().body("User updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating user");
+        }
+    }
+
 }

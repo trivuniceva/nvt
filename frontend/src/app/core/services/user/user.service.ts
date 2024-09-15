@@ -16,10 +16,13 @@ export class UserService {
   }
 
   login(email: string, password: string) {
+    console.log("2")
+    console.log(email)
+    console.log(password)
+
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password }).pipe(
       catchError(error => {
         console.error('Login error:', error);
-        // Raspakuj grešku i prosledi je dalje
         return throwError(error);
       })
     );
@@ -55,4 +58,24 @@ export class UserService {
       })
     );
   }
+
+  createDriver(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/create-driver`, userData)
+      .pipe(
+        catchError(error => {
+          // Handle specific errors here
+          return throwError(error);
+        })
+      );
+  }
+
+  updateUser(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/update-user`, userData).pipe(
+      catchError(error => {
+        console.error('Error updating user:', error);
+        return throwError(error);
+      })
+    );
+  }
+
 }

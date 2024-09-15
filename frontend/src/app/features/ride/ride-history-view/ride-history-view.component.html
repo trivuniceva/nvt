@@ -1,0 +1,70 @@
+<div class="container">
+  <h1>Ride History</h1>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th (click)="sort('route')">Route</th>
+      <th (click)="sort('price')">Price</th>
+      <th (click)="sort('startDate')">Start Date</th>
+      <th (click)="sort('endDate')">End Date</th>
+      <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ride of rides">
+      <td>{{ ride.route }}</td>
+      <td>{{ ride.price | currency }}</td>
+      <td>{{ ride.startDate | date: 'dd.MM.yyyy' }}</td>
+      <td>{{ ride.endDate | date: 'dd.MM.yyyy' }}</td>
+      <td>
+        <button (click)="showDetails(ride)">Details</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="selectedRide" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeDetails()">&times;</span>
+      <h2>Ride Details</h2>
+      <div class="map-container">
+        <!-- <app-map [route]="selectedRide.route"></app-map> -->
+      </div>
+      <p><strong>Driver:</strong> {{ selectedRide.driverName }}</p>
+      <p><strong>Ride Rating:</strong> {{ selectedRide.rating || 'No Rating' }}</p>
+      <button (click)="orderNow(selectedRide)">Order Now</button>
+      <button (click)="orderLater(selectedRide)">Order Later</button>
+    </div>
+  </div>
+
+  <div class="date-filter">
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" [(ngModel)]="startDate">
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" [(ngModel)]="endDate">
+    <button (click)="applyDateFilter()">Apply</button>
+  </div>
+
+  <div class="statistics">
+    <p>Total Distance Traveled: {{ totalDistance }}</p>
+    <p>Total Earnings: {{ totalEarnings | currency }}</p>
+    <p>Average Distance Traveled: {{ averageDistance }}</p>
+    <p>Average Earnings: {{ averageEarnings | currency }}</p>
+  </div>
+
+  <div class="charts">
+    <div>
+      <h3>Number of Rides by Day</h3>
+      <canvas id="ridesChart"></canvas>
+    </div>
+    <div>
+      <h3>Distance Traveled</h3>
+      <canvas id="distanceChart"></canvas>
+    </div>
+    <div>
+      <h3>Earnings</h3>
+      <canvas id="earningsChart"></canvas>
+    </div>
+  </div>
+
+</div>

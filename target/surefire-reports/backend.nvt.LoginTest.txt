@@ -1,4 +1,19 @@
 -------------------------------------------------------------------------------
 Test set: backend.nvt.LoginTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.02 s -- in backend.nvt.LoginTest
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 50.90 s <<< FAILURE! -- in backend.nvt.LoginTest
+backend.nvt.LoginTest.testLoginWithIncorrectPassword -- Time elapsed: 31.40 s <<< ERROR!
+org.openqa.selenium.TimeoutException: 
+Expected condition failed: waiting for visibility of element located by By.id: errorMessage (tried for 10 second(s) with 500 milliseconds interval)
+Build info: version: '4.19.1', revision: 'abe0ee07dc'
+System info: os.name: 'Mac OS X', os.arch: 'aarch64', os.version: '14.5', java.version: '22.0.2'
+Driver info: org.openqa.selenium.safari.SafariDriver
+Capabilities {acceptInsecureCerts: false, browserName: Safari, browserVersion: 17.5, platformName: mac, safari:automaticInspection: false, safari:automaticProfiling: false, safari:diagnose: false, safari:platformBuildVersion: 23F79, safari:platformVersion: 14.5, safari:useSimulator: false, setWindowRect: true, strictFileInteractability: false, webkit:WebRTC: {DisableICECandidateFiltering: false, DisableInsecureMediaCapture: false}}
+Session ID: E41ED770-33DC-49D8-ACA2-4567ACD7B61C
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:228)
+	at backend.nvt.LoginTest.testLoginWithIncorrectPassword(LoginTest.java:71)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+

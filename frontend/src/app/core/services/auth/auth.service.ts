@@ -10,19 +10,26 @@ export class AuthService {
   loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   private userRoleSubject = new BehaviorSubject<string>('');
   userRole$ = this.userRoleSubject.asObservable();
+  userEmail: any;
+
 
   constructor(private http: HttpClient) {
   }
 
   login({user}: { user: any }){
-
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.loggedIn.next(true);
 
     this.userRoleSubject.next(user.userRole);
 
+    this.userEmail = user.email;
+
     console.log("userrr", )
     console.log(localStorage.getItem('currentUser'))
+    console.log(user.email)
+    console.log(user.phone)
+    console.log(user.profilePic)
+
     this.loggedIn.next(true);
   }
 

@@ -1,0 +1,35 @@
+<div class="container">
+  <h1 mat-dialog-title>Review Your Order</h1>
+  <div mat-dialog-content>
+    <p><strong>Start:</strong> {{ data.start }}</p>
+    <p><strong>End:</strong> {{ data.end }}</p>
+    <p><strong>Waypoints:</strong> {{ data.waypoints.join(', ') }}</p>
+    <p><strong>Vehicle Type:</strong> {{ data.vehicleType }}</p>
+    <p><strong>Allow Pets:</strong> {{ data.allowPets ? 'Yes' : 'No' }}</p>
+    <p><strong>Allow Babies:</strong> {{ data.allowBabies ? 'Yes' : 'No' }}</p>
+    <p><strong>Split Fare Emails:</strong> {{ data.splitFareEmails }}</p>
+
+<!--    <div *ngIf="drivers.length === 0">-->
+<!--      <p>No available drivers at the moment.</p>-->
+<!--    </div>-->
+
+    <p><strong>Distance:</strong> {{ data.distance }} meters</p> <!-- Prikaz distance -->
+    <p><strong>Price:</strong> {{ data.price }} RSD</p> <!-- Prikaz cene -->
+  </div>
+
+  <div class="status-indicators">
+    <div
+      class="circle"
+      [ngClass]="{'success': paymentStatuses[i]}"
+      *ngFor="let circle of circles; let i = index"
+      (click)="onConfirm(i)">
+    </div>
+  </div>
+
+
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel Ride</button>
+    <button mat-button color="primary" (click)="onConfirm(0)">Pay Ride</button>
+  </div>
+</div>
